@@ -1,0 +1,52 @@
+package com.mondospider.spiderlocationapi;
+
+import java.io.IOException;
+
+import javax.jdo.PersistenceManager;
+import javax.servlet.http.*;
+
+@SuppressWarnings("serial")
+public class SetSpiderLocation extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		
+
+		
+		
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Location loc = new Location(12317771L, 12776552L);
+
+		try {
+
+			pm.makePersistent(loc);
+
+		} finally {
+
+			pm.close();
+
+		}
+
+		resp.setContentType("text/plain");
+		resp.getWriter().println(
+				"{" + "\n\"latitude\":" + loc.getLatitude() + ","
+						+ "\n\"longitude\":" + loc.getLongitude() + ","
+						+ "\n\"lastupdate\":" + loc.getCreatedAt() + ","
+						+ "\n}");
+	}
+	
+	public void updatePosition(User user, Location location) {
+	    PersistenceManager pm = PMF.get().getPersistenceManager();
+	    try {
+	        Employee e = pm.getObjectById(Employee.class, user.getEmail());
+	        if (titleChangeIsAuthorized(e, newTitle) {
+	            e.setTitle(newTitle);
+	        } else {
+	            throw new UnauthorizedTitleChangeException(e, newTitle);
+	        }
+	    } finally {
+	        pm.close();
+	    }
+	}
+	
+}

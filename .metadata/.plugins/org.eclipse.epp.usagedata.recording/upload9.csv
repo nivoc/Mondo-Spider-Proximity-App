@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+error,log,,,"Unable to get nature of project 'SpiderWebApp'.",1269094806417
+activated,view,org.eclipse.wst.server.ui,1.1.103.v20090909,"org.eclipse.wst.server.ui.ServersView",1269094821871
+activated,view,org.eclipse.ui.navigator.resources,3.4.1.M20090826-0800,"org.eclipse.ui.navigator.ProjectExplorer",1269094823724
+opened,editor,org.eclipse.jdt.ui,3.5.1.r351_v20090821-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1269094825825
+activated,editor,org.eclipse.jdt.ui,3.5.1.r351_v20090821-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1269094825875
+activated,view,org.eclipse.ui.navigator.resources,3.4.1.M20090826-0800,"org.eclipse.ui.navigator.ProjectExplorer",1269094833785
+activated,editor,org.eclipse.jdt.ui,3.5.1.r351_v20090821-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1269094835329
+deactivated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1269094836647
+activated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1269094838718
+activated,view,org.eclipse.ui.console,3.4.0.v20090513,"org.eclipse.ui.console.ConsoleView",1269094840125
+activated,view,org.eclipse.wst.server.ui,1.1.103.v20090909,"org.eclipse.wst.server.ui.ServersView",1269094843569
+activated,view,org.eclipse.ui.console,3.4.0.v20090513,"org.eclipse.ui.console.ConsoleView",1269094844815
+activated,editor,org.eclipse.jdt.ui,3.5.1.r351_v20090821-0800,"org.eclipse.jdt.ui.CompilationUnitEditor",1269094845296
+started,bundle,org.eclipse.ui.externaltools,3.2.0.v20090504,"org.eclipse.ui.externaltools",1269094854653
+activated,view,org.eclipse.ui.console,3.4.0.v20090513,"org.eclipse.ui.console.ConsoleView",1269094860999
+executed,command,org.eclipse.ui,3.5.1.M20090902-1000,"org.eclipse.ui.views.showView",1269094861011
+deactivated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1269094862476
+activated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1269094863088
+deactivated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1269094869891
+activated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1269094874773
+started,bundle,com.google.gwt.eclipse.oophm,1.2.0.v200912062003,"com.google.gwt.eclipse.oophm",1269094875331
+opened,view,com.google.gwt.eclipse.oophm,1.2.0.v200912062003,"com.google.gwt.eclipse.DevModeView",1269094876316
+activated,view,com.google.gwt.eclipse.oophm,1.2.0.v200912062003,"com.google.gwt.eclipse.DevModeView",1269094876334
+executed,command,org.eclipse.ui,3.5.1.M20090902-1000,"org.eclipse.ui.views.showView",1269094876335
+executed,command,org.eclipse.ui,3.5.1.M20090902-1000,"org.eclipse.ui.views.showView",1269094876335

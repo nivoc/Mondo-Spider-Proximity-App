@@ -1,0 +1,49 @@
+package com.mondospider.spiderlocationapi;
+
+import java.io.IOException;
+
+import javax.jdo.PersistenceManager;
+import javax.servlet.http.*;
+
+@SuppressWarnings("serial")
+public class SetSpiderLocation extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+	
+		hasPermission(req);
+		
+		if ( ! req.getParameter("pwd").equals("spiders_secret_key") );
+			accessDenied();
+			
+			
+			
+		updatePosition("spider", 12317771L, 12776552L);
+		
+		System.out.println();
+		
+		
+		resp.setContentType("text/plain");
+		resp.getWriter().println(
+				"{" + "\n\"saved\":" + 123 + ","
+						+ "\n\"as\":" + 123 + ","
+						+ "\n\"aa\":" + 12 + ","
+						+ "\n}");
+		
+		
+	}
+	
+	public void updatePosition(String username, long latitude,  long longitude) {
+		
+	    PersistenceManager pm = PMF.get().getPersistenceManager();
+	    try {
+	    
+	        Location l = pm.getObjectById(Location.class, username);
+	        l.setLatetude(latitude+1);
+	        l.setLongitude(longitude+1);
+	        
+	    } finally {
+	        pm.close();
+	    }
+	}
+	
+}

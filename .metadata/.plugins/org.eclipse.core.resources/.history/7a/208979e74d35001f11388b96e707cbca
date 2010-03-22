@@ -1,0 +1,39 @@
+package com.mondospider.spiderlocationapi;
+
+import java.io.IOException;
+import java.util.Date;
+
+import javax.jdo.PersistenceManager;
+import javax.servlet.http.*;
+
+import com.sun.servicetag.UnauthorizedAccessException;
+
+@SuppressWarnings("serial")
+public class SetSpiderLocation extends HttpServlet {
+	private static final String SECRET_KEY = "spiders_secret_key";
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		resp.setContentType("text/plain");
+		
+		
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+        Location l = pm.getObjectById(Location.class, "spider");
+
+
+		resp.setContentType("text/plain");
+		resp.getWriter().println(
+				"{" + "\n\"latitude\":" + l.getLatitude() + ","
+						+ "\n\"longitude\":" + l.getLongitude() + ","
+						+ "\n\"datemodified\":" + l.getDateModified() + ","
+						+ "\n}");
+		
+		
+		
+		
+	}
+	
+	
+}

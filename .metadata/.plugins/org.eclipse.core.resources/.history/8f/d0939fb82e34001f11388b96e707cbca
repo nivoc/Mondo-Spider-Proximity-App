@@ -1,0 +1,34 @@
+package com.mondospider.spiderlocationapi;
+
+import java.io.IOException;
+
+import javax.jdo.PersistenceManager;
+import javax.servlet.http.*;
+
+@SuppressWarnings("serial")
+public class SpiderLocationApiServlet extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+        Location loc = new Location("asd", 12317771L, 12776552L);
+
+        
+        
+        try {
+
+            pm.makePersistent(loc);
+
+        } finally {
+
+            pm.close();
+
+        }
+
+         
+		    
+
+			resp.setContentType("text/plain");
+			resp.getWriter().println("Hello,  I'm spfider world");
+	}
+}

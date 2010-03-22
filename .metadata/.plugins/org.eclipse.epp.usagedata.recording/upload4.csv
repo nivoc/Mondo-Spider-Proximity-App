@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,com.google.gdt.eclipse.platform.shared,1.2.0.v200912062003,"com.google.gdt.eclipse.platform.shared",1269094294626
+started,bundle,com.google.gdt.eclipse.suite,1.2.0.v200912062003,"com.google.gdt.eclipse.suite",1269094294633
+started,bundle,com.google.gwt.eclipse.core,1.2.0.v200912062003,"com.google.gwt.eclipse.core",1269094294661
+started,bundle,com.google.gwt.eclipse.sdkbundle.2.0.0,2.0.0.v200912062003,"com.google.gwt.eclipse.sdkbundle.2.0.0",1269094295074
+os,sysinfo,,,"macosx",1269094295077
+arch,sysinfo,,,"x86",1269094295077
+ws,sysinfo,,,"cocoa",1269094295077
+locale,sysinfo,,,"en_US",1269094295077
+processors,sysinfo,,,"2",1269094295078
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1269094295078
+java.runtime.version,sysinfo,,,"1.6.0_17-b04-248-10M3025",1269094295078
+java.specification.name,sysinfo,,,"Java Platform API Specification",1269094295078
+java.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1269094295078
+java.specification.version,sysinfo,,,"1.6",1269094295078
+java.vendor,sysinfo,,,"Apple Inc.",1269094295078
+java.version,sysinfo,,,"1.6.0_17",1269094295078
+java.vm.info,sysinfo,,,"mixed mode",1269094295078
+java.vm.name,sysinfo,,,"Java HotSpot(TM) Client VM",1269094295078
+java.vm.specification.name,sysinfo,,,"Java Virtual Machine Specification",1269094295078
+java.vm.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1269094295078
+java.vm.specification.version,sysinfo,,,"1.0",1269094295078
+java.vm.vendor,sysinfo,,,"Apple Inc.",1269094295078
+java.vm.version,sysinfo,,,"14.3-b01-101",1269094295078
+started,bundle,org.eclipse.update.scheduler,3.2.200.v20081127,"org.eclipse.update.scheduler",1269094295174
+started,bundle,org.eclipse.update.core,3.2.300.v20090525,"org.eclipse.update.core",1269094295235
