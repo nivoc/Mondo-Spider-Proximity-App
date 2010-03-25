@@ -1,6 +1,5 @@
 package com.mondospider.android.radar;
 
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -23,10 +22,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
 
-public class MondoRadar
-	extends Activity
-	implements LocationListener
+
+public class MondoRadar extends MapActivity implements LocationListener
 		{
 	static MondoRadar mondoradar;
 	static double lat=0;
@@ -65,6 +67,23 @@ public class MondoRadar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+		MapView mapview = (MapView) findViewById(R.id.mapview);
+		MapController mapctrl = mapview.getController();
+		mapctrl.setZoom(10);
+		/*
+		mapctrl.setCenter(
+				new GeoPoint(
+					(int) (35.45530345132602 * 1E6),
+					(int) (139.6365491316008 * 1E6)
+				)
+			);
+		*/
+		mapctrl.setCenter(
+				new GeoPoint(
+					(int) (mondspider_lat * 1E6),
+					(int) (mondospider_lon * 1E6)
+				)
+			);
         mondoradar = this;
         seListener = new SeListener();
         sensormanager = (SensorManager)getSystemService("sensor");
@@ -256,8 +275,8 @@ public class MondoRadar
     	RotateAnimation rotate = new RotateAnimation(
     			last_degree,
     			i1,
-    			50,
-    			50
+    			100,
+    			100
     			);
     	rotate.setDuration(1000);
     	rotate.setRepeatCount(1);
@@ -281,5 +300,10 @@ public class MondoRadar
 	    TextView dis_mile = (TextView) findViewById(R.id.dis_mile);
 	    	dis_mile.setText( String.valueOf(mile));
 
+	}
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

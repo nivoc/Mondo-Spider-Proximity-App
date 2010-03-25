@@ -1,93 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <LinearLayout
-	    android:layout_width="fill_parent"
+    <com.google.android.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:enabled="true"
+        android:apiKey="0QleGbh08VonooKnVvp7zEdP883wKSdy8oMl5AQ"
+    	/>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+	    android:src="@drawable/background"
+    	/>
+    <ImageView
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:id="@+id/compass2"
+	    android:id="@+id/compass"
+	    android:src="@drawable/spider_arrow"
 		android:layout_gravity="center"
-	    >
-	    <ImageView
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:id="@+id/compass"
-		    android:src="@drawable/arrow"
-			android:layout_gravity="center"
-	    	/>
-	</LinearLayout>
-	<!-- 
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="120dip"
+    	/>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    >
-		<TextView  
-		    android:layout_width="40dip" 
-		    android:layout_height="wrap_content" 
-		    android:text="LAT"
-		    />
-	    <EditText
-	     	android:layout_width="fill_parent" 
-	    	android:layout_height="wrap_content" 
-	    	android:id="@+id/lat"
-	    	/>
-	</LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    >
-		<TextView  
-		    android:layout_width="40dip" 
-		    android:layout_height="wrap_content" 
-		    android:text="LON"
-		    />
-	    <EditText
-	     	android:layout_width="fill_parent" 
-	    	android:layout_height="wrap_content" 
-	    	android:id="@+id/lon"
-	    	/>
-	</LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    >
-		<TextView  
-		    android:layout_width="40dip" 
-		    android:layout_height="wrap_content" 
-		    android:text="ALT"
-		    />
-	    <EditText
-	     	android:layout_width="fill_parent" 
-	    	android:layout_height="wrap_content" 
-	    	android:id="@+id/alt"
-	    	/>
-	</LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    >
-		<TextView  
-		    android:layout_width="40dip" 
-		    android:layout_height="wrap_content" 
-		    android:text="SPEED"
-		    />
-	    <EditText
-	     	android:layout_width="fill_parent" 
-	    	android:layout_height="wrap_content" 
-	    	android:id="@+id/speed"
-	    	/>
-	</LinearLayout>
-	 -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
+	    android:visibility="gone"
 	    >
 		<TextView  
 		    android:layout_width="40dip" 
@@ -100,28 +44,12 @@
 	    	android:id="@+id/dis"
 	    	/>
 	</LinearLayout>
-	<!-- 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    >
-		<TextView  
-		    android:layout_width="40dip" 
-		    android:layout_height="wrap_content" 
-		    android:text="BEA"
-		    />
-	    <EditText
-	     	android:layout_width="fill_parent" 
-	    	android:layout_height="wrap_content" 
-	    	android:id="@+id/bea"
-	    	/>
-	</LinearLayout>
-	 -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/line_km"
+	    android:id="@+id/line_m"
 	    >
 		<TextView  
 		    android:layout_width="wrap_content" 
@@ -139,6 +67,8 @@
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/line_inch"
+	    android:id="@+id/line_km"
 	    >
 		<TextView  
 		    android:layout_width="wrap_content" 
@@ -156,6 +86,8 @@
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/line_mile"
+	    android:id="@+id/line_inch"
 	    >
 		<TextView  
 		    android:layout_width="wrap_content" 
@@ -173,6 +105,8 @@
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/btn_close"
+	    android:id="@+id/line_mile"
 	    >
 		<TextView  
 		    android:layout_width="wrap_content" 
@@ -191,5 +125,6 @@
 	    android:layout_height="wrap_content" 
 	    android:id="@+id/btn_close"
 	    android:text="Close"
+	    android:layout_alignParentBottom="true"
 		/>
-</LinearLayout>
+</RelativeLayout>
