@@ -1,2 +1,0 @@
-INDEX VERSION 1.126+/Users/matthias/Documents/Projects/Spider/.metadata/.plugins/org.eclipse.jdt.core
-1745266675.index

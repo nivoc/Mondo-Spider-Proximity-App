@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename field &apos;lastUpdateTime&apos; in &apos;com.mondospider.spiderlocationapi.Location&apos; to &apos;dateModified&apos;&#x0A;- Original project: &apos;SpiderLocationApi&apos;&#x0A;- Original element: &apos;com.mondospider.spiderlocationapi.Location.lastUpdateTime&apos;&#x0A;- Renamed element: &apos;com.mondospider.spiderlocationapi.Location.dateModified&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;lastUpdateTime&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;com.mondospider.spiderlocationapi{Location.java[Location^lastUpdateTime" name="dateModified" references="true" setter="false" stamp="1269215378210" textual="false" version="1.0"/>
-</session>

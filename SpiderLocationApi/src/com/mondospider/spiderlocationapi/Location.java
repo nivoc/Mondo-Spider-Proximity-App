@@ -37,7 +37,7 @@ public class Location implements Serializable{
     // Necessary for the GWT-Serialization process
     @SuppressWarnings("unused")
 	private Location() {
-	}
+	}  
     
     public Location(String username, double latitude,  double longitude) {
     	this.setUsername(username);
@@ -50,6 +50,10 @@ public class Location implements Serializable{
 	@Persistent
     private String username;
 
+	@Persistent
+    private String moritz = "asd";
+	
+	
 	@Persistent
     private double longitude;
 
