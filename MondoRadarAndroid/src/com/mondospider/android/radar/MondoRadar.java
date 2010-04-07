@@ -11,11 +11,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Config;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -31,7 +34,6 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
-
 
 public class MondoRadar extends MapActivity implements LocationListener
 		{
@@ -92,15 +94,16 @@ public class MondoRadar extends MapActivity implements LocationListener
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-        /*
+//	      	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
+        /*
         DisplayMetrics metrics = new DisplayMetrics();
         display.getMetrics(metrics);
         Log.e("XXXX", String.valueOf( metrics.densityDpi ));
         switch( metrics.densityDpi ){
 	        case DisplayMetrics.DENSITY_HIGH:
-//	        	metrics.setTo(metrics);
 	        	break;
 	        case DisplayMetrics.DENSITY_MEDIUM:
 	           	break;
@@ -108,6 +111,15 @@ public class MondoRadar extends MapActivity implements LocationListener
 	        	break;
         }
         */
+      	int DisplayWidth = display.getWidth();
+    	int DisplayHeight = display.getHeight();
+    	ImageView radar_background = (ImageView) findViewById(R.id.radar);
+    	if(DisplayWidth == 480 && DisplayHeight == 800){
+    		radar_background.setImageDrawable( getResources().getDrawable( R.drawable.radar_800_480 ) );
+    	}
+	    	Log.e("DisplayWidth", String.valueOf( DisplayWidth ) );
+  	    	Log.e("DisplayHeight", String.valueOf( DisplayHeight ) );
+ 
         btn_map = (ImageButton) findViewById(R.id.btn_map);
         btn_satellite = (ImageButton) findViewById(R.id.btn_satellite);
         seekBar = (SeekBar) findViewById(R.id.seekbar_zoom);

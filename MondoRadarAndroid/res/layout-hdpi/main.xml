@@ -8,10 +8,10 @@
     >
     <com.google.android.maps.MapView
         android:id="@+id/mapview"
-        android:layout_width="320px"
-        android:layout_height="320px"
-        android:maxWidth="320px"
-        android:maxHeight="320px"
+        android:layout_width="480px"
+        android:layout_height="480px"
+        android:maxWidth="480px"
+        android:maxHeight="480px"
         android:enabled="true"
         android:apiKey="0QleGbh08VonooKnVvp7zEdP883wKSdy8oMl5AQ"
         android:layout_marginTop="60px"
@@ -24,32 +24,34 @@
 	    android:layout_alignParentTop="true"
     	/>
     <ImageView
-	    android:layout_width="320px"
-	    android:layout_height="320px"
+	    android:layout_width="480px"
+	    android:layout_height="480px"
 	    android:id="@+id/compass"
 	    android:src="@drawable/spider_arrow"
 		android:layout_gravity="center"
 		android:layout_alignParentTop="true"
 		android:layout_centerHorizontal="true"
-	    android:layout_marginTop="35px"
+	    android:layout_marginTop="60px"
     	/>
     <ImageButton
-	    android:layout_width="50px"
+	    android:layout_width="100px"
 	    android:layout_height="30px"
 	    android:id="@+id/btn_map"
 	    android:src="@drawable/dummy"
 		android:layout_alignParentTop="true"
-	    android:layout_marginTop="330px"
+	    android:layout_below="@+id/logo"
+	    android:layout_marginTop="490px"
 	    android:layout_marginLeft="10px"
     	/>
     <ImageButton
-	    android:layout_width="50px"
+	    android:layout_width="100px"
 	    android:layout_height="30px"
 	    android:id="@+id/btn_satellite"
 	    android:src="@drawable/dummy"
 		android:layout_alignParentTop="true"
-	    android:layout_marginTop="330px"
-	    android:layout_marginLeft="260px"
+	    android:layout_below="@+id/logo"
+	    android:layout_marginTop="490px"
+	    android:layout_marginLeft="370px"
     	/>
    	<SeekBar 
    		android:id="@+id/seekbar_zoom"
@@ -57,7 +59,7 @@
 	    android:layout_height="wrap_content" 
 	    android:padding="20sp" 
 	    android:progressDrawable="@drawable/seek_background"
-	    android:layout_marginTop="350px"
+	    android:layout_marginTop="500px"
 	    android:paddingLeft="30px"
 	    android:paddingRight="30px"
 	    /> 
