@@ -17,6 +17,16 @@
         android:layout_marginTop="60px"
     	/>
     <ImageView
+	    android:layout_width="480px"
+	    android:layout_height="480px"
+	    android:id="@+id/radar_spin"
+	    android:src="@drawable/radar_spin"
+		android:layout_gravity="center"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+	    android:layout_marginTop="60px"
+    	/>
+    <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
 	    android:src="@drawable/radar"

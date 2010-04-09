@@ -14,7 +14,17 @@
         android:maxHeight="320px"
         android:enabled="true"
         android:apiKey="0QleGbh08VonooKnVvp7zEdP883wKSdy8oMl5AQ"
-        android:layout_marginTop="60px"
+        android:layout_marginTop="35px"
+    	/>
+    <ImageView
+	    android:layout_width="320px"
+	    android:layout_height="320px"
+	    android:id="@+id/radar_spin"
+	    android:src="@drawable/radar_spin"
+		android:layout_gravity="center"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+	    android:layout_marginTop="35px"
     	/>
     <ImageView
         android:layout_width="fill_parent"
@@ -61,23 +71,6 @@
 	    android:paddingLeft="30px"
 	    android:paddingRight="30px"
 	    /> 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:visibility="gone"
-	    >
-		<TextView  
-		    android:layout_width="40dip" 
-		    android:layout_height="wrap_content" 
-		    android:text="DIS"
-		    />
-	    <EditText
-	     	android:layout_width="fill_parent" 
-	    	android:layout_height="wrap_content" 
-	    	android:id="@+id/dis"
-	    	/>
-	</LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"

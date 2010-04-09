@@ -3,10 +3,12 @@ package com.mondospider.android.radar;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.DrawFilter;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 
@@ -25,16 +27,14 @@ public class GrayScaleOverlay extends MyLocationOverlay {
 			Canvas canvas,
 			MapView mapView,  
             boolean shadow,
-            long when) {  
-		/*
-		DrawFilter xxx = canvas.getDrawFilter();
-		
-		Paint p = new Paint();
-		ColorMatrix cm = new ColorMatrix();
-	    cm.setSaturation(0);
-		ColorMatrixColorFilter cmcf = new ColorMatrixColorFilter(cm);
-		p.setColorFilter(cmcf);
-		*/
+            long when) {
+//		mapView.getBackground().
+//		mapView.
+//		DrawFilter xxx = canvas.getDrawFilter();
+//		canvas.set
+
+//		Drawable d = new MyStateDrawable(); 
+//		mapView.setBackgroundDrawable(d);
 		/*
 		mapView.setDrawingCacheEnabled(true);
 //		mapView.buildDrawingCache();
@@ -73,3 +73,34 @@ public class GrayScaleOverlay extends MyLocationOverlay {
         return ret;  
     }  
 }
+class MyStateDrawable extends Drawable {
+
+	@Override
+	public void draw(Canvas canvas) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getOpacity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setAlpha(int alpha) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setColorFilter(ColorFilter cf) {
+		// TODO Auto-generated method stub
+		Paint p = new Paint();
+		ColorMatrix cm = new ColorMatrix();
+	    cm.setSaturation(0);
+		ColorMatrixColorFilter cmcf = new ColorMatrixColorFilter(cm);
+		p.setColorFilter(cmcf);
+	}
+}
+

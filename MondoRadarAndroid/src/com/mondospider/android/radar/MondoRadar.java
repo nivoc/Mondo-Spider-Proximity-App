@@ -1,7 +1,6 @@
 package com.mondospider.android.radar;
 
 import android.content.Context;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,7 +10,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Config;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -20,7 +18,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -68,7 +75,7 @@ public class MondoRadar extends MapActivity implements LocationListener
     static SeListener seListener;
     static RotateAnimation rotate;
     static RotateAnimation rotate_map;
-    
+    static ImageView radar_spin;
     static Button btn_close;
     static ImageButton btn_map;
     static ImageButton btn_satellite;
@@ -120,6 +127,29 @@ public class MondoRadar extends MapActivity implements LocationListener
 	    	Log.e("DisplayWidth", String.valueOf( DisplayWidth ) );
   	    	Log.e("DisplayHeight", String.valueOf( DisplayHeight ) );
  
+  	    radar_spin = (ImageView) findViewById(R.id.radar_spin);
+  	    
+  	    AnimationSet set = new AnimationSet(true);
+  	  
+  	    AlphaAnimation alpha = new AlphaAnimation(0, 0.6f);
+  	    alpha.setDuration(800);
+  	    alpha.setRepeatCount( -1 );
+//X  	    alpha.setInterpolator(new CycleInterpolator(3));
+  	 
+  	    set.addAnimation(alpha);
+
+  	    Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_indefinitely);
+//  	    animation.setInterpolator( new LinearInterpolator() );
+//  	    animation.setInterpolator( new CycleInterpolator( 2.0f ) );
+  	    
+  	    set.addAnimation(animation);
+  	  
+  	    
+//  	    set.setInterpolator( new CycleInterpolator( -1 ) );
+  	    set.setInterpolator( new LinearInterpolator() );
+  	    
+  	    radar_spin.startAnimation( set );
+  	  
         btn_map = (ImageButton) findViewById(R.id.btn_map);
         btn_satellite = (ImageButton) findViewById(R.id.btn_satellite);
         seekBar = (SeekBar) findViewById(R.id.seekbar_zoom);
@@ -159,7 +189,18 @@ public class MondoRadar extends MapActivity implements LocationListener
     	dis_mile = (TextView) findViewById(R.id.dis_mile);
     	
 		mapview = (MapView) findViewById(R.id.mapview);
-		
+		/*
+//		Drawable drawable = this.getResources().getDrawable(R.anim.spider_point);
+//		MyLocationOverlay overlay = new MyLocationOverlay(drawable., new GeoPoint(35656000, 139700000));
+		GeoPoint geo = new GeoPoint(
+				(int) (35.45530345132602 * 1E6),
+				(int) (139.6365491316008 * 1E6)
+			);
+		SpiderOverlay overlay = new SpiderOverlay(this.getResources(), geo);
+		List<Overlay> OverlayList = mapview.getOverlays();
+		OverlayList.add(overlay);
+		 */		
+			
 //		overlay = new GrayScaleOverlay( this, mapview );
 //		List<Overlay> list = mapview.getOverlays();  
 //		list.add(overlay);  
@@ -391,36 +432,39 @@ public class MondoRadar extends MapActivity implements LocationListener
     synchronized public static void ChangeDirection(){
 		if(mValues == null)
 			return;
-		MondoRadar.mapctrl.setCenter(
-				new GeoPoint(
-					(int) (MondoRadar.lat * 1E6),
-					(int) (MondoRadar.lon * 1E6)
-				)
-			);
 		
-		
-		
-		int l = Math.round( mValues[0] );
-		int l2 =  Math.round( bea_float );
-		int l3 =  Math.round( north_float );
-		if(l >= 360)
-			l -= 360;
-		else if(l < 0)
-			l += 360;
-		
-		int i1 = 360 - l + l2;
-		if(i1 >= 360)
-			i1 -= 360;
-		else if(i1 < 0)
-			i1 += 360;
-
-		int i2 = 360 - l + l3;
-		if(i2 >= 360)
-			i2 -= 360;
-		else if(i2 < 0)
-			i2 += 360;
-
 		try{
+			
+			MondoRadar.mapctrl.setCenter(
+					new GeoPoint(
+						(int) (MondoRadar.lat * 1E6),
+						(int) (MondoRadar.lon * 1E6)
+					)
+				);
+			
+			
+			
+			int l = Math.round( mValues[0] );
+			int l2 =  Math.round( bea_float );
+			int l3 =  Math.round( north_float );
+			if(l >= 360)
+				l -= 360;
+			else if(l < 0)
+				l += 360;
+			
+			int i1 = 360 - l + l2;
+			if(i1 >= 360)
+				i1 -= 360;
+			else if(i1 < 0)
+				i1 += 360;
+	
+			int i2 = 360 - l + l3;
+			if(i2 >= 360)
+				i2 -= 360;
+			else if(i2 < 0)
+				i2 += 360;
+	
+	
 			MondoRadar.rotate_map = new RotateAnimation(
 	    			last_north,
 	    			i2,
@@ -437,33 +481,34 @@ public class MondoRadar extends MapActivity implements LocationListener
 	    			ImageViewCompass.getMeasuredWidth() / 2,
 	    			ImageViewCompass.getMeasuredHeight() / 2
 	    			);
-	    	rotate.setDuration(3000);
+	    	rotate.setDuration(5000);
+	    	rotate.setInterpolator( new AccelerateDecelerateInterpolator() );
 	    	rotate.setRepeatCount(1);
 	    	ImageViewCompass.startAnimation(rotate);
+	
+	
+	    	last_degree = i1;
+	    	last_north = i2;
+		    	e_dis.setText( String.valueOf(dis) );
+		    	
+		    int meter = (int) Math.round(dis);
+		    int kilo = Math.round( meter / 1000 );
+		    	dis_m.setText( String.valueOf(meter));
+		       	dis_km.setText( String.valueOf(kilo));
+		       	
+		    int inch = (int) Math.round( meter * 0.4 );
+		    int mile = (int) Math.round( kilo * 0.62 );
+		       	dis_inch.setText( String.valueOf(inch));
+		    	dis_mile.setText( String.valueOf(mile));
+		}catch(NullPointerException e){
+			Log.e("NullPointerException", e.toString());
 		}catch(Exception e){
 			Log.e("Exception", e.toString());
 		}
-    	last_degree = i1;
-    	last_north = i2;
-    	
-	    	e_dis.setText( String.valueOf(dis) );
-	    	
-	    int meter = (int) Math.round(dis);
-	    int kilo = Math.round( meter / 1000 );
-	    	dis_m.setText( String.valueOf(meter));
-	       	dis_km.setText( String.valueOf(kilo));
-	       	
-	    int inch = (int) Math.round( meter * 0.4 );
-	    int mile = (int) Math.round( kilo * 0.62 );
-	       	dis_inch.setText( String.valueOf(inch));
-	    	dis_mile.setText( String.valueOf(mile));
-
 	}
 	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
 }

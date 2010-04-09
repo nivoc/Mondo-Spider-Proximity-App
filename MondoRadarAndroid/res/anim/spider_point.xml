@@ -1,0 +1,7 @@
+<animation-list
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="spider_animation" oneshot="false">
+	<item android:drawable="@drawable/spider_point_00" android:duration="200" />
+	<item android:drawable="@drawable/spider_point_30" android:duration="200" />
+	<item android:drawable="@drawable/spider_point_60" android:duration="200" />
+</animation-list>
