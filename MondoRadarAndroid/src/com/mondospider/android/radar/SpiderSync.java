@@ -16,14 +16,14 @@ public class SpiderSync {
 			public void run() {
 				while(SpiderSync.sync){
 					try{
-//						String sycnData = LibHTTP.get( SpiderSync.context.getString(R.string.spiderlocation) );
-						
+						String sycnData = LibHTTP.get( SpiderSync.context.getString(R.string.spiderlocation) );
+/*						
 						String sycnData = "{"
 							 + "\"latitude\":30.0,"
 							 + "\"longitude\":-139.0,"
 							 + "\"datemodified\":\"Thu Mar 25 06:59:21 UTC 2010\","
 							 + "}";
-						
+*/
 						String json = "[" + sycnData + "]";
 						JSONArray jsons = new JSONArray(json);
 						JSONObject jsonObj = jsons.getJSONObject( 0 );
