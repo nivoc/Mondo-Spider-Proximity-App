@@ -7,6 +7,7 @@
         <activity android:name=".MondoRadar"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
                   >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -15,7 +16,7 @@
         </activity>
 		<uses-library android:name="com.google.android.maps" />
     </application>
-    <uses-sdk android:minSdkVersion="3" />
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4"  />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
