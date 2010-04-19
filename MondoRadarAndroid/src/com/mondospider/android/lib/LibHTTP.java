@@ -1,4 +1,4 @@
-package com.mondospider.android.radar;
+package com.mondospider.android.lib;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -12,7 +12,6 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.ByteArrayBuffer;
 
-import android.content.Context;
 import android.util.Log;
 
 

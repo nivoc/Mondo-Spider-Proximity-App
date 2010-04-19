@@ -14,7 +14,7 @@
         android:maxHeight="480px"
         android:enabled="true"
         android:apiKey="0QleGbh08VonooKnVvp7zEdP883wKSdy8oMl5AQ"
-        android:layout_marginTop="60px"
+        android:layout_marginTop="71px"
     	/>
     <ImageView
 	    android:layout_width="480px"
@@ -24,7 +24,7 @@
 		android:layout_gravity="center"
 		android:layout_alignParentTop="true"
 		android:layout_centerHorizontal="true"
-	    android:layout_marginTop="60px"
+	    android:layout_marginTop="71px"
     	/>
     <ImageView
         android:layout_width="fill_parent"
@@ -41,27 +41,7 @@
 		android:layout_gravity="center"
 		android:layout_alignParentTop="true"
 		android:layout_centerHorizontal="true"
-	    android:layout_marginTop="60px"
-    	/>
-    <ImageButton
-	    android:layout_width="100px"
-	    android:layout_height="30px"
-	    android:id="@+id/btn_map"
-	    android:src="@drawable/dummy"
-		android:layout_alignParentTop="true"
-	    android:layout_below="@+id/logo"
-	    android:layout_marginTop="490px"
-	    android:layout_marginLeft="10px"
-    	/>
-    <ImageButton
-	    android:layout_width="100px"
-	    android:layout_height="30px"
-	    android:id="@+id/btn_satellite"
-	    android:src="@drawable/dummy"
-		android:layout_alignParentTop="true"
-	    android:layout_below="@+id/logo"
-	    android:layout_marginTop="490px"
-	    android:layout_marginLeft="370px"
+	    android:layout_marginTop="71px"
     	/>
    	<SeekBar 
    		android:id="@+id/seekbar_zoom"
@@ -69,38 +49,42 @@
 	    android:layout_height="wrap_content" 
 	    android:padding="20sp" 
 	    android:progressDrawable="@drawable/seek_background"
-	    android:layout_marginTop="500px"
-	    android:paddingLeft="30px"
-	    android:paddingRight="30px"
+	    android:layout_marginTop="525px"
+	    android:layout_marginLeft="30px"
+	    android:layout_marginRight="30px"
+	    android:thumb="@drawable/thumb"
 	    /> 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+	    android:background="@drawable/news_button"
+	    android:id="@+id/news_button"
+	    android:layout_alignParentTop="true"
+	    android:layout_marginTop="590px"
+	    android:layout_marginLeft="220px"
+    	/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+	    android:background="@drawable/info_button"
+	    android:id="@+id/info_button"
+	    android:layout_alignParentTop="true"
+	    android:layout_marginTop="590px"
+	    android:layout_marginLeft="330px"
+    	/>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:visibility="gone"
-	    >
-		<TextView  
-		    android:layout_width="40dip" 
-		    android:layout_height="wrap_content" 
-		    android:text="DIS"
-		    />
-	    <EditText
-	     	android:layout_width="fill_parent" 
-	    	android:layout_height="wrap_content" 
-	    	android:id="@+id/dis"
-	    	/>
-	</LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_above="@+id/line_km"
+	    android:layout_alignParentBottom="true"
+	    android:layout_marginBottom="50px"
 	    android:id="@+id/line_m"
 	    >
 		<TextView  
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content" 
-		    android:text="Distance(m): "
+		    android:layout_marginLeft="50px"
+		    android:text="distance   :: :: :: :: :: :: :: :: :: ::   "
 		    />
 	    <TextView  
 		    android:layout_width="wrap_content" 
@@ -109,68 +93,4 @@
 		    android:text=""
 		    />
 	</LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_above="@+id/line_inch"
-	    android:id="@+id/line_km"
-	    >
-		<TextView  
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:text="Distance(km): "
-		    />
-	    <TextView  
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:id="@+id/dis_km"
-		    android:text=""
-		    />
-	</LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_above="@+id/line_mile"
-	    android:id="@+id/line_inch"
-	    >
-		<TextView  
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:text="Distance(inch): "
-		    />
-	    <TextView  
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:id="@+id/dis_inch"
-		    android:text=""
-		    />
-	</LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_above="@+id/btn_close"
-	    android:id="@+id/line_mile"
-	    >
-		<TextView  
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:text="Distance(mile): "
-		    />
-	    <TextView  
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:id="@+id/dis_mile"
-		    android:text=""
-		    />
-	</LinearLayout>
-	<Button
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content" 
-	    android:id="@+id/btn_close"
-	    android:text="Close"
-	    android:layout_alignParentBottom="true"
-		/>
 </RelativeLayout>

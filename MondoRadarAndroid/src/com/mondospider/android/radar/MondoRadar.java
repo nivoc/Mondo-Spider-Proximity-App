@@ -1,10 +1,7 @@
 package com.mondospider.android.radar;
 
-import java.util.List;
-
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,28 +10,22 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Config;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.CycleInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -45,7 +36,7 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
+import com.mondospider.android.overlay.SpiderItemizedOverlay;
 
 public class MondoRadar extends MapActivity implements LocationListener
 		{
@@ -82,56 +73,38 @@ public class MondoRadar extends MapActivity implements LocationListener
     static RotateAnimation rotate_map;
     static ImageView radar_spin;
     static Button btn_close;
-    static ImageButton btn_map;
-    static ImageButton btn_satellite;
     
     static SensorManager sensormanager;
     static Sensor sensor;
-    private GrayScaleOverlay overlay;  
-    
+
     static MapController mapctrl;
     static MapView mapview;
     
-    static EditText e_dis;
     static TextView dis_m;
-    static TextView dis_km;
-    static TextView dis_inch;
-    static TextView dis_mile;
     static SeekBar seekBar;
     
     static SpiderSync sync;
+    
+    static SpiderItemizedOverlay spiderOverlay;
+    
+    static GeoPoint geoPoint;
+    static GeoPoint spiderPoint;
+    final static Handler thread_handler = new Handler();
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-//	      	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        /*
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-        Log.e("XXXX", String.valueOf( metrics.densityDpi ));
-        switch( metrics.densityDpi ){
-	        case DisplayMetrics.DENSITY_HIGH:
-	        	break;
-	        case DisplayMetrics.DENSITY_MEDIUM:
-	           	break;
-	        case DisplayMetrics.DENSITY_LOW:
-	        	break;
-        }
-        */
       	int DisplayWidth = display.getWidth();
     	int DisplayHeight = display.getHeight();
     	ImageView radar_background = (ImageView) findViewById(R.id.radar);
     	if(DisplayWidth == 480 && DisplayHeight == 800){
     		radar_background.setImageDrawable( getResources().getDrawable( R.drawable.radar_800_480 ) );
     	}
-	    	Log.e("DisplayWidth", String.valueOf( DisplayWidth ) );
-  	    	Log.e("DisplayHeight", String.valueOf( DisplayHeight ) );
- 
+
   	    radar_spin = (ImageView) findViewById(R.id.radar_spin);
   	    
   	    AnimationSet set = new AnimationSet(true);
@@ -139,24 +112,14 @@ public class MondoRadar extends MapActivity implements LocationListener
   	    AlphaAnimation alpha = new AlphaAnimation(0, 0.6f);
   	    alpha.setDuration(800);
   	    alpha.setRepeatCount( -1 );
-//X  	    alpha.setInterpolator(new CycleInterpolator(3));
-  	 
   	    set.addAnimation(alpha);
 
-  	    Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_indefinitely);
-//  	    animation.setInterpolator( new LinearInterpolator() );
-//  	    animation.setInterpolator( new CycleInterpolator( 2.0f ) );
-  	    
+  	    Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_indefinitely); 
   	    set.addAnimation(animation);
-  	  
-  	    
-//  	    set.setInterpolator( new CycleInterpolator( -1 ) );
   	    set.setInterpolator( new LinearInterpolator() );
   	    
   	    radar_spin.startAnimation( set );
   	  
-        btn_map = (ImageButton) findViewById(R.id.btn_map);
-        btn_satellite = (ImageButton) findViewById(R.id.btn_satellite);
         seekBar = (SeekBar) findViewById(R.id.seekbar_zoom);
         seekBar.setMax(15);
         seekBar.setProgress(10);
@@ -166,20 +129,20 @@ public class MondoRadar extends MapActivity implements LocationListener
                     SeekBar seekBar,
                     int progress,
                     boolean fromTouch) {
-                Log.v("onProgressChanged()",
+                Log.d("onProgressChanged()",
                     String.valueOf(progress) + ", " +
                     String.valueOf(fromTouch));
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                Log.v("onStartTrackingTouch()",
+                Log.d("onStartTrackingTouch()",
                     String.valueOf(seekBar.getProgress()));
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.v("onStopTrackingTouch()",
+                Log.d("onStopTrackingTouch()",
                     String.valueOf(seekBar.getProgress()));
                 MondoRadar.mapctrl.setZoom( seekBar.getProgress() + 5 );
             }
@@ -187,60 +150,24 @@ public class MondoRadar extends MapActivity implements LocationListener
         sync = new SpiderSync(this);
         sync.start();
         
-	    e_dis = (EditText) findViewById(R.id.dis);
 	    dis_m = (TextView) findViewById(R.id.dis_m);
-    	dis_km = (TextView) findViewById(R.id.dis_km);
-    	dis_inch = (TextView) findViewById(R.id.dis_inch);
-    	dis_mile = (TextView) findViewById(R.id.dis_mile);
     	
 		mapview = (MapView) findViewById(R.id.mapview);
-		Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
-		MyOverlay overlay = new MyOverlay(bmp, new GeoPoint(35728926, 13971038));
-		List<Overlay> list = mapview.getOverlays();
-		list.add(overlay);
-		/*
-//		Drawable drawable = this.getResources().getDrawable(R.anim.spider_point);
-//		MyLocationOverlay overlay = new MyLocationOverlay(drawable., new GeoPoint(35656000, 139700000));
-		GeoPoint geo = new GeoPoint(
-				(int) (35.45530345132602 * 1E6),
-				(int) (139.6365491316008 * 1E6)
-			);
-		SpiderOverlay overlay = new SpiderOverlay(this.getResources(), geo);
-		List<Overlay> OverlayList = mapview.getOverlays();
-		OverlayList.add(overlay);
-		 */		
-			
-//		overlay = new GrayScaleOverlay( this, mapview );
-//		List<Overlay> list = mapview.getOverlays();  
-//		list.add(overlay);  
+		Drawable spider_point = getResources().getDrawable( R.anim.spider_point );
 		
+		spiderOverlay = new SpiderItemizedOverlay( spider_point );
+				
 		MondoRadar.mapctrl = mapview.getController();
 		MondoRadar.mapctrl.setZoom(10);
-//		MondoRadar.mapctrl.zoomToSpan(
-//				(int) ( 35.66026 * 1E6 ), (int) ( 139.729528 ) );
 
-		/*
-		mapctrl.setCenter(
-				new GeoPoint(
-					(int) (35.45530345132602 * 1E6),
-					(int) (139.6365491316008 * 1E6)
-				)
-			);
-		*/
-		/*
-		MondoRadar.mapctrl.setCenter(
-				new GeoPoint(
-					(int) (mondspider_lat * 1E6),
-					(int) (mondospider_lon * 1E6)
-				)
-			);
-		*/
         mondoradar = this;
         seListener = new SeListener();
         sensormanager = (SensorManager)getSystemService("sensor");
         sensor = sensormanager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         sensormanager.registerListener(seListener, sensor, 1);
 
+        MondoRadar.mapview.setSatellite(false);
+        /*
         btn_map.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (MondoRadar.mapview.isSatellite()) {
@@ -253,15 +180,7 @@ public class MondoRadar extends MapActivity implements LocationListener
 					MondoRadar.mapview.setSatellite(true);
 			}
 		});
-
-        btn_close = (Button) findViewById(R.id.btn_close);
-        btn_close.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				destroyListeners();
-			}
-        });
-        
+		*/
         ImageViewCompass = (ImageView) findViewById(R.id.compass);
         
         mondo_spider_location = new Location("mondo_spider");
@@ -284,9 +203,33 @@ public class MondoRadar extends MapActivity implements LocationListener
 	        lat = lc.getLatitude();
 	        lon = lc.getLongitude();
 		}
-		
+		MondoRadar.thread();
     }
-    
+    static private void thread(){
+		new Thread(
+			new Runnable() {
+				public void run() {
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					thread_handler.post(thread_Finished);
+				}
+			}
+		).start();
+    }
+    final static Runnable thread_Finished = new Runnable() {
+		public void run() {
+			if(spiderOverlay != null)
+				spiderOverlay.clearPoint();
+			mapview.getOverlays().add( spiderOverlay );
+			spiderOverlay.addPoint( MondoRadar.spiderPoint );
+			MondoRadar.mapctrl.setCenter(MondoRadar.geoPoint);
+
+			MondoRadar.thread();
+		}
+	};
 	public boolean onCreateOptionsMenu(Menu menu) {
 	   	super.onCreateOptionsMenu(menu);
     	menu.add(0, 5100, Menu.NONE, "Statue of Liberty" );
@@ -357,18 +300,14 @@ public class MondoRadar extends MapActivity implements LocationListener
         	bea_float = Float.valueOf( String.valueOf( bea ) ).floatValue();
         	MondoRadar.ChangeDirection();
         }
-	
+        MondoRadar.spiderPoint = new GeoPoint(
+				(int) (mondspider_lat * 1E6),
+				(int) (mondospider_lon * 1E6)
+			);
     }
-    /*
-    @Override
-    protected void onPause() {
-    	finish();
-    	super.onPause();
-    }
-    */
     @Override
     protected void onStop() {
-    	finish();
+    	destroyListeners();
     	super.onStop();
     }
     @Override
@@ -406,52 +345,39 @@ public class MondoRadar extends MapActivity implements LocationListener
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
 	}
 
     private class SeListener implements SensorEventListener{
 
 		@Override
 		public void onAccuracyChanged(Sensor sensor, int accuracy) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void onSensorChanged(SensorEvent event) {
-			// TODO Auto-generated method stub
 			mValues = event.values;
 			MondoRadar.ChangeDirection();
 		}
     	
     }
-    synchronized public static void ChangeDirection(){
+    synchronized 
+    public static void ChangeDirection(){
 		if(mValues == null)
 			return;
-		
+
 		try{
-			
-			MondoRadar.mapctrl.setCenter(
-					new GeoPoint(
-						(int) (MondoRadar.lat * 1E6),
-						(int) (MondoRadar.lon * 1E6)
-					)
+			MondoRadar.geoPoint = new GeoPoint(
+					(int) (MondoRadar.lat * 1E6),
+					(int) (MondoRadar.lon * 1E6)
 				);
-			
-			
 			
 			int l = Math.round( mValues[0] );
 			int l2 =  Math.round( bea_float );
@@ -498,17 +424,9 @@ public class MondoRadar extends MapActivity implements LocationListener
 	
 	    	last_degree = i1;
 	    	last_north = i2;
-		    	e_dis.setText( String.valueOf(dis) );
 		    	
 		    int meter = (int) Math.round(dis);
-		    int kilo = Math.round( meter / 1000 );
-		    	dis_m.setText( String.valueOf(meter));
-		       	dis_km.setText( String.valueOf(kilo));
-		       	
-		    int inch = (int) Math.round( meter * 0.4 );
-		    int mile = (int) Math.round( kilo * 0.62 );
-		       	dis_inch.setText( String.valueOf(inch));
-		    	dis_mile.setText( String.valueOf(mile));
+		    dis_m.setText( String.valueOf(meter) + " m");
 		}catch(NullPointerException e){
 			Log.e("NullPointerException", e.toString());
 		}catch(Exception e){
@@ -517,7 +435,6 @@ public class MondoRadar extends MapActivity implements LocationListener
 	}
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
