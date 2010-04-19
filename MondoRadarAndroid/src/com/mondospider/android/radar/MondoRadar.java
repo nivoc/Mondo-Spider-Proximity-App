@@ -1,6 +1,10 @@
 package com.mondospider.android.radar;
 
+import java.util.List;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -41,6 +45,7 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 
 public class MondoRadar extends MapActivity implements LocationListener
 		{
@@ -189,6 +194,10 @@ public class MondoRadar extends MapActivity implements LocationListener
     	dis_mile = (TextView) findViewById(R.id.dis_mile);
     	
 		mapview = (MapView) findViewById(R.id.mapview);
+		Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
+		MyOverlay overlay = new MyOverlay(bmp, new GeoPoint(35728926, 13971038));
+		List<Overlay> list = mapview.getOverlays();
+		list.add(overlay);
 		/*
 //		Drawable drawable = this.getResources().getDrawable(R.anim.spider_point);
 //		MyLocationOverlay overlay = new MyLocationOverlay(drawable., new GeoPoint(35656000, 139700000));
