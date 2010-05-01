@@ -18,15 +18,18 @@ public class SpiderSync {
 			public void run() {
 				while(SpiderSync.sync){
 					try{
-						String sycnData = LibHTTP.get( SpiderSync.context.getString(R.string.spiderlocation) );
+						String syncData = LibHTTP.get( SpiderSync.context.getString(R.string.spiderlocation) );
 						/*
 						String sycnData = "{"
 							 + "\"latitude\":35.728926,"
 							 + "\"longitude\":139.71038,"
 							 + "\"datemodified\":\"Thu Mar 25 06:59:21 UTC 2010\","
 							 + "}";
-*/
-						String json = "[" + sycnData + "]";
+						 */
+						if(syncData.indexOf("Host is unresolved") >= 0){
+							MondoRadar.unconnectToast.show();
+						}
+						String json = "[" + syncData + "]";
 						JSONArray jsons = new JSONArray(json);
 						JSONObject jsonObj = jsons.getJSONObject( 0 );
 						double latitude = jsonObj.getDouble("latitude");

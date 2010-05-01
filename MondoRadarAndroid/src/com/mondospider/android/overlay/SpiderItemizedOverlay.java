@@ -28,8 +28,10 @@ public class SpiderItemizedOverlay extends ItemizedOverlay<SpiderOverlayItem> {
     }
 
     public void addPoint(GeoPoint point) {
-        this.points.add(point);
-        populate();
+    	if(point != null){
+    		this.points.add(point);
+        	populate();
+    	}
     }
 	
     public void clearPoint() {

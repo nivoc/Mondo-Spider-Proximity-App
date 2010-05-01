@@ -93,4 +93,5 @@
 		    android:text=""
 		    />
 	</LinearLayout>
+	<include layout="@layout/slidingdrawer" />
 </RelativeLayout>

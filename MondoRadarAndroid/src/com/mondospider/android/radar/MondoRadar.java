@@ -14,10 +14,13 @@ import android.os.Handler;
 import android.util.Config;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -26,10 +29,13 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.SlidingDrawer;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.google.android.maps.GeoPoint;
@@ -90,6 +96,14 @@ public class MondoRadar extends MapActivity implements LocationListener
     static GeoPoint geoPoint;
     static GeoPoint spiderPoint;
     final static Handler thread_handler = new Handler();
+    
+    static SlidingDrawer slidenews;
+    static SlidingDrawer slideinfo;
+	static ImageButton news_button;
+	static ImageButton info_button;
+
+		
+		static Toast unconnectToast;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,6 +119,31 @@ public class MondoRadar extends MapActivity implements LocationListener
     		radar_background.setImageDrawable( getResources().getDrawable( R.drawable.radar_800_480 ) );
     	}
 
+    	news_button = (ImageButton) findViewById(R.id.news_button);
+   		info_button = (ImageButton) findViewById(R.id.info_button);
+        slidenews = (SlidingDrawer) findViewById(R.id.slidenews);
+        slideinfo = (SlidingDrawer) findViewById(R.id.slideinfo);
+        
+        news_button.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if( slideinfo.isMoving() || slideinfo.isOpened() )
+					slideinfo.animateClose();
+				slidenews.animateOpen();
+			}
+		});
+        info_button.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if( slidenews.isMoving() || slidenews.isOpened() )
+					slidenews.animateClose();
+				slideinfo.animateOpen();
+			}
+		});
+    	unconnectToast = Toast.makeText(
+				this, 
+				R.string.unconnectwarning ,
+				Toast.LENGTH_SHORT
+				);
+    	
   	    radar_spin = (ImageView) findViewById(R.id.radar_spin);
   	    
   	    AnimationSet set = new AnimationSet(true);
@@ -205,6 +244,7 @@ public class MondoRadar extends MapActivity implements LocationListener
 		}
 		MondoRadar.thread();
     }
+
     static private void thread(){
 		new Thread(
 			new Runnable() {
@@ -314,6 +354,11 @@ public class MondoRadar extends MapActivity implements LocationListener
     protected void onDestroy() {
     	destroyListeners();
     	super.onDestroy();
+    }
+    @Override
+    protected void onPause() {
+    	destroyListeners();
+    	super.onPause();
     }
     synchronized public void destroyListeners(){
     	if(sensormanager != null && seListener != null)
@@ -436,5 +481,19 @@ public class MondoRadar extends MapActivity implements LocationListener
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
+	}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if( slidenews.isMoving() || slidenews.isOpened() ){
+				slidenews.animateClose();
+				return true;
+			}
+			if( slideinfo.isMoving() || slideinfo.isOpened() ){
+				slideinfo.animateClose();
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }
