@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+	<SlidingDrawer
+        android:id="@+id/slidenews"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:handle="@+id/handle"
+        android:content="@+id/content">
+        <LinearLayout
+            android:id="@id/handle"
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            />
+        <LinearLayout
+            android:id="@id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#AAFF6666">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="You can put news content instead this TextView"
+                />
+        </LinearLayout>
+    </SlidingDrawer>
+	<SlidingDrawer
+        android:id="@+id/slideinfo"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:handle="@+id/handle2"
+        android:content="@+id/content2"
+        >
+        <LinearLayout
+            android:id="@id/handle2"
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            />
+        <LinearLayout
+            android:id="@id/content2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#AAAAAAAA"
+            >
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="You can put info content instead this TextView"
+                />
+        </LinearLayout>
+    </SlidingDrawer>
+</merge>
