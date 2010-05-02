@@ -36,7 +36,9 @@ public final class R {
         public static final int spider_point_00=0x7f020012;
         public static final int spider_point_30=0x7f020013;
         public static final int spider_point_60=0x7f020014;
-        public static final int thumb=0x7f020015;
+        public static final int start_eat_art=0x7f020015;
+        public static final int start_mondo_radar=0x7f020016;
+        public static final int thumb=0x7f020017;
     }
     public static final class id {
         public static final int compass=0x7f060003;
@@ -54,10 +56,13 @@ public final class R {
         public static final int seekbar_zoom=0x7f060004;
         public static final int slideinfo=0x7f06000c;
         public static final int slidenews=0x7f060009;
+        public static final int splashscreen=0x7f060010;
+        public static final int widget83=0x7f06000f;
     }
     public static final class layout {
         public static final int main=0x7f030000;
         public static final int slidingdrawer=0x7f030001;
+        public static final int splash=0x7f030002;
     }
     public static final class string {
         public static final int app_name=0x7f050000;

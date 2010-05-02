@@ -109,7 +109,10 @@ public class MondoRadar extends MapActivity implements LocationListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.main);
+        
+		setContentView(R.layout.main);
+        
+        
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
       	int DisplayWidth = display.getWidth();
