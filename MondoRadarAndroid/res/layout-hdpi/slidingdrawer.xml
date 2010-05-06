@@ -23,25 +23,25 @@
 	                android:src="@drawable/slider_head_bg"
 	        		android:layout_marginTop="0px"
 	            	/>
-			   <ImageButton
-			       	android:layout_width="wrap_content"
-			       	android:layout_height="wrap_content"
+			    <ImageButton
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
 				    android:background="@drawable/news_button"
 				    android:id="@+id/news_button_01"
 				    android:layout_alignParentTop="true"
 				    android:layout_marginTop="0px"
-				    android:layout_marginLeft="150px"
-			   	/>
-			   <ImageButton
-			       	android:layout_width="wrap_content"
-			       	android:layout_height="wrap_content"
+				    android:layout_marginLeft="220px"
+			    	/>
+			    <ImageButton
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
 				    android:background="@drawable/info_button"
 				    android:id="@+id/info_button_01"
 				    android:layout_alignParentTop="true"
 				    android:layout_marginTop="0px"
-				    android:layout_marginLeft="230px"
-			   	/>
-			   	<!-- Twitter Staff here -->
+				    android:layout_marginLeft="330px"
+			    	/>
+			    	<!-- Twitter Staff here -->
         </RelativeLayout>
     </SlidingDrawer>
 	<SlidingDrawer
@@ -68,29 +68,29 @@
 	                android:src="@drawable/slider_head_bg"
 	        		android:layout_marginTop="0px"
 	            	/>
-			   <ImageButton
-			       	android:layout_width="wrap_content"
-			       	android:layout_height="wrap_content"
+			    <ImageButton
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
 				    android:background="@drawable/news_button"
 				    android:id="@+id/news_button_02"
 				    android:layout_alignParentTop="true"
 				    android:layout_marginTop="0px"
-				    android:layout_marginLeft="150px"
-			   	/>
-			   <ImageButton
-			       	android:layout_width="wrap_content"
-			       	android:layout_height="wrap_content"
-			    	android:background="@drawable/info_button"
+				    android:layout_marginLeft="220px"
+			    	/>
+			    <ImageButton
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+				    android:background="@drawable/info_button"
 				    android:id="@+id/info_button_02"
 				    android:layout_alignParentTop="true"
 				    android:layout_marginTop="0px"
-				    android:layout_marginLeft="230px"
-			   	/>
+				    android:layout_marginLeft="330px"
+			    	/>
 	    		<ScrollView
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent"
 					android:scrollbars="vertical"
-	        		android:layout_marginTop="80px"
+	        		android:layout_marginTop="130px"
 					>
 					<LinearLayout
 						android:layout_width="fill_parent"
@@ -107,14 +107,14 @@
 			                android:layout_height="wrap_content"
 			                android:text="@string/eat_art_description"
 						    android:textColor="#A6A8AB"
-						    android:layout_marginTop="15px"
-				    		android:layout_marginLeft="15px"
+						    android:layout_marginTop="25px"
+				    		android:layout_marginLeft="30px"
 			                />
 				        <ImageView
 			                android:layout_width="fill_parent"
 			                android:layout_height="wrap_content"
 			                android:src="@drawable/radar_info_border"
-						    android:layout_marginTop="15px"
+						    android:layout_marginTop="25px"
 			            	/>
 	                </LinearLayout>
                 </ScrollView>
