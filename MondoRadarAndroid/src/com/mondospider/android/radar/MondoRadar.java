@@ -101,6 +101,10 @@ public class MondoRadar extends MapActivity implements LocationListener
     static SlidingDrawer slideinfo;
 	static ImageButton news_button;
 	static ImageButton info_button;
+	static ImageButton news_button_01;
+	static ImageButton info_button_01;
+	static ImageButton news_button_02;
+	static ImageButton info_button_02;
 
 		
 		static Toast unconnectToast;
@@ -124,21 +128,45 @@ public class MondoRadar extends MapActivity implements LocationListener
 
     	news_button = (ImageButton) findViewById(R.id.news_button);
    		info_button = (ImageButton) findViewById(R.id.info_button);
+    	news_button_01 = (ImageButton) findViewById(R.id.news_button_01);
+   		info_button_01 = (ImageButton) findViewById(R.id.info_button_01);
+    	news_button_02 = (ImageButton) findViewById(R.id.news_button_02);
+   		info_button_02 = (ImageButton) findViewById(R.id.info_button_02);
         slidenews = (SlidingDrawer) findViewById(R.id.slidenews);
         slideinfo = (SlidingDrawer) findViewById(R.id.slideinfo);
         
         news_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if( slideinfo.isMoving() || slideinfo.isOpened() )
-					slideinfo.animateClose();
+				if(isSliderOpen()) return;
 				slidenews.animateOpen();
 			}
 		});
         info_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if( slidenews.isMoving() || slidenews.isOpened() )
-					slidenews.animateClose();
+				if(isSliderOpen()) return;
 				slideinfo.animateOpen();
+			}
+		});
+        news_button_01.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				slidenews.animateClose();
+			}
+		});
+        info_button_01.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				slidenews.animateClose();
+				slideinfo.animateOpen();
+			}
+		});
+        news_button_02.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				slideinfo.animateClose();
+				slidenews.animateOpen();
+			}
+		});
+        info_button_02.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				slideinfo.animateClose();
 			}
 		});
     	unconnectToast = Toast.makeText(
@@ -165,8 +193,13 @@ public class MondoRadar extends MapActivity implements LocationListener
         seekBar = (SeekBar) findViewById(R.id.seekbar_zoom);
         seekBar.setMax(15);
         seekBar.setProgress(10);
+        seekBar.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if(isSliderOpen()) return;
+			}
+		});
         seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-            @Override
+        	@Override
             public void onProgressChanged(
                     SeekBar seekBar,
                     int progress,
@@ -248,6 +281,12 @@ public class MondoRadar extends MapActivity implements LocationListener
 		MondoRadar.thread();
     }
 
+    private boolean isSliderOpen(){
+		if( slideinfo.isMoving() || slideinfo.isOpened() || slidenews.isMoving() || slidenews.isOpened() )
+			return true;
+		else
+			return false;
+    }
     static private void thread(){
 		new Thread(
 			new Runnable() {
