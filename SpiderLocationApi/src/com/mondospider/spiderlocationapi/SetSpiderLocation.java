@@ -42,11 +42,11 @@ public class SetSpiderLocation extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
-//		if(!req.isSecure()) {
-//			resp.getWriter().println(
-//			"{\"result:error\", \"reason\":\"Connection unsecure. Only ssl connections allowed\"}");
-//			return;
-//		}
+		if(!req.isSecure()) {
+			resp.getWriter().println(
+			"{\"result:error\", \"reason\":\"SSL secured connection required for updates.\"}");
+			return;
+		}
 		
 		if (req.getParameter("lat") == null || req.getParameter("lng") == null || req.getParameter("pwd")==null) {
 			//Display Error&Help
