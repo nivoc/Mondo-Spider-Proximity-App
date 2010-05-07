@@ -191,8 +191,8 @@ public class MondoRadar extends MapActivity implements LocationListener
   	    radar_spin.startAnimation( set );
   	  
         seekBar = (SeekBar) findViewById(R.id.seekbar_zoom);
-        seekBar.setMax(15);
-        seekBar.setProgress(10);
+        seekBar.setMax(10);
+        seekBar.setProgress(6);
         seekBar.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if(isSliderOpen()) return;
@@ -219,7 +219,7 @@ public class MondoRadar extends MapActivity implements LocationListener
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Log.d("onStopTrackingTouch()",
                     String.valueOf(seekBar.getProgress()));
-                MondoRadar.mapctrl.setZoom( seekBar.getProgress() + 5 );
+                MondoRadar.mapctrl.setZoom( seekBar.getProgress() + 10 );
             }
         });
         sync = new SpiderSync(this);
@@ -228,12 +228,12 @@ public class MondoRadar extends MapActivity implements LocationListener
 	    dis_m = (TextView) findViewById(R.id.dis_m);
     	
 		mapview = (MapView) findViewById(R.id.mapview);
-		Drawable spider_point = getResources().getDrawable( R.anim.spider_point );
-		
+		Drawable spider_point = getResources().getDrawable( R.drawable.spider_point_00 );
+
 		spiderOverlay = new SpiderItemizedOverlay( spider_point );
 				
 		MondoRadar.mapctrl = mapview.getController();
-		MondoRadar.mapctrl.setZoom(10);
+		MondoRadar.mapctrl.setZoom(16);
 
         mondoradar = this;
         seListener = new SeListener();
@@ -307,66 +307,13 @@ public class MondoRadar extends MapActivity implements LocationListener
 				spiderOverlay.clearPoint();
 			mapview.getOverlays().add( spiderOverlay );
 			spiderOverlay.addPoint( MondoRadar.spiderPoint );
+
+			Log.d("Debug", String.valueOf(mondospider_lon));
 			MondoRadar.mapctrl.setCenter(MondoRadar.geoPoint);
 
 			MondoRadar.thread();
 		}
 	};
-	public boolean onCreateOptionsMenu(Menu menu) {
-	   	super.onCreateOptionsMenu(menu);
-    	menu.add(0, 5100, Menu.NONE, "Statue of Liberty" );
-    	menu.add(0, 5200, Menu.NONE, "Moscone Center" );
-    	menu.add(0, 5300, Menu.NONE, "Key West" );
-    	menu.add(0, 5400, Menu.NONE, "Chicago International Airport" );
-    	menu.add(0, 5500, Menu.NONE, "Hawaii" );
-    	menu.add(0, 5600, Menu.NONE, "White House" );
-    	return true;
-    }
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	switch (item.getItemId()) {
-			case 5100:
-		        // Statue of Liberty 
-		        mondspider_lat = 41.727255;
-		        mondospider_lon = -87.297363;
-				break;
-			case 5200:
-		        // Moscone Center 
-		        mondspider_lat = 40.707189;
-		        mondospider_lon = -74.19342;
-				break;
-			case 5300:
-		        // Key West 
-		        mondspider_lat = 24.54636;
-		        mondospider_lon = -81.797507;
-				break;
-			case 5400:
-		        // Chicago International Airport 
-		        mondspider_lat = 41.976721;
-		        mondospider_lon = -87.918606;
-				break;
-			case 5500:
-		        // Hawaii 
-		        mondspider_lat = 19.642588;
-		        mondospider_lon = -155.566406;
-				break;
-			case 5600:
-		        // White House 
-		        mondspider_lat = 38.901053;
-		        mondospider_lon = -77.036562;
-				break;
-    	}
-    	mondo_spider_location = new Location("mondo_spider");
-        mondo_spider_location.setLatitude(mondspider_lat);
-        mondo_spider_location.setLongitude(mondospider_lon);
-        if( last_location != null && mondo_spider_location != null ){
-        	last_bea = bea;
-        	dis = last_location.distanceTo(mondo_spider_location);
-        	bea = Math.round( last_location.bearingTo(mondo_spider_location) );
-        	bea_float = Float.valueOf( String.valueOf( bea ) ).floatValue();
-        	MondoRadar.ChangeDirection();
-        }
-    	return true;
-    }
     synchronized public static void setSpiderLocation(double latitude, double longitude){
     	Log.d("setSpiderLocation->latitude", String.valueOf(latitude));
     	Log.d("setSpiderLocation->longitude", String.valueOf(longitude));
@@ -417,14 +364,14 @@ public class MondoRadar extends MapActivity implements LocationListener
         alt = location.getAltitude();
         spe = location.getSpeed();
         north = location.getBearing();
-        north_float = Float.valueOf( String.valueOf( bea ) ).floatValue();
+        north_float = Float.valueOf( String.valueOf( north ) ).floatValue();
         if( mondo_spider_location != null ){
         	last_bea = bea;
         	dis = location.distanceTo(mondo_spider_location);
         	bea = Math.round( location.bearingTo(mondo_spider_location) );
         	bea_float = Float.valueOf( String.valueOf( bea ) ).floatValue();
-        	if (Config.LOGD) Log.d(TAG, String.valueOf( bea ) );
-        	if (Config.LOGD) Log.d(TAG, String.valueOf( bea_float ) );
+//        	if (Config.LOGD) Log.d(TAG, String.valueOf( bea ) );
+//        	if (Config.LOGD) Log.d(TAG, String.valueOf( bea_float ) );
         }
         MondoRadar.ChangeDirection();
 
@@ -486,7 +433,7 @@ public class MondoRadar extends MapActivity implements LocationListener
 			else if(i2 < 0)
 				i2 += 360;
 	
-	
+			// Map
 			MondoRadar.rotate_map = new RotateAnimation(
 	    			last_north,
 	    			i2,
@@ -496,7 +443,8 @@ public class MondoRadar extends MapActivity implements LocationListener
 	    	rotate_map.setDuration(3000);
 	    	rotate_map.setRepeatCount(1);
 	    	MondoRadar.mapview.startAnimation(rotate_map);
-	
+		
+			// Arrow
 	    	MondoRadar.rotate = new RotateAnimation(
 	    			last_degree,
 	    			i1,
