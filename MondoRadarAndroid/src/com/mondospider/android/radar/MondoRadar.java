@@ -308,7 +308,7 @@ public class MondoRadar extends MapActivity implements LocationListener
 			mapview.getOverlays().add( spiderOverlay );
 			spiderOverlay.addPoint( MondoRadar.spiderPoint );
 
-			Log.d("Debug", String.valueOf(mondospider_lon));
+//			Log.d("Debug", String.valueOf(mondospider_lon));
 			MondoRadar.mapctrl.setCenter(MondoRadar.geoPoint);
 
 			MondoRadar.thread();
