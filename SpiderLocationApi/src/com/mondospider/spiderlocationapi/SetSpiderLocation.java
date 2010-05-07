@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +42,24 @@ public class SetSpiderLocation extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
+//		if(!req.isSecure()) {
+//			resp.getWriter().println(
+//			"{\"result:error\", \"reason\":\"Connection unsecure. Only ssl connections allowed\"}");
+//			return;
+//		}
+		
+		if (req.getParameter("lat") == null || req.getParameter("lng") == null || req.getParameter("pwd")==null) {
+			//Display Error&Help
+			try {
+				req.getRequestDispatcher("/index.html").forward(req,resp);
+			} catch (ServletException e) {
+				resp.getWriter().println(
+				"{\"result:error\", \"reason\":\"Forward failed\"}");
+				e.printStackTrace();
+				return;
+			}
+		}
+		
 		// Permission Check
 		String key = req.getParameter("pwd");
 		if (!isSecretKeyTrue(key)) {
@@ -68,9 +87,9 @@ public class SetSpiderLocation extends HttpServlet {
 
 				return;
 			}
-
+ 
 			// Update Position
-			updatePosition("spider_neu", lat, lng);
+			updatePosition("spider", lat, lng);
 
 			responseResp.put("result", "success");
 			responseResp.put("updated_on", new Date());
@@ -78,11 +97,15 @@ public class SetSpiderLocation extends HttpServlet {
 			resp.setContentType("text/plain");
 
 			resp.getWriter().println(responseResp.toString(2));
-
+			return;
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		resp.sendRedirect("/index.html");
 
 	}
 

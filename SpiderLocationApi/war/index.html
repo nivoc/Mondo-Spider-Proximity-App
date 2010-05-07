@@ -1,27 +1,29 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Quirks Mode". Replacing this declaration     -->
-<!-- with a "Standards Mode" doctype is supported, -->
-<!-- but may lead to some differences in layout.   -->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Spider Web App</title>
-  </head>
-
-  <body>
-    <h1>Spider Web App</h1>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>406 Not Acceptable</title>
+	<style type="text/css" media="screen">
+		body {font-family:lucia arial;}
+		dt {margin-left:50px;margin-bottom:20px;}
+	</style>
+</head>
+<body id="api" onload="">
+	<h1 id="">I should do what?</h1>
+	Sorry I'm a robot. You have to tell me your request in the right words. And the word is not please - thats the word for humans.
 	
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Usage</td>        
-      </tr>
-      <tr>
-        <td><a href="spiderlocation/show">Show Spiders current Location</a></td>
-      </tr>
-    </table>
-  </body>
+	<h2 style="margin-top:30px" id="here_is_my_languarge">My language</h2>
+	<dl>
+		<dd><a href="/spiderlocation/show">/spiderlocation/show</a></dd> 
+		<dt>Human readable representation of siders current location</dt>
+		<dd><a href="/spiderlocation/get">/spiderlocation/get</a></dd>
+		<dt>Machine (JSON) readable representation of spiders current location</dt>
+		<dd><a href="/spiderlocation/set?lat=52.523405&lng=13.4114&pwd=SECRETEKEY">/spiderlocation/set</a></dd>
+		<dt>Update spiders location. A set-call must contain the parameters lat (latetude), lng (longdetude) and pwd (secrete permission key)
+<pre>Example:
+http://mondospiderwebapp.appspot.com/spiderlocation/set?lat=<b>52.523405</b>&lng=<b>13.4114</b>&pwd=<b>SECRETEKEY</b></pre></dt>
+			</li>
+</dl>
+</body>
 </html>
