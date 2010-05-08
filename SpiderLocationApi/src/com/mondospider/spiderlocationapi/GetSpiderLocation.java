@@ -27,7 +27,8 @@ public class GetSpiderLocation extends HttpServlet {
         	responseResp.put("latitude", l.getLatitude() );
         	responseResp.put("longitude", l.getLongitude());
         	responseResp.put("datemodified",l.getDateModified());
-		
+        	responseResp.put("next_update_in", 5);
+        	
         	resp.setContentType("text/plain");
 		
 			resp.getWriter().println(responseResp.toString(2));

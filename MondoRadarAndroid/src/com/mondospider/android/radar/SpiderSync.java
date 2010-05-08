@@ -6,11 +6,12 @@ import org.json.JSONObject;
 import com.mondospider.android.lib.LibHTTP;
 
 import android.content.Context;
+import android.util.Log;
 
 public class SpiderSync {
 	public static Thread thread;
 	public static boolean sync;
-	private static int interval = 60 * 1000;
+	private int interval = 60 * 1000;
 	private static Context context;
 	public SpiderSync(Context cont){
 		SpiderSync.context = cont;
@@ -18,6 +19,7 @@ public class SpiderSync {
 			public void run() {
 				while(SpiderSync.sync){
 					try{
+						Log.d("mondospider", "Send http req for location update");
 						String syncData = LibHTTP.get( SpiderSync.context.getString(R.string.spiderlocation) );
 						/*
 						String sycnData = "{"
@@ -34,6 +36,8 @@ public class SpiderSync {
 						JSONObject jsonObj = jsons.getJSONObject( 0 );
 						double latitude = jsonObj.getDouble("latitude");
 						double longitude = jsonObj.getDouble("longitude");
+						SpiderSync.this.interval = jsonObj.getInt("next_update_in")*1000;
+						
 						MondoRadar.setSpiderLocation(latitude,longitude);
 					}catch(Exception ex){
 						ex.printStackTrace();
