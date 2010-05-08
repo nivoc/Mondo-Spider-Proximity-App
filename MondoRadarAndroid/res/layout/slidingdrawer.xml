@@ -91,17 +91,16 @@
 				    android:id="@+id/layoutswitcher"
 				    android:layout_width="fill_parent"
 				    android:layout_height="fill_parent"
-	        		android:layout_marginTop="80px"
+	        		android:layout_marginTop="130px"
 	        		>
 				    <LinearLayout
 				        android:layout_width="fill_parent"
-				        android:layout_height="fill_parent"
-			        	>
+				        android:layout_height="fill_parent">
 			    		<ScrollView
 							android:layout_width="fill_parent"
 							android:layout_height="fill_parent"
 							android:scrollbars="vertical"
-							android:layout_marginTop="80px"
+				        	android:layout_marginTop="80px"
 							>
 							<LinearLayout
 								android:layout_width="fill_parent"
@@ -118,60 +117,214 @@
 					                android:layout_height="wrap_content"
 					                android:text="@string/eat_art_description"
 								    android:textColor="#A6A8AB"
-								    android:layout_marginTop="15px"
-						    		android:layout_marginLeft="15px"
+								    android:layout_marginTop="25px"
+						    		android:layout_marginLeft="30px"
 					                />
 						        <ImageView
 					                android:layout_width="fill_parent"
 					                android:layout_height="wrap_content"
 					                android:src="@drawable/radar_info_border"
-								    android:layout_marginTop="15px"
+								    android:layout_marginTop="25px"
 					            	/>
-					            	
+				               <ImageView
+					                android:layout_width="wrap_content"
+					                android:layout_height="wrap_content"
+					                android:src="@drawable/radar_info_team"
+					        		android:layout_marginTop="10px"
+					            	/>
+				               <ImageView
+					                android:layout_width="fill_parent"
+					                android:layout_height="wrap_content"
+					                android:src="@drawable/radar_info_map"
+					        		android:layout_marginTop="10px"
+					            	/>
+				            	<LinearLayout
+									android:layout_width="fill_parent"
+									android:layout_height="wrap_content"
+									android:orientation="horizontal"
+									>
+	            				    <ImageButton
+								        android:layout_width="wrap_content"
+								        android:layout_height="wrap_content"
+									    android:background="@drawable/radar_info_previous"
+									    android:id="@+id/info_prev_99"
+									    android:onClick="onClickPerv"
+								    	/>
+								    <ImageButton
+								        android:layout_width="wrap_content"
+								        android:layout_height="wrap_content"
+									    android:background="@drawable/radar_info_next"
+									    android:id="@+id/info_next_99"
+									    android:onClick="onClickNext"
+								    	/>
+				            	</LinearLayout>
 			                </LinearLayout>
-		                </ScrollView>				        
-				        <TextView
-				            android:layout_height="wrap_content"
-				            android:id="@+id/firstpanel"
-				            android:paddingTop="10dip"
-				            android:text="my first panel"
-				            android:layout_width="fill_parent"
-				            android:layout_weight="1"
-				            android:textStyle="bold" >
-				        </TextView>
+		                </ScrollView>
 				    </LinearLayout>
-				    <LinearLayout
-				        android:layout_width="fill_parent"
-				        android:layout_height="fill_parent"
-				        >
-				        <TextView
-				            android:layout_height="wrap_content"
-				            android:id="@+id/secondpanel"
-				            android:paddingTop="10dip"
-				            android:text="my second panel"
-				            android:layout_width="fill_parent"
-				            android:layout_weight="1"
-				            android:textStyle="bold" 
-				            android:layout_marginTop="80px">
-				        </TextView>
+				    
+				    <!-- Ben Start -->
+				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
+					  <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+				       <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_team" />
+				       <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/radar_info_map_canada" android:layout_marginTop="10px" />
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_previous" android:id="@+id/info_prev_00" android:onClick="onClickPerv" />
+						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
+				       </LinearLayout>
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
+						<TextView android:text="@string/peroson_info_ben" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="10px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+				       </LinearLayout>
+					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:layout_marginTop="10px" android:layout_marginLeft="30px" android:layout_marginRight="30px" >
+	            	    <ImageView android:background="@drawable/pic_ben" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						<TextView android:text="@string/peroson_description_ben" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textColor="#A6A8AB" android:layout_marginLeft="5px" />
+				       </LinearLayout>
+			          </LinearLayout>
+		             </ScrollView>
 				    </LinearLayout>
-				    <LinearLayout
-				        android:layout_width="fill_parent"
-				        android:layout_height="fill_parent"
-				        >
-				        <TextView
-				            android:layout_height="wrap_content"
-				            android:id="@+id/thirdpanel"
-				            android:paddingTop="10dip"
-				            android:text="my third panel"
-				            android:layout_width="fill_parent"
-				            android:layout_weight="1"
-				            android:textStyle="bold"
-				            android:layout_marginTop="80px">
-				        </TextView>
+				    <!-- Ben End -->
+		    
+				    <!-- Leigh Start -->
+				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
+					  <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+				       <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_team" />
+				       <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/radar_info_map_canada" android:layout_marginTop="10px" />
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_previous" android:id="@+id/info_prev_00" android:onClick="onClickPerv" />
+						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
+				       </LinearLayout>
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="10px" android:layout_marginLeft="30px" />
+						<TextView android:text="@string/peroson_info_leigh" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="10px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+				       </LinearLayout>
+					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="30px" android:layout_marginRight="30px" >
+	            	    <ImageView android:background="@drawable/pic_leigh" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						<TextView android:text="@string/peroson_description_leigh" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textColor="#A6A8AB" android:layout_marginLeft="5px"  />
+				       </LinearLayout>
+			          </LinearLayout>
+		             </ScrollView>
 				    </LinearLayout>
+				    <!-- Leigh End -->
+		    
+				    <!-- Matthias Start -->
+				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
+					  <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+				       <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_team" />
+				       <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/radar_info_map_canada" android:layout_marginTop="10px" />
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_previous" android:id="@+id/info_prev_00" android:onClick="onClickPerv" />
+						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
+				       </LinearLayout>
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="10px" android:layout_marginLeft="30px" />
+						<TextView android:text="@string/peroson_info_matthias" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="10px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+				       </LinearLayout>
+					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="30px" android:layout_marginRight="30px" >
+	            	    <ImageView android:background="@drawable/pic_matthias" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						<TextView android:text="@string/peroson_description_matthias" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textColor="#A6A8AB" android:layout_marginLeft="5px"  />
+				       </LinearLayout>
+			          </LinearLayout>
+		             </ScrollView>
+				    </LinearLayout>
+				    <!-- Matthias End -->
+				    
+				    <!-- Omri Start -->
+				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
+					  <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+				       <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_team" />
+				       <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/radar_info_map_israel" android:layout_marginTop="10px" />
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_previous" android:id="@+id/info_prev_00" android:onClick="onClickPerv" />
+						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
+				       </LinearLayout>
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="10px" android:layout_marginLeft="30px" />
+						<TextView android:text="@string/peroson_info_omri" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="10px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+				       </LinearLayout>
+					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="30px" android:layout_marginRight="30px" >
+	            	    <ImageView android:background="@drawable/pic_omri" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						<TextView android:text="@string/peroson_description_omri" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textColor="#A6A8AB" android:layout_marginLeft="5px" />
+				       </LinearLayout>
+			          </LinearLayout>
+		             </ScrollView>
+				    </LinearLayout>
+				    <!-- Omri End -->
+				    
+				    <!-- Prithitaj Start -->
+				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
+					  <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+				       <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_team" />
+				       <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/radar_info_map_india" android:layout_marginTop="10px" />
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_previous" android:id="@+id/info_prev_00" android:onClick="onClickPerv" />
+						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
+				       </LinearLayout>
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="10px" android:layout_marginLeft="30px" />
+						<TextView android:text="@string/peroson_info_prithiraj" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="10px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+				       </LinearLayout>
+					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="30px" android:layout_marginRight="30px" >
+	            	    <ImageView android:background="@drawable/pic_prithiraj" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						<TextView android:text="@string/peroson_description_prithiraj" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textColor="#A6A8AB" android:layout_marginLeft="5px" />
+				       </LinearLayout>
+			          </LinearLayout>
+		             </ScrollView>
+				    </LinearLayout>
+				    <!-- Prithitaj End -->
+				    
+				    <!-- Sumit Start -->
+				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
+					  <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+				       <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_team" />
+				       <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/radar_info_map_india" android:layout_marginTop="10px" />
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_previous" android:id="@+id/info_prev_00" android:onClick="onClickPerv" />
+						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
+				       </LinearLayout>
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="10px" android:layout_marginLeft="30px" />
+						<TextView android:text="@string/peroson_info_sumit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="10px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+				       </LinearLayout>
+					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="30px" android:layout_marginRight="30px" >
+	            	    <ImageView android:background="@drawable/pic_sumit" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						<TextView android:text="@string/peroson_description_sumit" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textColor="#A6A8AB" android:layout_marginLeft="5px"  />
+				       </LinearLayout>
+			          </LinearLayout>
+		             </ScrollView>
+				    </LinearLayout>
+				    <!-- Sumit End -->
+				    
+				    
+				    <!-- Aoi Nakanishi Start -->
+				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
+					  <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+				       <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_team" />
+				       <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/radar_info_map_japan" android:layout_marginTop="10px" />
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_previous" android:id="@+id/info_prev_00" android:onClick="onClickPerv" />
+						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
+				       </LinearLayout>
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="10px" android:layout_marginLeft="30px" />
+						<TextView android:text="@string/peroson_info_aoi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="10px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+				       </LinearLayout>
+					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="30px" android:layout_marginRight="30px" >
+	            	    <ImageView android:background="@drawable/pic_aoi" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						<TextView android:text="@string/peroson_description_aoi" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textColor="#A6A8AB" android:layout_marginLeft="5px"  />
+				       </LinearLayout>
+			          </LinearLayout>
+		             </ScrollView>
+				    </LinearLayout>
+				    <!-- Aoi Nakanishi End -->
+				    
 				</ViewFlipper>
-			   
-        </RelativeLayout>
+	        </RelativeLayout>
     </SlidingDrawer>
 </merge>

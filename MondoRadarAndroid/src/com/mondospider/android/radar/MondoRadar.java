@@ -112,6 +112,10 @@ public class MondoRadar extends MapActivity implements LocationListener
 
 	private ViewFlipper layoutswitcher;
 	private float oldTouchValue;
+	private Animation in_from_left;
+	private Animation out_from_left;
+	private Animation in_from_right;
+	private Animation out_from_right;
 	
 	static Toast unconnectToast;
     /** Called when the activity is first created. */
@@ -288,11 +292,11 @@ public class MondoRadar extends MapActivity implements LocationListener
 		
         layoutswitcher = (ViewFlipper)findViewById(R.id.layoutswitcher);
         
-        Animation s_in  = AnimationUtils.loadAnimation(this, R.anim.slide_to_left);
-        Animation s_out = AnimationUtils.loadAnimation(this, R.anim.slide_to_right);
-        layoutswitcher.setInAnimation(s_in);
-        layoutswitcher.setOutAnimation(s_out);
-
+        in_from_left  = AnimationUtils.loadAnimation(this, R.anim.in_from_left);
+        out_from_left = AnimationUtils.loadAnimation(this, R.anim.out_from_left);
+        in_from_right  = AnimationUtils.loadAnimation(this, R.anim.in_from_right);
+        out_from_right = AnimationUtils.loadAnimation(this, R.anim.out_from_right);
+        
     }
 
     private boolean isSliderOpen(){
@@ -500,84 +504,16 @@ public class MondoRadar extends MapActivity implements LocationListener
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	@Override
-    public boolean onTouchEvent(MotionEvent touchevent) {
-        switch (touchevent.getAction())
-        {
-            case MotionEvent.ACTION_DOWN:
-            {
-                oldTouchValue = touchevent.getX();
-                break;
-            }
-            case MotionEvent.ACTION_UP:
-            {
-//                if(this.searchOk==false) return false;
-                float currentX = touchevent.getX();
-                if (oldTouchValue < currentX)
-                {
-                	layoutswitcher.setInAnimation(MondoRadar.inFromLeftAnimation());
-                	layoutswitcher.setOutAnimation(MondoRadar.outToRightAnimation());
-                	layoutswitcher.showPrevious();
-                }
-                if (oldTouchValue > currentX)
-                {
-                	layoutswitcher.setInAnimation(MondoRadar.inFromRightAnimation());
-                	layoutswitcher.setOutAnimation(MondoRadar.outToLeftAnimation());
-                	layoutswitcher.showNext();
-                }
-            break;
-            }
-        }
-        return false;
-    }
 	public void onClickPerv(View view){
-		layoutswitcher.setInAnimation(MondoRadar.inFromLeftAnimation());
-    	layoutswitcher.setOutAnimation(MondoRadar.outToRightAnimation());
+		layoutswitcher.setInAnimation( in_from_left );
+    	layoutswitcher.setOutAnimation( out_from_left );
     	layoutswitcher.showPrevious();
+    	view.invalidate();
 	}
 	public void onClickNext(View view){
-    	layoutswitcher.setInAnimation(MondoRadar.inFromRightAnimation());
-    	layoutswitcher.setOutAnimation(MondoRadar.outToLeftAnimation());
+    	layoutswitcher.setInAnimation( in_from_right );
+    	layoutswitcher.setOutAnimation( out_from_right );
     	layoutswitcher.showNext();
+    	view.invalidate();
 	}
-	//for the previous movement
-	public static Animation inFromRightAnimation() {
-
-    	Animation inFromRight = new TranslateAnimation(
-    	Animation.RELATIVE_TO_PARENT,  +1.0f, Animation.RELATIVE_TO_PARENT,  0.0f,
-    	Animation.RELATIVE_TO_PARENT,  0.0f, Animation.RELATIVE_TO_PARENT,   0.0f
-    	);
-    	inFromRight.setDuration(150);
-    	inFromRight.setInterpolator(new AccelerateInterpolator());
-    	return inFromRight;
-    	}
-    public static Animation outToLeftAnimation() {
-    	Animation outtoLeft = new TranslateAnimation(
-    	 Animation.RELATIVE_TO_PARENT,  0.0f, Animation.RELATIVE_TO_PARENT,  -1.0f,
-    	 Animation.RELATIVE_TO_PARENT,  0.0f, Animation.RELATIVE_TO_PARENT,   0.0f
-    	);
-    	outtoLeft.setDuration(150);
-    	outtoLeft.setInterpolator(new AccelerateInterpolator());
-    	return outtoLeft;
-    	}    
-    // for the next movement
-    public static Animation inFromLeftAnimation() {
-    	Animation inFromLeft = new TranslateAnimation(
-    	Animation.RELATIVE_TO_PARENT,  -1.0f, Animation.RELATIVE_TO_PARENT,  0.0f,
-    	Animation.RELATIVE_TO_PARENT,  0.0f, Animation.RELATIVE_TO_PARENT,   0.0f
-    	);
-    	inFromLeft.setDuration(150);
-    	inFromLeft.setInterpolator(new AccelerateInterpolator());
-    	return inFromLeft;
-    	}
-    public static Animation outToRightAnimation() {
-    	Animation outtoRight = new TranslateAnimation(
-    	 Animation.RELATIVE_TO_PARENT,  0.0f, Animation.RELATIVE_TO_PARENT,  +1.0f,
-    	 Animation.RELATIVE_TO_PARENT,  0.0f, Animation.RELATIVE_TO_PARENT,   0.0f
-    	);
-    	outtoRight.setDuration(150);
-    	outtoRight.setInterpolator(new AccelerateInterpolator());
-    	return outtoRight;
-    	}
-
 }

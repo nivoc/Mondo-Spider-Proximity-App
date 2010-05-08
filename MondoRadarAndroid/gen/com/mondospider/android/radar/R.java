@@ -9,10 +9,12 @@ package com.mondospider.android.radar;
 
 public final class R {
     public static final class anim {
-        public static final int rotate_indefinitely=0x7f040000;
-        public static final int slide_to_left=0x7f040001;
-        public static final int slide_to_right=0x7f040002;
-        public static final int spider_point=0x7f040003;
+        public static final int in_from_left=0x7f040000;
+        public static final int in_from_right=0x7f040001;
+        public static final int out_from_left=0x7f040002;
+        public static final int out_from_right=0x7f040003;
+        public static final int rotate_indefinitely=0x7f040004;
+        public static final int spider_point=0x7f040005;
     }
     public static final class attr {
     }
@@ -68,16 +70,15 @@ public final class R {
         public static final int content=0x7f06000b;
         public static final int content2=0x7f060010;
         public static final int dis_m=0x7f060008;
-        public static final int firstpanel=0x7f060014;
         public static final int handle=0x7f06000a;
         public static final int handle2=0x7f06000f;
         public static final int info_button=0x7f060006;
         public static final int info_button_01=0x7f06000d;
         public static final int info_button_02=0x7f060012;
-        public static final int info_next_00=0x7f06001a;
-        public static final int info_next_99=0x7f060018;
-        public static final int info_prev_00=0x7f060019;
-        public static final int info_prev_99=0x7f060017;
+        public static final int info_next_00=0x7f060017;
+        public static final int info_next_99=0x7f060015;
+        public static final int info_prev_00=0x7f060016;
+        public static final int info_prev_99=0x7f060014;
         public static final int layoutswitcher=0x7f060013;
         public static final int line_m=0x7f060007;
         public static final int mapview=0x7f060000;
@@ -86,13 +87,11 @@ public final class R {
         public static final int news_button_02=0x7f060011;
         public static final int radar=0x7f060002;
         public static final int radar_spin=0x7f060001;
-        public static final int secondpanel=0x7f060015;
         public static final int seekbar_zoom=0x7f060004;
         public static final int slideinfo=0x7f06000e;
         public static final int slidenews=0x7f060009;
-        public static final int splashscreen=0x7f06001c;
-        public static final int thirdpanel=0x7f060016;
-        public static final int widget83=0x7f06001b;
+        public static final int splashscreen=0x7f060019;
+        public static final int widget83=0x7f060018;
     }
     public static final class layout {
         public static final int main=0x7f030000;
