@@ -6,4 +6,26 @@
     <string name="unconnectwarning">Please connect to internet.</string>
 
     <string name="eat_art_description">The MondoSpider partner project of eatART. eatART is an art-research lab that makes audacious and improbable large-scale sculptures. Blah blah blah...</string>
+
+    <string name="peroson_info_aoi">Aoi Nakanishi, Tokyo, Japan.</string>
+    <string name="peroson_description_aoi">Who am I?\nI didn't decide what to write...</string>
+
+    <string name="peroson_info_ben">Ben, Canada</string>
+    <string name="peroson_description_ben">Here is description for Ben.</string>
+
+    <string name="peroson_info_leigh">Leigh, Canada</string>
+    <string name="peroson_description_leigh">Here is description for Leigh.</string>
+
+    <string name="peroson_info_matthias">Matthias, Canada</string>
+    <string name="peroson_description_matthias">Here is description for Matthias</string>
+
+    <string name="peroson_info_omri">Omri, Israel</string>
+    <string name="peroson_description_omri">Here is description for Omri.</string>
+    
+    <string name="peroson_info_prithiraj">Prithitaj, India</string>
+    <string name="peroson_description_prithiraj">Here is description for Prithitaj.</string>
+    
+    <string name="peroson_info_sumit">Sumit, India</string>
+    <string name="peroson_description_sumit">Here is description for Sumit.</string>
+
 </resources>

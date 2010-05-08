@@ -86,38 +86,92 @@
 				    android:layout_marginTop="0px"
 				    android:layout_marginLeft="230px"
 			   	/>
-	    		<ScrollView
-					android:layout_width="fill_parent"
-					android:layout_height="fill_parent"
-					android:scrollbars="vertical"
+			   	<ViewFlipper
+				    android:layout_margin="6dip"
+				    android:id="@+id/layoutswitcher"
+				    android:layout_width="fill_parent"
+				    android:layout_height="fill_parent"
 	        		android:layout_marginTop="80px"
-					>
-					<LinearLayout
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:orientation="vertical"
-						>
-				        <ImageView
-			                android:layout_width="fill_parent"
-			                android:layout_height="wrap_content"
-			                android:src="@drawable/eat_art"
-			            	/>
-			            <TextView
-			                android:layout_width="fill_parent"
-			                android:layout_height="wrap_content"
-			                android:text="@string/eat_art_description"
-						    android:textColor="#A6A8AB"
-						    android:layout_marginTop="15px"
-				    		android:layout_marginLeft="15px"
-			                />
-				        <ImageView
-			                android:layout_width="fill_parent"
-			                android:layout_height="wrap_content"
-			                android:src="@drawable/radar_info_border"
-						    android:layout_marginTop="15px"
-			            	/>
-	                </LinearLayout>
-                </ScrollView>
+	        		>
+				    <LinearLayout
+				        android:layout_width="fill_parent"
+				        android:layout_height="fill_parent"
+			        	>
+			    		<ScrollView
+							android:layout_width="fill_parent"
+							android:layout_height="fill_parent"
+							android:scrollbars="vertical"
+							android:layout_marginTop="80px"
+							>
+							<LinearLayout
+								android:layout_width="fill_parent"
+								android:layout_height="wrap_content"
+								android:orientation="vertical"
+								>
+						        <ImageView
+					                android:layout_width="fill_parent"
+					                android:layout_height="wrap_content"
+					                android:src="@drawable/eat_art"
+					            	/>
+					            <TextView
+					                android:layout_width="fill_parent"
+					                android:layout_height="wrap_content"
+					                android:text="@string/eat_art_description"
+								    android:textColor="#A6A8AB"
+								    android:layout_marginTop="15px"
+						    		android:layout_marginLeft="15px"
+					                />
+						        <ImageView
+					                android:layout_width="fill_parent"
+					                android:layout_height="wrap_content"
+					                android:src="@drawable/radar_info_border"
+								    android:layout_marginTop="15px"
+					            	/>
+					            	
+			                </LinearLayout>
+		                </ScrollView>				        
+				        <TextView
+				            android:layout_height="wrap_content"
+				            android:id="@+id/firstpanel"
+				            android:paddingTop="10dip"
+				            android:text="my first panel"
+				            android:layout_width="fill_parent"
+				            android:layout_weight="1"
+				            android:textStyle="bold" >
+				        </TextView>
+				    </LinearLayout>
+				    <LinearLayout
+				        android:layout_width="fill_parent"
+				        android:layout_height="fill_parent"
+				        >
+				        <TextView
+				            android:layout_height="wrap_content"
+				            android:id="@+id/secondpanel"
+				            android:paddingTop="10dip"
+				            android:text="my second panel"
+				            android:layout_width="fill_parent"
+				            android:layout_weight="1"
+				            android:textStyle="bold" 
+				            android:layout_marginTop="80px">
+				        </TextView>
+				    </LinearLayout>
+				    <LinearLayout
+				        android:layout_width="fill_parent"
+				        android:layout_height="fill_parent"
+				        >
+				        <TextView
+				            android:layout_height="wrap_content"
+				            android:id="@+id/thirdpanel"
+				            android:paddingTop="10dip"
+				            android:text="my third panel"
+				            android:layout_width="fill_parent"
+				            android:layout_weight="1"
+				            android:textStyle="bold"
+				            android:layout_marginTop="80px">
+				        </TextView>
+				    </LinearLayout>
+				</ViewFlipper>
+			   
         </RelativeLayout>
     </SlidingDrawer>
 </merge>
