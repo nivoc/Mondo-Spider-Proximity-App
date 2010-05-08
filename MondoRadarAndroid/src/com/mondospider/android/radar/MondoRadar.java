@@ -1,5 +1,8 @@
 package com.mondospider.android.radar;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
@@ -11,31 +14,28 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Config;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.SimpleAdapter;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,7 +93,8 @@ public class MondoRadar extends MapActivity implements LocationListener
     static TextView dis_m;
     static SeekBar seekBar;
     
-    static SpiderSync sync;
+    static SpiderSync spider_sync;
+    static TwitterSync twitter_sync;
     
     static SpiderItemizedOverlay spiderOverlay;
     
@@ -117,6 +118,8 @@ public class MondoRadar extends MapActivity implements LocationListener
 	private Animation in_from_right;
 	private Animation out_from_right;
 	
+	private static ListView twitter_listview;
+	private static ArrayList<HashMap<String, String>> tweet_current_list;
 	static Toast unconnectToast;
     /** Called when the activity is first created. */
     @Override
@@ -232,9 +235,9 @@ public class MondoRadar extends MapActivity implements LocationListener
                 MondoRadar.mapctrl.setZoom( seekBar.getProgress() + 10 );
             }
         });
-        sync = new SpiderSync(this);
-        sync.start();
-        
+        spider_sync = new SpiderSync(this);
+        spider_sync.start();
+                
 	    dis_m = (TextView) findViewById(R.id.dis_m);
     	
 		mapview = (MapView) findViewById(R.id.mapview);
@@ -290,6 +293,70 @@ public class MondoRadar extends MapActivity implements LocationListener
 		}
 		MondoRadar.thread();
 		
+		String[] tweet_date_dummy = new String[] {
+				"01 Apr 2010 10:10am",
+				"02 Apr 2010 12:10pm",
+				"03 Apr 2010 03:10pm",
+				"04 Apr 2010 04:10pm",
+				"05 Apr 2010 07:10pm",
+				"06 Apr 2010 04:10pm"
+				};
+		String[] tweet_text_dummy = new String[] {
+				"This is sample tweet",
+				"Update from twitter",
+				"List view can do many things",
+				"Android is a interesing platform",
+				"Android devices are lovely.",
+				"The mascot is cute;)"
+				};
+		twitter_listview = (ListView) findViewById(R.id.twitter_listview);
+//		twitter_listview.setClickable(false);
+		tweet_current_list = new ArrayList<HashMap<String, String>>();
+        twitter_sync = new TwitterSync(this);
+        twitter_sync.start();
+
+		final ArrayList<HashMap<String, String>> tweet_list = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> items;
+		for(int i=0;i<=5;i++){
+			items = new HashMap<String, String>();
+			items.put("tweet_date", tweet_date_dummy[i]);
+			items.put("tweet_text", tweet_text_dummy[i]);
+			tweet_list.add(items);
+		}
+		final SimpleAdapter sa = new SimpleAdapter(
+				this,
+				tweet_list,
+				R.layout.tweet_row,
+	            new String[] {
+						"tweet_date",
+						"tweet_text"
+						},
+	            new int[] {
+						R.id.tweet_date,
+						R.id.tweet_text
+						}
+				);
+		twitter_listview.setAdapter(sa);
+		twitter_listview.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// Do nothings
+			}
+
+			public void onScroll(
+					AbsListView view,
+					int firstVisibleItem,
+					int visibleItemCount,
+					int totalItemCount) {
+				// TODO
+				// Do somethings
+			}
+		});
+
+		
+
+		
+		
         layoutswitcher = (ViewFlipper)findViewById(R.id.layoutswitcher);
         
         in_from_left  = AnimationUtils.loadAnimation(this, R.anim.in_from_left);
@@ -325,16 +392,14 @@ public class MondoRadar extends MapActivity implements LocationListener
 				spiderOverlay.clearPoint();
 			mapview.getOverlays().add( spiderOverlay );
 			spiderOverlay.addPoint( MondoRadar.spiderPoint );
-
-//			Log.d("Debug", String.valueOf(mondospider_lon));
 			MondoRadar.mapctrl.setCenter(MondoRadar.geoPoint);
 
 			MondoRadar.thread();
 		}
 	};
     synchronized public static void setSpiderLocation(double latitude, double longitude){
-    	Log.d("setSpiderLocation->latitude", String.valueOf(latitude));
-    	Log.d("setSpiderLocation->longitude", String.valueOf(longitude));
+//    	Log.d("setSpiderLocation->latitude", String.valueOf(latitude));
+//    	Log.d("setSpiderLocation->longitude", String.valueOf(longitude));
     	mondspider_lat = latitude;
     	mondospider_lon = longitude;
     	mondo_spider_location = new Location("mondo_spider");
@@ -351,6 +416,33 @@ public class MondoRadar extends MapActivity implements LocationListener
 				(int) (mondspider_lat * 1E6),
 				(int) (mondospider_lon * 1E6)
 			);
+    }
+    static Handler tweetHandler = new Handler();
+    synchronized public static void setSpiderTweet(ArrayList<HashMap<String, String>> tweet_list){
+    	MondoRadar.tweet_current_list = tweet_list;
+    	new Thread(new Runnable() {
+    	    public void run() {
+	        	final SimpleAdapter sa = new SimpleAdapter(
+	    				MondoRadar.mondoradar,
+	    				MondoRadar.tweet_current_list,
+	    				R.layout.tweet_row,
+	    	            new String[] {
+	    						"tweet_date",
+	    						"tweet_text"
+	    						},
+	    	            new int[] {
+	    						R.id.tweet_date,
+	    						R.id.tweet_text
+	    						}
+	    				);
+	        	MondoRadar.tweetHandler.post(new Runnable() {
+    	        public void run() {
+    	        	twitter_listview.setAdapter(sa);
+    	        	twitter_listview.invalidate();
+    	        }
+    	      });
+    	    }
+    	  }).start();
     }
     @Override
     protected void onStop() {
@@ -504,16 +596,33 @@ public class MondoRadar extends MapActivity implements LocationListener
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	public void onClickPerv(View view){
+	static Handler infoHandler = new Handler();
+	public void onClickPerv(final View view){
 		layoutswitcher.setInAnimation( in_from_left );
     	layoutswitcher.setOutAnimation( out_from_left );
     	layoutswitcher.showPrevious();
-    	view.invalidate();
+    	new Thread(new Runnable() {
+    	    public void run() {
+	        	MondoRadar.infoHandler.post(new Runnable() {
+    	        public void run() {
+    	        	view.invalidate();
+    	        }
+    	      });
+    	    }
+    	  }).start();
 	}
-	public void onClickNext(View view){
+	public void onClickNext(final View view){
     	layoutswitcher.setInAnimation( in_from_right );
     	layoutswitcher.setOutAnimation( out_from_right );
     	layoutswitcher.showNext();
-    	view.invalidate();
+    	new Thread(new Runnable() {
+    	    public void run() {
+	        	MondoRadar.infoHandler.post(new Runnable() {
+    	        public void run() {
+    	        	view.invalidate();
+    	        }
+    	      });
+    	    }
+    	  }).start();
 	}
 }

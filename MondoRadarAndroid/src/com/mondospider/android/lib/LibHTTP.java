@@ -24,7 +24,7 @@ public class LibHTTP {
 
 	public static String get(String url){    	
 		String ReturnHTML = "";
-		Log.d("LibHTTP->get->url",url);
+//		Log.d("LibHTTP->get->url",url);
         try{ 
           URLConnection urlConn = new URL( url ).openConnection(); 
           InputStream is = urlConn.getInputStream(); 
@@ -38,7 +38,7 @@ public class LibHTTP {
         }catch(Exception e){ 
         	ReturnHTML = e.getMessage(); 
         }
-        Log.d("LibHTTP->get->ReturnHTML", ReturnHTML);
+//        Log.d("LibHTTP->get->ReturnHTML", ReturnHTML);
 		return ReturnHTML;
 	}
 }

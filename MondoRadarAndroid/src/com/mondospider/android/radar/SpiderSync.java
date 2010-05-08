@@ -10,7 +10,7 @@ import android.content.Context;
 public class SpiderSync {
 	public static Thread thread;
 	public static boolean sync;
-	private static int interval = 30 * 1000;
+	private static int interval = 60 * 1000;
 	private static Context context;
 	public SpiderSync(Context cont){
 		SpiderSync.context = cont;
