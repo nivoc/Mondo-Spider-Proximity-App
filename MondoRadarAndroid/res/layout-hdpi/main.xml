@@ -13,7 +13,7 @@
         android:maxWidth="480px"
         android:maxHeight="480px"
         android:enabled="true"
-        android:apiKey="0QleGbh08VonooKnVvp7zEdP883wKSdy8oMl5AQ"
+        android:apiKey="@string/googlemapsapikey"
         android:layout_marginTop="71px"
     	/>
     <ImageView

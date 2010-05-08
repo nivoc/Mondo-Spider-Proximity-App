@@ -13,9 +13,10 @@
         android:maxWidth="320px"
         android:maxHeight="320px"
         android:enabled="true"
-        android:apiKey="0QleGbh08VonooKnVvp7zEdP883wKSdy8oMl5AQ"
+        android:apiKey="@string/googlemapsapikey"
         android:layout_marginTop="44px"
     	/>
+        <!-- See README for android:apiKey -->
     <ImageView
 	    android:layout_width="320px"
 	    android:layout_height="320px"

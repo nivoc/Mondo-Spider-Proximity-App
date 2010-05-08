@@ -1,0 +1,12 @@
+You need a GoogleMapsAPI-Key to use the mapping feature. You can request it for free here:
+http://code.google.com/android/add-ons/google-apis/maps-api-signup.html
+
+After you got the key create the following File under /res/values and store your key as pointed out below.
+======/res/values/mapapi.xml====
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="googlemapsapikey">1IS1kq22__EXAMPLE_KEY__7MOI12_+M8fJvhg</string>
+</resources>
+=====FILE END===================
+
+Yey - You are ready to use it.
