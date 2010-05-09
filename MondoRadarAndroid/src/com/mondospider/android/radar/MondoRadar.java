@@ -622,6 +622,22 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		case R.id.startTestActivity:
 			startActivity(new Intent(this, Test.class));
 			return true; 
+		case R.id.radarScreen:
+			if (isSliderOpen()){
+				mInfoDrawer.animateClose();
+				mInfoDrawer.animateClose();
+			}
+			return true; 
+		case R.id.aboutScreen:
+			if (isSliderOpen())
+				mNewsDrawer.animateClose();
+			mInfoDrawer.animateOpen();
+			return true;
+		case R.id.tweetsScreen:
+			if (isSliderOpen())
+				mInfoDrawer.animateClose();
+			mNewsDrawer.animateOpen();
+			return true; 
 		}
 
 		return false; 
