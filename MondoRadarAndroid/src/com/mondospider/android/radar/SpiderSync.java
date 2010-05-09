@@ -1,69 +1,72 @@
 package com.mondospider.android.radar;
 
-import org.json.JSONArray;
+import java.util.ArrayList;
+
 import org.json.JSONObject;
+
+import android.util.Log;
 
 import com.mondospider.android.lib.LibHTTP;
 
-import android.content.Context;
-import android.util.Log;
+/**
+ * Use: s = new SpiderSync(APIURL) s.start();
+ * 
+ * call s.waitAfterCurrCall() to sleep in background call s.notifyresumeWork()
+ * to reactivate it
+ * 
+ * Reqister with addSpiderListener(CLASS) all classes that should be notified
+ * with updates. This classes must implement the interface SpiderListener();
+ */
+public class SpiderSync extends Daemon {
+	private String spiderLocationApiUrl;
+	private ArrayList<SpiderListener> listenerCollection = new ArrayList<SpiderListener>();
 
-public class SpiderSync {
-	public static Thread thread;
-	public static boolean sync;
-	private int interval = 60 * 1000;
-	private static Context context;
-	public SpiderSync(Context cont){
-		SpiderSync.context = cont;
-		thread = new Thread(){
-			public void run() {
-				while(SpiderSync.sync){
-					try{
-						Log.d("mondospider", "Send http req for location update");
-						String syncData = LibHTTP.get( SpiderSync.context.getString(R.string.spiderlocation) );
-						/*
-						String sycnData = "{"
-							 + "\"latitude\":35.728926,"
-							 + "\"longitude\":139.71038,"
-							 + "\"datemodified\":\"Thu Mar 25 06:59:21 UTC 2010\","
-							 + "}";
-						 */
-						if(syncData.indexOf("Host is unresolved") >= 0){
-							MondoRadar.unconnectToast.show();
-						}
-						String json = "[" + syncData + "]";
-						JSONArray jsons = new JSONArray(json);
-						JSONObject jsonObj = jsons.getJSONObject( 0 );
-						double latitude = jsonObj.getDouble("latitude");
-						double longitude = jsonObj.getDouble("longitude");
-						SpiderSync.this.interval = jsonObj.getInt("next_update_in")*1000;
-						
-						MondoRadar.setSpiderLocation(latitude,longitude);
-					}catch(Exception ex){
-						ex.printStackTrace();
-					}
-					
-					try{
-						Thread.sleep( interval );
-					}catch(Exception ex){
-						ex.printStackTrace();
-					}
-					
-				}
-			};
-		};
+	public SpiderSync(String spiderLocationApiUrl) {
+		super();
 
+		Check.isNotNull(spiderLocationApiUrl);
+		Check.isLongerThan3(spiderLocationApiUrl);
+
+		this.spiderLocationApiUrl = spiderLocationApiUrl;
 	}
-	public void start(){
-		if(thread != null){
-			SpiderSync.sync = true;
-			SpiderSync.thread.start();
+
+	protected void theActualWork() {
+		try {
+			Log.d(LOGTAG, "Send http req for spider update - Wait Time (nextSyncIn) was: " + nextSyncIn);
+			String responseString = LibHTTP.get(spiderLocationApiUrl);
+
+			/*
+			 * String responseString = "{" + "\"latitude\":35.728926," +
+			 * "\"longitude\":139.71038," +
+			 * "\"datemodified\":\"Thu Mar 25 06:59:21 UTC 2010\"," + "}";
+			 */
+
+			JSONObject jsonObj = new JSONObject(responseString);
+
+			final double latitude = jsonObj.getDouble("latitude");
+			final double longitude = jsonObj.getDouble("longitude");
+			int nextSyncIn2 = jsonObj.getInt("next_update_in") * 1000;
+			nextSyncIn = nextSyncIn2;
+			fireUpdate(latitude, longitude);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			// make sure that it waits a bit after an error
+			nextSyncIn = 60;
 		}
 	}
-	public void stop(){
-		if(thread != null){
-			SpiderSync.sync = false;
-			SpiderSync.thread.stop();
+
+	void fireUpdate(double latitude, double longitude) {
+		for (SpiderListener listener : listenerCollection) {
+			listener.onSpiderUpdate(latitude, longitude);
 		}
+	}
+
+	void addSpiderListener(SpiderListener l) {
+		listenerCollection.add(l);
+	}
+
+	interface SpiderListener {
+		void onSpiderUpdate(double latitude, double longitude);
 	}
 }

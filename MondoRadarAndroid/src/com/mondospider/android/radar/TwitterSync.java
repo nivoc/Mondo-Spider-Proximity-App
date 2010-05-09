@@ -6,87 +6,75 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.mondospider.android.lib.LibHTTP;
-
-import android.content.Context;
 import android.util.Log;
 
-public class TwitterSync {
-	public static Thread thread;
-	public static boolean sync;
-	private static int interval = 30 * 1000;
-	private static Context context;
-	private static ArrayList<HashMap<String, String>> tweet_list;
-	private static HashMap<String, String> items;
-	public TwitterSync(Context cont){
-		TwitterSync.context = cont;
-		tweet_list = new ArrayList<HashMap<String, String>>();
-		thread = new Thread(){
-			@Override
-			public void run() {
-				while(TwitterSync.sync){
-					try{
-						String json = LibHTTP.get( TwitterSync.context.getString(R.string.spidertweeturl) );
-						/*
-						String sycnData = "{"
-							 + "\"latitude\":35.728926,"
-							 + "\"longitude\":139.71038,"
-							 + "\"datemodified\":\"Thu Mar 25 06:59:21 UTC 2010\","
-							 + "}";
-						 */
-						HashMap<String, String> items;
-						if(json.indexOf("Host is unresolved") >= 0){
-							MondoRadar.unconnectToast.show();
-						}
-//						Log.d("Debug",json);
-						JSONArray jsons = new JSONArray(json);
-						
-						tweet_list.clear();
-						for (int i = 0; i < jsons.length(); i++) {
-						    JSONObject jsonObj = jsons.getJSONObject(i);
-						    int id = jsonObj.getInt("id");
-						    String text = jsonObj.getString("text");
-						    String created_at = jsonObj.getString("created_at");
-						    
-//						    Log.d("Debug",String.valueOf(id));
-//						    Log.d("Debug",text);
-//						    Log.d("Debug",created_at);
-//						    Log.d("Debug","------------------------------------");
-//						    Log.d("Debug","------------------------------------");
-//						    Log.d("Debug","------------------------------------");
-//						    Log.d("Debug","------------------------------------");
-						    
-							items = new HashMap<String, String>();
-							items.put("tweet_date", created_at );
-							items.put("tweet_text", text );
-							tweet_list.add(items);
-						}
-						MondoRadar.setSpiderTweet(tweet_list);
-					}catch(Exception ex){
-						ex.printStackTrace();
-					}
-					
-					try{
-						Thread.sleep( interval );
-					}catch(Exception ex){
-						ex.printStackTrace();
-					}
-					
-				}
-			};
-		};
+import com.mondospider.android.lib.LibHTTP;
 
+/**
+ * Use: s = new TwitterSync(APIURL) s.start();
+ * 
+ * call s.waitAfterCurrCall() to sleep in background call s.notify() to
+ * reactivate it
+ * 
+ * Reqister with addTwitterListener(CLASS) all classes that should be notified
+ * with updates. This classes must implement the interface TwitterListener();
+ */
+public class TwitterSync extends Daemon {
+	private String twitterApiUrl;
+	private ArrayList<TwitterListener> listenerCollection = new ArrayList<TwitterListener>();
+
+	public TwitterSync(String twitterApiUrl) {
+		super();
+
+		Check.isNotNull(twitterApiUrl);
+		Check.isLongerThan3(twitterApiUrl);
+
+		this.twitterApiUrl = twitterApiUrl;
 	}
-	public void start(){
-		if(thread != null){
-			TwitterSync.sync = true;
-			TwitterSync.thread.start();
+
+	protected void theActualWork() {
+		try {
+			Log.d(LOGTAG, "Send http req for twitter update - Wait Time (nextSyncIn) was: " + nextSyncIn);
+			String responseString = LibHTTP.get(twitterApiUrl);
+			// R.string.spidertweeturl
+
+			JSONArray jsons = new JSONArray(responseString);
+			ArrayList<HashMap<String, String>> tweetList = new ArrayList<HashMap<String, String>>();
+
+			for (int i = 0; i < jsons.length(); i++) {
+				JSONObject o = jsons.getJSONObject(i);
+
+				// int id = o.getInt("id");
+				String text = o.getString("text");
+				String createdAt = o.getString("created_at");
+
+				HashMap<String, String> items = new HashMap<String, String>();
+				items.put("tweet_date", createdAt);
+				items.put("tweet_text", text);
+				tweetList.add(items);
+			}
+
+			fireUpdate(tweetList);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			// make sure that it waits a bit after an error
+			nextSyncIn = 60;
 		}
 	}
-	public void stop(){
-		if(thread != null){
-			TwitterSync.sync = false;
-			TwitterSync.thread.stop();
+
+	void fireUpdate(ArrayList<HashMap<String, String>> tweet_list) {
+		for (TwitterListener listener : listenerCollection) {
+			listener.onTwitterUpdate(tweet_list);
 		}
 	}
+
+	void addTwitterListener(TwitterListener l) {
+		listenerCollection.add(l);
+	}
+
+	interface TwitterListener {
+		void onTwitterUpdate(ArrayList<HashMap<String, String>> tweet_list);
+	}
+
 }
