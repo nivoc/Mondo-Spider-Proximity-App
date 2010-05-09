@@ -69,35 +69,36 @@ import com.mondospider.android.radar.TwitterSync.TwitterListener;
 public class MondoRadar extends MapActivity implements LocationListener,
 		SpiderListener, TwitterListener, SensorEventListener, OnClickListener {
 
+	// Debugging
+	public static final String TAG = "Mondospider";
+
+	// Layout Views
+	private ImageView mRadarSpinView;
+	private SeekBar mSeekBar;
+	private SlidingDrawer mNewsDrawer;
+	private SlidingDrawer mInfoDrawer;
+	private ImageView mCompassImageView;
+	private TextView mDistanceTextView;
+
 	private static final long UPD_MIN_TIME = 0;
 	private static final float UPD_MIN_DISTANCE = 0;
-	private static MondoRadar mondoradar;
 	private static double lat = 0;
 	private static double lon = 0;
-	private static double alt = 0;
-	private static double spe = 0;
 	private static double dis = 0;
 	private static double bea = 0;
 	private static double north = 0;
 	private static float northFloat = 0;
 	private static float lastNorth = 0;
-	private static double lastBea = 0;
 	private static float lastDegree = 0;
 	private static float beaFloat = 0;
-	private static double mondspiderLat = 0;
-	private static double mondospiderLon = 0;
 	private static LocationManager locationmanager;
-	private static Location mondo_spider_location;
-	private static Location last_location;
-
-	public static final String LOGTAG = "Mondospider";
+	private static Location mSpiderLoc = new Location("mondo_spider");
+	private static Location mLastUserloc;
 
 	private static float[] mValues;
 
-	private ImageView ImageViewCompass;
 	private static RotateAnimation rotate;
 	private static RotateAnimation rotate_map;
-	private ImageView radar_spin;
 
 	private static SensorManager sensormanager;
 	private static Sensor sensor;
@@ -105,20 +106,14 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	private static MapController mapctrl;
 	private static MapView mapview;
 
-	private TextView dis_m;
-	private SeekBar seekBar;
-
 	private static SpiderSync spiderSync;
 	private static TwitterSync twitterSync;
 
 	private static SpiderItemizedOverlay spiderOverlay;
 
 	private static GeoPoint geoPoint;
-	private static GeoPoint spiderPoint;
+	private static GeoPoint mSpiderPoint;
 	final static Handler thread_handler = new Handler();
-
-	private  SlidingDrawer slidenews;
-	private SlidingDrawer slideinfo;
 
 	private ViewFlipper layoutswitcher;
 	private Animation in_from_left;
@@ -126,22 +121,19 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	private Animation in_from_right;
 	private Animation out_from_right;
 
-
 	private static ListView twitter_listview;
 	private static ArrayList<HashMap<String, String>> tweet_current_list;
 
-
-	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//Set Layout
+
+		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 
-		//Resize Background based on screen res
+		// Resize Background based on screen res
 		WindowManager windowManager = getWindowManager();
 		Display display = windowManager.getDefaultDisplay();
 		int DisplayWidth = display.getWidth();
@@ -152,41 +144,27 @@ public class MondoRadar extends MapActivity implements LocationListener,
 					R.drawable.radar_800_480));
 		}
 
-		//Find UI-Elements
+		// Registrer OnClicks
 		findViewById(R.id.news_button).setOnClickListener(this);
 		findViewById(R.id.info_button).setOnClickListener(this);
 		findViewById(R.id.news_button_01).setOnClickListener(this);
 		findViewById(R.id.info_button_01).setOnClickListener(this);
 		findViewById(R.id.news_button_02).setOnClickListener(this);
 		findViewById(R.id.info_button_02).setOnClickListener(this);
-		slidenews = (SlidingDrawer) findViewById(R.id.slidenews);
-		slideinfo = (SlidingDrawer) findViewById(R.id.slideinfo);
-		radar_spin = (ImageView) findViewById(R.id.radar_spin);
 
-		
-		
-		
-		
-		AnimationSet set = new AnimationSet(true);
+		// Find UI-Elements
+		mNewsDrawer = (SlidingDrawer) findViewById(R.id.slidenews);
+		mInfoDrawer = (SlidingDrawer) findViewById(R.id.slideinfo);
+		mRadarSpinView = (ImageView) findViewById(R.id.radar_spin);
+		mDistanceTextView = (TextView) findViewById(R.id.dis_m);
+		mSeekBar = (SeekBar) findViewById(R.id.seekbar_zoom);
 
-		AlphaAnimation alpha = new AlphaAnimation(0, 0.6f);
-		alpha.setDuration(800);
-		alpha.setRepeatCount(-1);
-		set.addAnimation(alpha);
+		// Setup ZoomBar
+		mSeekBar.setMax(10);
+		mSeekBar.setProgress(6);
+		mSeekBar.setOnClickListener(this);
 
-		Animation animation = AnimationUtils.loadAnimation(this,
-				R.anim.rotate_indefinitely);
-		set.addAnimation(animation);
-		set.setInterpolator(new LinearInterpolator());
-
-		radar_spin.startAnimation(set);
-
-		seekBar = (SeekBar) findViewById(R.id.seekbar_zoom);
-		seekBar.setMax(10);
-		seekBar.setProgress(6);
-		seekBar.setOnClickListener(this);
-		
-		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+		mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromTouch) {
@@ -208,7 +186,19 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			}
 		});
 
-		dis_m = (TextView) findViewById(R.id.dis_m);
+		AnimationSet set = new AnimationSet(true);
+
+		AlphaAnimation alpha = new AlphaAnimation(0, 0.6f);
+		alpha.setDuration(800);
+		alpha.setRepeatCount(-1);
+		set.addAnimation(alpha);
+
+		Animation animation = AnimationUtils.loadAnimation(this,
+				R.anim.rotate_indefinitely);
+		set.addAnimation(animation);
+		set.setInterpolator(new LinearInterpolator());
+
+		mRadarSpinView.startAnimation(set);
 
 		mapview = (MapView) findViewById(R.id.mapview);
 		Drawable spider_point = getResources().getDrawable(
@@ -219,24 +209,12 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		MondoRadar.mapctrl = mapview.getController();
 		MondoRadar.mapctrl.setZoom(16);
 
-		mondoradar = this;
-
 		sensormanager = (SensorManager) getSystemService("sensor");
 		sensor = sensormanager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
 		MondoRadar.mapview.setSatellite(false);
-		/*
-		 * btn_map.setOnClickListener(new OnClickListener() { public void
-		 * onClick(View v) { if (MondoRadar.mapview.isSatellite()) {
-		 * MondoRadar.mapview.setSatellite(false); } } });
-		 * btn_satellite.setOnClickListener(new OnClickListener() { public void
-		 * onClick(View v) { MondoRadar.mapview.setSatellite(true); } });
-		 */
-		ImageViewCompass = (ImageView) findViewById(R.id.compass);
+		mCompassImageView = (ImageView) findViewById(R.id.compass);
 
-		mondo_spider_location = new Location("mondo_spider");
-		mondo_spider_location.setLatitude(mondspiderLat);
-		mondo_spider_location.setLongitude(mondospiderLon);
 
 		locationmanager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		Location lc = locationmanager
@@ -322,7 +300,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		sensormanager.registerListener(this, sensor, 1);
 		locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				UPD_MIN_TIME, UPD_MIN_DISTANCE, this);
-		MondoRadar.thread();
+		//MondoRadar.thread();
 
 		createOrWakeTwitterSync();
 		createOrWakesSpiderSync();
@@ -359,35 +337,32 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	}
 
 	private boolean isSliderOpen() {
-		if (slideinfo.isMoving() || slideinfo.isOpened()
-				|| slidenews.isMoving() || slidenews.isOpened())
+		if (mInfoDrawer.isMoving() || mInfoDrawer.isOpened()
+				|| mNewsDrawer.isMoving() || mNewsDrawer.isOpened())
 			return true;
 		else
 			return false;
 	}
 
-	static private void thread() {
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				thread_handler.post(thread_Finished);
-			}
-		}).start();
-	}
 
 	final static Runnable thread_Finished = new Runnable() {
 		public void run() {
 			if (spiderOverlay != null)
 				spiderOverlay.clearPoint();
 			mapview.getOverlays().add(spiderOverlay);
-			spiderOverlay.addPoint(MondoRadar.spiderPoint);
+			spiderOverlay.addPoint(MondoRadar.mSpiderPoint);
 			MondoRadar.mapctrl.setCenter(MondoRadar.geoPoint);
 
-			MondoRadar.thread();
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					thread_handler.post(thread_Finished);
+				}
+			}).start();
 		}
 	};
 	static Handler tweetHandler = new Handler();
@@ -401,17 +376,14 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	@Override
 	public void onLocationChanged(Location location) {
-		last_location = location;
+		mLastUserloc = location;
 		lat = location.getLatitude();
 		lon = location.getLongitude();
-		alt = location.getAltitude();
-		spe = location.getSpeed();
 		north = location.getBearing();
 		northFloat = Float.valueOf(String.valueOf(north)).floatValue();
-		if (mondo_spider_location != null) {
-			lastBea = bea;
-			dis = location.distanceTo(mondo_spider_location);
-			bea = Math.round(location.bearingTo(mondo_spider_location));
+		if (mSpiderLoc != null) {
+			dis = location.distanceTo(mSpiderLoc);
+			bea = Math.round(location.bearingTo(mSpiderLoc));
 			beaFloat = Float.valueOf(String.valueOf(bea)).floatValue();
 			// if (Config.LOGD) Log.d(TAG, String.valueOf( bea ) );
 			// if (Config.LOGD) Log.d(TAG, String.valueOf( bea_float ) );
@@ -431,6 +403,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
+
 	synchronized public void changeDirection() {
 		if (mValues == null)
 			return;
@@ -469,20 +442,20 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 			// Arrow
 			MondoRadar.rotate = new RotateAnimation(lastDegree, i1,
-					ImageViewCompass.getMeasuredWidth() / 2, ImageViewCompass
+					mCompassImageView.getMeasuredWidth() / 2, mCompassImageView
 							.getMeasuredHeight() / 2);
 			rotate.setDuration(5000);
 			rotate.setInterpolator(new AccelerateDecelerateInterpolator());
 			rotate.setRepeatCount(1);
 
-			ImageViewCompass.startAnimation(rotate);
+			mCompassImageView.startAnimation(rotate);
 
 			lastDegree = i1;
 			lastNorth = i2;
 
 			int meter = (int) Math.round(dis);
 
-			dis_m.setText(String.valueOf(meter) + " m");
+			mDistanceTextView.setText(String.valueOf(meter) + " m");
 		} catch (NullPointerException e) {
 			Log.e("NullPointerException", e.toString());
 			e.printStackTrace();
@@ -500,12 +473,12 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (slidenews.isMoving() || slidenews.isOpened()) {
-				slidenews.animateClose();
+			if (mNewsDrawer.isMoving() || mNewsDrawer.isOpened()) {
+				mNewsDrawer.animateClose();
 				return true;
 			}
-			if (slideinfo.isMoving() || slideinfo.isOpened()) {
-				slideinfo.animateClose();
+			if (mInfoDrawer.isMoving() || mInfoDrawer.isOpened()) {
+				mInfoDrawer.animateClose();
 				return true;
 			}
 		}
@@ -546,23 +519,16 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	@Override
 	synchronized public void onSpiderUpdate(double latitude, double longitude) {
-		// Log.d("setSpiderLocation->latitude", String.valueOf(latitude));
-		// Log.d("setSpiderLocation->longitude", String.valueOf(longitude));
-		mondspiderLat = latitude;
-		mondospiderLon = longitude;
-		mondo_spider_location = new Location("mondo_spider");
-		mondo_spider_location.setLatitude(mondspiderLat);
-		mondo_spider_location.setLongitude(mondospiderLon);
-		if (last_location != null && mondo_spider_location != null) {
-			lastBea = bea;
-			dis = last_location.distanceTo(mondo_spider_location);
-			bea = Math.round(last_location.bearingTo(mondo_spider_location));
+		mSpiderLoc = new Location("mondo_spider");
+		mSpiderLoc.setLatitude(latitude);
+		mSpiderLoc.setLongitude(longitude);
+		if (mLastUserloc != null && mSpiderLoc != null) {
+			dis = mLastUserloc.distanceTo(mSpiderLoc);
+			bea = Math.round(mLastUserloc.bearingTo(mSpiderLoc));
 			beaFloat = Float.valueOf(String.valueOf(bea)).floatValue();
-			// Removed because it causes errors if called from another thread
-			// MondoRadar.ChangeDirection();
 		}
-		MondoRadar.spiderPoint = new GeoPoint((int) (mondspiderLat * 1E6),
-				(int) (mondospiderLon * 1E6));
+		mSpiderPoint = new GeoPoint((int) (mSpiderLoc.getLatitude() * 1E6),
+				(int) (mSpiderLoc.getLongitude() * 1E6));
 	}
 
 	@Override
@@ -570,11 +536,10 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		MondoRadar.tweet_current_list = tweetList;
 		new Thread(new Runnable() {
 			public void run() {
-				final SimpleAdapter sa = new SimpleAdapter(
-						MondoRadar.mondoradar, MondoRadar.tweet_current_list,
-						R.layout.tweet_row, new String[] { "tweet_date",
-								"tweet_text" }, new int[] { R.id.tweet_date,
-								R.id.tweet_text });
+				final SimpleAdapter sa = new SimpleAdapter(MondoRadar.this,
+						MondoRadar.tweet_current_list, R.layout.tweet_row,
+						new String[] { "tweet_date", "tweet_text" }, new int[] {
+								R.id.tweet_date, R.id.tweet_text });
 				MondoRadar.tweetHandler.post(new Runnable() {
 					public void run() {
 						twitter_listview.setAdapter(sa);
@@ -583,8 +548,8 @@ public class MondoRadar extends MapActivity implements LocationListener,
 				});
 			}
 		}).start();
-	}	
-	
+	}
+
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	}
@@ -601,36 +566,35 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		case R.id.news_button:
 			if (isSliderOpen())
 				return;
-			slidenews.animateOpen();
+			mNewsDrawer.animateOpen();
 			break;
 		case R.id.info_button:
 			if (isSliderOpen())
 				return;
-			slideinfo.animateOpen();
+			mInfoDrawer.animateOpen();
 			break;
 		case R.id.news_button_01:
-			slidenews.animateClose();
+			mNewsDrawer.animateClose();
 			break;
 		case R.id.info_button_01:
-			slidenews.animateClose();
-			slideinfo.animateOpen();
+			mNewsDrawer.animateClose();
+			mInfoDrawer.animateOpen();
 			break;
 		case R.id.news_button_02:
-			slideinfo.animateClose();
-			slidenews.animateOpen();
+			mInfoDrawer.animateClose();
+			mNewsDrawer.animateOpen();
 			break;
 		case R.id.info_button_02:
-			slideinfo.animateClose();
+			mInfoDrawer.animateClose();
 			break;
 		case R.id.seekbar_zoom:
 			if (isSliderOpen())
 				return;
 			break;
-			
-			
+
 		default:
-			Log.e(LOGTAG, "No Action found for this click event :(.");
+			Log.e(TAG, "No Action found for this click event :(.");
 		}
-		
+
 	}
 }

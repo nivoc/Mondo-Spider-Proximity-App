@@ -48,7 +48,7 @@ public class SpiderSync extends Daemon {
 
 	protected void theActualWork() {
 		try {
-			Log.d(LOGTAG, "Send http req for spider update - Wait Time (nextSyncIn) was: " + nextSyncIn);
+			Log.d(TAG, "Send http req for spider update - Wait Time (nextSyncIn) was: " + nextSyncIn);
 			String responseString = LibHTTP.get(spiderLocationApiUrl);
 
 			/*
@@ -61,7 +61,7 @@ public class SpiderSync extends Daemon {
 
 			final double latitude = jsonObj.getDouble("latitude");
 			final double longitude = jsonObj.getDouble("longitude");
-			int nextSyncIn2 = jsonObj.getInt("next_update_in") * 1000;
+			int nextSyncIn2 = jsonObj.getInt("next_update_in");
 			nextSyncIn = nextSyncIn2;
 			fireUpdate(latitude, longitude);
 

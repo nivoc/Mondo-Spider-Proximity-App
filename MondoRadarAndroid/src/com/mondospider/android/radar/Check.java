@@ -19,7 +19,7 @@ package com.mondospider.android.radar;
 import android.util.Log;
 
 public class Check {
-	public final String LOGTAG = MondoRadar.LOGTAG;
+	public final String LOGTAG = MondoRadar.TAG;
 
 	public static void isNotNull(Object o) {
 		if (o == null) {

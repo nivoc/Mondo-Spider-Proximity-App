@@ -23,10 +23,10 @@ import android.util.Log;
  * 
  */
 abstract public class Daemon extends Thread {
-	public static String LOGTAG = MondoRadar.LOGTAG;
+	public static String TAG = MondoRadar.TAG;
 	private boolean pause = false;
 	// inital in 60 sec
-	protected int nextSyncIn = 60 * 1000;
+	protected int nextSyncIn = 60;
 	
 	public Daemon() {
 		setDaemon(true);		
@@ -43,15 +43,15 @@ abstract public class Daemon extends Thread {
 				
 				//do the work
 				theActualWork();
-				Thread.sleep(nextSyncIn);
+				Thread.sleep(nextSyncIn*1000);
 
 			} catch ( InterruptedException e ) { 
 			    // do nothing - It's a normal wakeup
 		    } catch (Exception ex) {
 				ex.printStackTrace();
-				Log.e(LOGTAG, "MEMEM");
+				Log.e(TAG, "");
 				// make sure that it waits a bit after an error
-				nextSyncIn=60;
+				nextSyncIn=120;
 			}
 		}
 	};

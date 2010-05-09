@@ -50,7 +50,7 @@ public class TwitterSync extends Daemon {
 
 	protected void theActualWork() {
 		try {
-			Log.d(LOGTAG, "Send http req for twitter update - Wait Time (nextSyncIn) was: " + nextSyncIn);
+			Log.d(TAG, "Send http req for twitter update - Wait Time (nextSyncIn) was: " + nextSyncIn);
 			String responseString = LibHTTP.get(twitterApiUrl);
 			// R.string.spidertweeturl
 
