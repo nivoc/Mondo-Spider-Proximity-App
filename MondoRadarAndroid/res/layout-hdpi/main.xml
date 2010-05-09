@@ -72,26 +72,15 @@
 	    android:layout_marginTop="590px"
 	    android:layout_marginLeft="330px"
     	/>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
+	<TextView  
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content" 
+	    android:layout_marginLeft="50px"
 	    android:layout_alignParentBottom="true"
-	    android:layout_marginBottom="50px"
-	    android:id="@+id/line_m"
-	    >
-		<TextView  
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:layout_marginLeft="50px"
-		    android:text="distance   :: :: :: :: :: :: :: :: :: ::   "
-		    />
-	    <TextView  
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:id="@+id/dis_m"
-		    android:text=""
-		    />
-	</LinearLayout>
+   		android:layout_marginBottom="50px"
+   		android:textSize="15dip"
+    	android:id="@+id/dis_m"
+	    android:text="distance   :: :: :: :: :: :: :: :: :: ::   loading"
+	    />
 	<include layout="@layout/slidingdrawer" />
 </RelativeLayout>

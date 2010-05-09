@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -30,9 +31,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,16 +50,12 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SimpleAdapter;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -151,7 +152,10 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		findViewById(R.id.info_button_01).setOnClickListener(this);
 		findViewById(R.id.news_button_02).setOnClickListener(this);
 		findViewById(R.id.info_button_02).setOnClickListener(this);
-
+		
+		//Set eatart links clickable
+		((TextView)findViewById(R.id.eat_art_description)).setMovementMethod(LinkMovementMethod.getInstance());
+		
 		// Find UI-Elements
 		mNewsDrawer = (SlidingDrawer) findViewById(R.id.slidenews);
 		mInfoDrawer = (SlidingDrawer) findViewById(R.id.slideinfo);
@@ -365,7 +369,6 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			}).start();
 		}
 	};
-	static Handler tweetHandler = new Handler();
 
 	synchronized public void destroyListeners() {
 		if (sensormanager != null)
@@ -455,7 +458,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 			int meter = (int) Math.round(dis);
 
-			mDistanceTextView.setText(String.valueOf(meter) + " m");
+			mDistanceTextView.setText("distance :: :: :: :: :: :: :: :: :: " + String.valueOf(meter) + " m");
 		} catch (NullPointerException e) {
 			Log.e("NullPointerException", e.toString());
 			e.printStackTrace();
@@ -534,20 +537,18 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	@Override
 	public void onTwitterUpdate(ArrayList<HashMap<String, String>> tweetList) {
 		MondoRadar.tweet_current_list = tweetList;
-		new Thread(new Runnable() {
+		
+		final SimpleAdapter sa = new SimpleAdapter(MondoRadar.this,
+				tweetList, R.layout.tweet_row,
+				new String[] { "tweet_date", "tweet_text" }, new int[] {
+						R.id.tweet_date, R.id.tweet_text });
+		runOnUiThread(new Runnable() {
 			public void run() {
-				final SimpleAdapter sa = new SimpleAdapter(MondoRadar.this,
-						MondoRadar.tweet_current_list, R.layout.tweet_row,
-						new String[] { "tweet_date", "tweet_text" }, new int[] {
-								R.id.tweet_date, R.id.tweet_text });
-				MondoRadar.tweetHandler.post(new Runnable() {
-					public void run() {
-						twitter_listview.setAdapter(sa);
-						twitter_listview.invalidate();
-					}
-				});
+				twitter_listview.setAdapter(sa);
+				twitter_listview.invalidate();
 			}
-		}).start();
+		});
+		
 	}
 
 	@Override
@@ -572,6 +573,10 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			if (isSliderOpen())
 				return;
 			mInfoDrawer.animateOpen();
+			layoutswitcher.setAnimation(null);
+			layoutswitcher.setInAnimation(null);
+			layoutswitcher.setOutAnimation(null);
+			layoutswitcher.setDisplayedChild(0);
 			break;
 		case R.id.news_button_01:
 			mNewsDrawer.animateClose();
@@ -579,6 +584,10 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		case R.id.info_button_01:
 			mNewsDrawer.animateClose();
 			mInfoDrawer.animateOpen();
+			layoutswitcher.setAnimation(null);
+			layoutswitcher.setInAnimation(null);
+			layoutswitcher.setOutAnimation(null);
+			layoutswitcher.setDisplayedChild(0);
 			break;
 		case R.id.news_button_02:
 			mInfoDrawer.animateClose();
@@ -597,4 +606,26 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		}
 
 	}
+	
+	
+	 
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.startTestActivity:
+			startActivity(new Intent(this, Test.class));
+			return true; 
+		}
+
+		return false; 
+	}
+	
+	
 }
