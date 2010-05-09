@@ -119,12 +119,6 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	private  SlidingDrawer slidenews;
 	private SlidingDrawer slideinfo;
-	private ImageButton news_button;
-	private ImageButton info_button;
-	private ImageButton news_button_01;
-	private ImageButton info_button_01;
-	private ImageButton news_button_02;
-	private ImageButton info_button_02;
 
 	private ViewFlipper layoutswitcher;
 	private Animation in_from_left;
@@ -159,19 +153,20 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		}
 
 		//Find UI-Elements
-		news_button = (ImageButton) findViewById(R.id.news_button);
-		info_button = (ImageButton) findViewById(R.id.info_button);
-		news_button_01 = (ImageButton) findViewById(R.id.news_button_01);
-		info_button_01 = (ImageButton) findViewById(R.id.info_button_01);
-		news_button_02 = (ImageButton) findViewById(R.id.news_button_02);
-		info_button_02 = (ImageButton) findViewById(R.id.info_button_02);
+		findViewById(R.id.news_button).setOnClickListener(this);
+		findViewById(R.id.info_button).setOnClickListener(this);
+		findViewById(R.id.news_button_01).setOnClickListener(this);
+		findViewById(R.id.info_button_01).setOnClickListener(this);
+		findViewById(R.id.news_button_02).setOnClickListener(this);
+		findViewById(R.id.info_button_02).setOnClickListener(this);
 		slidenews = (SlidingDrawer) findViewById(R.id.slidenews);
 		slideinfo = (SlidingDrawer) findViewById(R.id.slideinfo);
-
-		
-
 		radar_spin = (ImageView) findViewById(R.id.radar_spin);
 
+		
+		
+		
+		
 		AnimationSet set = new AnimationSet(true);
 
 		AlphaAnimation alpha = new AlphaAnimation(0, 0.6f);
