@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2010 The Mondospider Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.mondospider.android.radar;
 
 import java.util.ArrayList;
@@ -60,13 +76,13 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	static double dis = 0;
 	static double bea = 0;
 	static double north = 0;
-	static float north_float = 0;
-	static float last_north = 0;
-	static double last_bea = 0;
-	static float last_degree = 0;
-	static float bea_float = 0;
-	static double mondspider_lat = 40.707189;
-	static double mondospider_lon = -74.19342;
+	static float northFloat = 0;
+	static float lastNorth = 0;
+	static double lastBea = 0;
+	static float lastDegree = 0;
+	static float beaFloat = 0;
+	static double mondspiderLat = 40.707189;
+	static double mondospiderLon = -74.19342;
 
 	static final long M_TIME = 0;
 	static final float M_DISTANCE = 0;
@@ -104,14 +120,14 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	static GeoPoint spiderPoint;
 	final static Handler thread_handler = new Handler();
 
-	static SlidingDrawer slidenews;
-	static SlidingDrawer slideinfo;
-	static ImageButton news_button;
-	static ImageButton info_button;
-	static ImageButton news_button_01;
-	static ImageButton info_button_01;
-	static ImageButton news_button_02;
-	static ImageButton info_button_02;
+	private  SlidingDrawer slidenews;
+	private SlidingDrawer slideinfo;
+	private ImageButton news_button;
+	private ImageButton info_button;
+	private ImageButton news_button_01;
+	private ImageButton info_button_01;
+	private ImageButton news_button_02;
+	private ImageButton info_button_02;
 
 	private ViewFlipper layoutswitcher;
 	private Animation in_from_left;
@@ -127,8 +143,9 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//Set Layout
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		setContentView(R.layout.main);
 
 		WindowManager windowManager = getWindowManager();
@@ -263,8 +280,8 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		ImageViewCompass = (ImageView) findViewById(R.id.compass);
 
 		mondo_spider_location = new Location("mondo_spider");
-		mondo_spider_location.setLatitude(mondspider_lat);
-		mondo_spider_location.setLongitude(mondospider_lon);
+		mondo_spider_location.setLatitude(mondspiderLat);
+		mondo_spider_location.setLongitude(mondospiderLon);
 
 		locationmanager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		Location lc = locationmanager
@@ -436,12 +453,12 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		alt = location.getAltitude();
 		spe = location.getSpeed();
 		north = location.getBearing();
-		north_float = Float.valueOf(String.valueOf(north)).floatValue();
+		northFloat = Float.valueOf(String.valueOf(north)).floatValue();
 		if (mondo_spider_location != null) {
-			last_bea = bea;
+			lastBea = bea;
 			dis = location.distanceTo(mondo_spider_location);
 			bea = Math.round(location.bearingTo(mondo_spider_location));
-			bea_float = Float.valueOf(String.valueOf(bea)).floatValue();
+			beaFloat = Float.valueOf(String.valueOf(bea)).floatValue();
 			// if (Config.LOGD) Log.d(TAG, String.valueOf( bea ) );
 			// if (Config.LOGD) Log.d(TAG, String.valueOf( bea_float ) );
 		}
@@ -484,8 +501,8 @@ public class MondoRadar extends MapActivity implements LocationListener,
 					(int) (MondoRadar.lon * 1E6));
 
 			int l = Math.round(mValues[0]);
-			int l2 = Math.round(bea_float);
-			int l3 = Math.round(north_float);
+			int l2 = Math.round(beaFloat);
+			int l3 = Math.round(northFloat);
 			if (l >= 360)
 				l -= 360;
 			else if (l < 0)
@@ -504,7 +521,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 				i2 += 360;
 
 			// Map
-			MondoRadar.rotate_map = new RotateAnimation(last_north, i2,
+			MondoRadar.rotate_map = new RotateAnimation(lastNorth, i2,
 					MondoRadar.mapview.getMeasuredWidth() / 2,
 					MondoRadar.mapview.getMeasuredHeight() / 2);
 			rotate_map.setDuration(3000);
@@ -512,7 +529,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			MondoRadar.mapview.startAnimation(rotate_map);
 
 			// Arrow
-			MondoRadar.rotate = new RotateAnimation(last_degree, i1,
+			MondoRadar.rotate = new RotateAnimation(lastDegree, i1,
 					ImageViewCompass.getMeasuredWidth() / 2, ImageViewCompass
 							.getMeasuredHeight() / 2);
 			rotate.setDuration(5000);
@@ -521,8 +538,8 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 			ImageViewCompass.startAnimation(rotate);
 
-			last_degree = i1;
-			last_north = i2;
+			lastDegree = i1;
+			lastNorth = i2;
 
 			int meter = (int) Math.round(dis);
 
@@ -592,21 +609,21 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	synchronized public void onSpiderUpdate(double latitude, double longitude) {
 		// Log.d("setSpiderLocation->latitude", String.valueOf(latitude));
 		// Log.d("setSpiderLocation->longitude", String.valueOf(longitude));
-		mondspider_lat = latitude;
-		mondospider_lon = longitude;
+		mondspiderLat = latitude;
+		mondospiderLon = longitude;
 		mondo_spider_location = new Location("mondo_spider");
-		mondo_spider_location.setLatitude(mondspider_lat);
-		mondo_spider_location.setLongitude(mondospider_lon);
+		mondo_spider_location.setLatitude(mondspiderLat);
+		mondo_spider_location.setLongitude(mondospiderLon);
 		if (last_location != null && mondo_spider_location != null) {
-			last_bea = bea;
+			lastBea = bea;
 			dis = last_location.distanceTo(mondo_spider_location);
 			bea = Math.round(last_location.bearingTo(mondo_spider_location));
-			bea_float = Float.valueOf(String.valueOf(bea)).floatValue();
+			beaFloat = Float.valueOf(String.valueOf(bea)).floatValue();
 			// Removed because it causes errors if called from another thread
 			// MondoRadar.ChangeDirection();
 		}
-		MondoRadar.spiderPoint = new GeoPoint((int) (mondspider_lat * 1E6),
-				(int) (mondospider_lon * 1E6));
+		MondoRadar.spiderPoint = new GeoPoint((int) (mondspiderLat * 1E6),
+				(int) (mondospiderLon * 1E6));
 	}
 
 	@Override
