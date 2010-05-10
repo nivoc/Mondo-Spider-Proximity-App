@@ -8,25 +8,25 @@
 
     <string name="eat_art_description">Find out more about <a href='http://www.eatart.org'>eatART</a> and the <a href='http://www.mondospider.com'>Mondo Spider</a>\n\nTo donate to eatART and help spread energy awareness, please visit our <a href='http://www.canadahelps.org/CharityProfilePage.aspx?CharityID=s97017'>Canada Helps page</a></string>
 
-    <string name="peroson_info_aoi">Aoi Nakanishi, Tokyo, Japan.</string>
-    <string name="peroson_description_aoi">Who am I?\nI didn't decide what to write...</string>
+    <string name="person_info_aoi">Aoi Nakanishi, Tokyo, Japan.</string>
+    <string name="person_description_aoi">Who am I?\nI didn't decide what to write...</string>
 
-    <string name="peroson_info_ben">Ben, Canada</string>
-    <string name="peroson_description_ben">Here is description for Ben.</string>
+    <string name="person_info_ben">Ben Cooper, Vancouver, British Columbia</string>
+    <string name="person_description_ben">Ben has a passion for capturing images (both in photos and in videos), connecting with people and create futuristic projects. www.thecooperbros.ca</string>
 
-    <string name="peroson_info_leigh">Leigh, Canada</string>
-    <string name="peroson_description_leigh">Here is description for Leigh.</string>
+    <string name="person_info_leigh">Leigh, Canada</string>
+    <string name="person_description_leigh">Here is description for Leigh.</string>
 
-    <string name="peroson_info_matthias">Matthias, Canada</string>
-    <string name="peroson_description_matthias">Here is description for Matthias</string>
+    <string name="person_info_matthias">Matthias Wieland, Hannover, Germany</string>
+    <string name="person_description_matthias">Matthias is a html native. Currently is node.js in his focus besides android and a bunch of ajax ingredients. twitter.com/nivoc</string>
 
-    <string name="peroson_info_omri">Omri, Israel</string>
-    <string name="peroson_description_omri">Here is description for Omri.</string>
+    <string name="person_info_omri">Omri Baumer, Givatayim, Israel</string>
+    <string name="person_description_omri">Omri is a computer hacker, android programmer, and technology buff who loves a good project. Looking for an invite the the US! http://thebaumers.com</string>
     
-    <string name="peroson_info_prithiraj">Prithitaj, India</string>
-    <string name="peroson_description_prithiraj">Here is description for Prithitaj.</string>
+    <string name="person_info_prithiraj">Prithiraj Sengupta, Tripura, India</string>
+    <string name="person_description_prithiraj">Prithiraj has interests in project planning, db designing and team coordination. He is currently focused on learning google technologies. www.whyo2.com</string>
     
-    <string name="peroson_info_sumit">Sumit, India</string>
-    <string name="peroson_description_sumit">Here is description for Sumit.</string>
+    <string name="person_info_sumit">Sumit, India</string>
+    <string name="person_description_sumit">Here is description for Sumit.</string>
 
 </resources>

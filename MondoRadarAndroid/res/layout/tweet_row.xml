@@ -30,5 +30,7 @@
 	 	android:clickable="false"
 	 	android:longClickable="false"
 		android:text="This is twtitter test. Mondo spider will tweet itself. because the spider has AI...in the future.."
+		android:linksClickable="true"
+		android:autoLink="web"
 		/>
 </LinearLayout>

@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.mondospider.android.lib.LibHTTP;
+import com.mondospider.android.lib.Util;
 
 /**
  * Use: s = new TwitterSync(APIURL) s.start();
@@ -66,7 +67,7 @@ public class TwitterSync extends Daemon {
 
 				HashMap<String, String> items = new HashMap<String, String>();
 				items.put("tweet_date", createdAt);
-				items.put("tweet_text", text);
+				items.put("tweet_text", Util.entity2html(text));
 				tweetList.add(items);
 			}
 

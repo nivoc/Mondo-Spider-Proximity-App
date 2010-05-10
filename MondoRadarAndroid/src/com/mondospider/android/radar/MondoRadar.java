@@ -567,34 +567,34 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		case R.id.news_button:
 			if (isSliderOpen())
 				return;
-			mNewsDrawer.animateOpen();
+			mNewsDrawer.open();
 			break;
 		case R.id.info_button:
 			if (isSliderOpen())
 				return;
-			mInfoDrawer.animateOpen();
+			mInfoDrawer.open();
 			layoutswitcher.setAnimation(null);
 			layoutswitcher.setInAnimation(null);
 			layoutswitcher.setOutAnimation(null);
 			layoutswitcher.setDisplayedChild(0);
 			break;
 		case R.id.news_button_01:
-			mNewsDrawer.animateClose();
+			mNewsDrawer.close();
 			break;
 		case R.id.info_button_01:
-			mNewsDrawer.animateClose();
-			mInfoDrawer.animateOpen();
+			mNewsDrawer.close();
+			mInfoDrawer.open();
 			layoutswitcher.setAnimation(null);
 			layoutswitcher.setInAnimation(null);
 			layoutswitcher.setOutAnimation(null);
 			layoutswitcher.setDisplayedChild(0);
 			break;
 		case R.id.news_button_02:
-			mInfoDrawer.animateClose();
-			mNewsDrawer.animateOpen();
+			mInfoDrawer.close();
+			mNewsDrawer.open();
 			break;
 		case R.id.info_button_02:
-			mInfoDrawer.animateClose();
+			mInfoDrawer.close();
 			break;
 		case R.id.seekbar_zoom:
 			if (isSliderOpen())
