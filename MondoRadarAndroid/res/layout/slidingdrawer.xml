@@ -228,6 +228,29 @@
 				    </LinearLayout>
 				    <!-- Leigh End -->
 		    
+				    <!-- Wibke Start -->
+				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
+					  <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+				       <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_team" />
+				       <ImageView android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/radar_info_map_canada" android:layout_marginTop="10px" />
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            	    <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_previous" android:id="@+id/info_prev_00" android:onClick="onClickPerv" />
+						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
+				       </LinearLayout>
+				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="10px" android:layout_marginLeft="30px" />
+						<TextView android:text="@string/person_info_wibke" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="10px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+				       </LinearLayout>
+					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
+	            	    <ImageView android:background="@drawable/pic_wibke" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+						<TextView android:text="@string/person_description_wibke" android:layout_width="fill_parent" android:layout_height="fill_parent" android:textColor="#A6A8AB" android:layout_marginLeft="5px"  android:linksClickable="true" android:autoLink="web" />
+				       </LinearLayout>
+			          </LinearLayout>
+		             </ScrollView>
+				    </LinearLayout>
+				    <!-- Wibke End -->
+		    
 				    <!-- Matthias Start -->
 				    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
 			    	 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:scrollbars="vertical" android:layout_marginTop="80px" >
