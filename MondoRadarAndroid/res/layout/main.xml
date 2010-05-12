@@ -50,7 +50,7 @@
 	    android:layout_height="wrap_content" 
 	    android:padding="20sp" 
 	    android:progressDrawable="@drawable/seek_background"
-	    android:layout_marginTop="345px"
+	    android:layout_marginTop="260px"
 	    android:layout_marginLeft="30px"
 	    android:layout_marginRight="30px"
 	    android:thumb="@drawable/thumb"

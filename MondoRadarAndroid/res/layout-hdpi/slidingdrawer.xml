@@ -25,6 +25,15 @@
 	                android:src="@drawable/slider_head_bg"
 	        		android:layout_marginTop="0px"
 	            	/>
+			   <ImageButton
+			       	android:layout_width="wrap_content"
+			       	android:layout_height="wrap_content"
+				    android:background="@drawable/radar_info_backwards_arrow"
+				    android:id="@+id/radar_info_backwards_arrow_01"
+				    android:layout_alignParentTop="true"
+				    android:layout_marginTop="20px"
+				    android:layout_marginLeft="5px"
+			   	/>
 			    <ImageButton
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
@@ -86,6 +95,15 @@
 	                android:src="@drawable/slider_head_bg"
 	        		android:layout_marginTop="0px"
 	            	/>
+			   <ImageButton
+			       	android:layout_width="wrap_content"
+			       	android:layout_height="wrap_content"
+				    android:background="@drawable/radar_info_backwards_arrow"
+				    android:id="@+id/radar_info_backwards_arrow_02"
+				    android:layout_alignParentTop="true"
+				    android:layout_marginTop="20px"
+				    android:layout_marginLeft="5px"
+			   	/>
 			    <ImageButton
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"

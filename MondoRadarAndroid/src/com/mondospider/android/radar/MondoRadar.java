@@ -152,7 +152,9 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		findViewById(R.id.info_button_01).setOnClickListener(this);
 		findViewById(R.id.news_button_02).setOnClickListener(this);
 		findViewById(R.id.info_button_02).setOnClickListener(this);
-		
+		findViewById(R.id.radar_info_backwards_arrow_01).setOnClickListener(this);
+		findViewById(R.id.radar_info_backwards_arrow_02).setOnClickListener(this);
+
 		//Set eatart links clickable
 		((TextView)findViewById(R.id.eat_art_description)).setMovementMethod(LinkMovementMethod.getInstance());
 		
@@ -478,10 +480,12 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (mNewsDrawer.isMoving() || mNewsDrawer.isOpened()) {
 				mNewsDrawer.animateClose();
+				mSeekBar.setVisibility(View.VISIBLE);
 				return true;
 			}
 			if (mInfoDrawer.isMoving() || mInfoDrawer.isOpened()) {
 				mInfoDrawer.animateClose();
+				mSeekBar.setVisibility(View.VISIBLE);
 				return true;
 			}
 		}
@@ -568,6 +572,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			if (isSliderOpen())
 				return;
 			mNewsDrawer.open();
+			mSeekBar.setVisibility(View.GONE);
 			break;
 		case R.id.info_button:
 			if (isSliderOpen())
@@ -577,9 +582,11 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			layoutswitcher.setInAnimation(null);
 			layoutswitcher.setOutAnimation(null);
 			layoutswitcher.setDisplayedChild(0);
+			mSeekBar.setVisibility(View.GONE);
 			break;
 		case R.id.news_button_01:
 			mNewsDrawer.close();
+			mSeekBar.setVisibility(View.VISIBLE);
 			break;
 		case R.id.info_button_01:
 			mNewsDrawer.close();
@@ -588,28 +595,29 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			layoutswitcher.setInAnimation(null);
 			layoutswitcher.setOutAnimation(null);
 			layoutswitcher.setDisplayedChild(0);
+			mSeekBar.setVisibility(View.GONE);
 			break;
 		case R.id.news_button_02:
 			mInfoDrawer.close();
 			mNewsDrawer.open();
+			mSeekBar.setVisibility(View.GONE);
 			break;
 		case R.id.info_button_02:
 			mInfoDrawer.close();
+			mSeekBar.setVisibility(View.VISIBLE);
 			break;
-		case R.id.seekbar_zoom:
-			if (isSliderOpen())
-				return;
+		case R.id.radar_info_backwards_arrow_01:
+		case R.id.radar_info_backwards_arrow_02:
+			mInfoDrawer.close();
+			mNewsDrawer.close();
+			mSeekBar.setVisibility(View.VISIBLE);
 			break;
-
 		default:
 			Log.e(TAG, "No Action found for this click event :(.");
 		}
 
 	}
 	
-	
-	 
-
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
@@ -619,24 +627,27 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.startTestActivity:
-			startActivity(new Intent(this, Test.class));
-			return true; 
+//		case R.id.startTestActivity:
+//			startActivity(new Intent(this, Test.class));
+//			return true; 
 		case R.id.radarScreen:
 			if (isSliderOpen()){
 				mInfoDrawer.animateClose();
 				mInfoDrawer.animateClose();
+				mSeekBar.setVisibility(View.VISIBLE);
 			}
 			return true; 
 		case R.id.aboutScreen:
 			if (isSliderOpen())
 				mNewsDrawer.animateClose();
 			mInfoDrawer.animateOpen();
+			mSeekBar.setVisibility(View.GONE);
 			return true;
 		case R.id.tweetsScreen:
 			if (isSliderOpen())
 				mInfoDrawer.animateClose();
 			mNewsDrawer.animateOpen();
+			mSeekBar.setVisibility(View.GONE);
 			return true; 
 		}
 

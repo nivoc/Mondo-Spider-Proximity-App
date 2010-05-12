@@ -6,7 +6,7 @@
     <string name="spidertweeturl">http://twitter.com/statuses/user_timeline/mondospider.json</string>
     <string name="unconnectwarning">Please connect to internet.</string>
 
-    <string name="eat_art_description">Find out more about <a href='http://www.eatart.org'>eatART</a> and the <a href='http://www.mondospider.com'>Mondo Spider</a>\n\nTo donate to eatART and help spread energy awareness, please visit our <a href='http://www.canadahelps.org/CharityProfilePage.aspx?CharityID=s97017'>Canada Helps page</a></string>
+    <string name="eat_art_description"><a href='http://www.eatart.org'>eatART</a> is an art lab. We make audacious and improbable large-scale kinetic, robotic, and mechanized sculptures that investigate our human relationship to energy use. To learn more visit <a href='http://www.eatart.org'>eatART.org</a> or <a href='http://www.mondospider.com'>MondoSpider.com</a></string>
 
     <string name="person_info_aoi">Aoi Nakanishi, Tokyo, Japan.</string>
     <string name="person_description_aoi">Who am I?\nI didn't decide what to write...</string>
