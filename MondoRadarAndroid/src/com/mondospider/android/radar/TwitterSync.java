@@ -16,7 +16,9 @@
 
 package com.mondospider.android.radar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -25,6 +27,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.mondospider.android.lib.LibHTTP;
+import com.mondospider.android.lib.ReadableDates;
 import com.mondospider.android.lib.Util;
 
 /**
@@ -39,6 +42,9 @@ import com.mondospider.android.lib.Util;
 public class TwitterSync extends Daemon {
 	private String twitterApiUrl;
 	private ArrayList<TwitterListener> listenerCollection = new ArrayList<TwitterListener>();
+
+	SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd hh:mm:ss ZZZZ yyyy");
+	ReadableDates rd = new ReadableDates();
 
 	public TwitterSync(String twitterApiUrl) {
 		super();
@@ -65,6 +71,9 @@ public class TwitterSync extends Daemon {
 				String text = o.getString("text");
 				String createdAt = o.getString("created_at");
 
+				Date dt = format.parse(createdAt);
+				createdAt=rd.ReadbleDate(dt);
+				
 				HashMap<String, String> items = new HashMap<String, String>();
 				items.put("tweet_date", createdAt);
 				items.put("tweet_text", Util.entity2html(text));

@@ -67,6 +67,8 @@
 						android:divider="#000000"
 						android:scrollingCache="false"
 						android:smoothScrollbar="false"
+						android:scrollbarSize="30px"
+						
 						/>
         </RelativeLayout>
     </SlidingDrawer>

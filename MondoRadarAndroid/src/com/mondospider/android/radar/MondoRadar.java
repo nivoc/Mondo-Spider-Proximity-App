@@ -239,21 +239,15 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			lon = lc.getLongitude();
 		}
 
-		String[] tweet_date_dummy = new String[] { "01 Apr 2010 10:10am",
-				"02 Apr 2010 12:10pm", "03 Apr 2010 03:10pm",
-				"04 Apr 2010 04:10pm", "05 Apr 2010 07:10pm",
-				"06 Apr 2010 04:10pm" };
-		String[] tweet_text_dummy = new String[] { "This is sample tweet",
-				"Update from twitter", "List view can do many things",
-				"Android is a interesing platform",
-				"Android devices are lovely.", "The mascot is cute;)" };
+		String[] tweet_date_dummy = new String[] { "News feed from Mondo Spider" };
+		String[] tweet_text_dummy = new String[] { "Update the Mondospider news from twitter. You can see any moving." };
 		twitter_listview = (ListView) findViewById(R.id.twitter_listview);
 		// twitter_listview.setClickable(false);
 		tweet_current_list = new ArrayList<HashMap<String, String>>();
 
 		final ArrayList<HashMap<String, String>> tweet_list = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> items;
-		for (int i = 0; i <= 5; i++) {
+		for (int i = 0; i < tweet_date_dummy.length; i++) {
 			items = new HashMap<String, String>();
 			items.put("tweet_date", tweet_date_dummy[i]);
 			items.put("tweet_text", tweet_text_dummy[i]);
