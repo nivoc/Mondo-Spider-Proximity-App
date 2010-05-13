@@ -213,8 +213,8 @@
 						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
 				       </LinearLayout>
 				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
-	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
-						<TextView android:text="@string/person_info_ben" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="8px" />
+						<TextView android:text="@string/person_info_ben" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="5px" />
 				       </LinearLayout>
 					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
 	            	    <ImageView android:background="@drawable/pic_ben" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -236,8 +236,8 @@
 						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
 				       </LinearLayout>
 				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
-	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
-						<TextView android:text="@string/person_info_leigh" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="8px" />
+						<TextView android:text="@string/person_info_leigh" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="5px" />
 				       </LinearLayout>
 					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
 	            	    <ImageView android:background="@drawable/pic_leigh" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -259,8 +259,8 @@
 						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
 				       </LinearLayout>
 				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
-	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
-						<TextView android:text="@string/person_info_wibke" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="8px" />
+						<TextView android:text="@string/person_info_wibke" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="5px" />
 				       </LinearLayout>
 					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
 	            	    <ImageView android:background="@drawable/pic_wibke" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -283,8 +283,8 @@
 						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
 				       </LinearLayout>
 				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
-	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
-						<TextView android:text="@string/person_info_matthias" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="8px" />
+						<TextView android:text="@string/person_info_matthias" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="5px" />
 				       </LinearLayout>
 					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
 	            	    <ImageView android:background="@drawable/pic_matthias" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -306,8 +306,8 @@
 						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
 				       </LinearLayout>
 				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
-	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
-						<TextView android:text="@string/person_info_omri" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="8px" />
+						<TextView android:text="@string/person_info_omri" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="5px" />
 				       </LinearLayout>
 					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
 	            	    <ImageView android:background="@drawable/pic_omri" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -329,8 +329,8 @@
 						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
 				       </LinearLayout>
 				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
-	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
-						<TextView android:text="@string/person_info_prithiraj" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="8px" />
+						<TextView android:text="@string/person_info_prithiraj" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="5px" />
 				       </LinearLayout>
 					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
 	            	    <ImageView android:background="@drawable/pic_prithiraj" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -352,8 +352,8 @@
 						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
 				       </LinearLayout>
 				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
-	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
-						<TextView android:text="@string/person_info_sumit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="8px" />
+						<TextView android:text="@string/person_info_sumit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="5px" />
 				       </LinearLayout>
 					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
 	            	    <ImageView android:background="@drawable/pic_sumit" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -376,8 +376,8 @@
 						<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/radar_info_next" android:id="@+id/info_next_00" android:onClick="onClickNext" />
 				       </LinearLayout>
 				       <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" >
-	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="30px" />
-						<TextView android:text="@string/person_info_aoi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="30px" />
+	            		<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/radar_info_marked" android:layout_marginTop="25px" android:layout_marginLeft="8px" />
+						<TextView android:text="@string/person_info_aoi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="#A6A8AB" android:layout_marginTop="25px" android:layout_marginLeft="5px"  android:layout_marginRight="5px" />
 				       </LinearLayout>
 					   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="10px" android:layout_marginLeft="5px" android:layout_marginRight="5px" >
 	            	    <ImageView android:background="@drawable/pic_aoi" android:layout_width="wrap_content" android:layout_height="wrap_content" />
