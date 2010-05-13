@@ -168,7 +168,6 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		// Setup ZoomBar
 		mSeekBar.setMax(10);
 		mSeekBar.setProgress(6);
-		mSeekBar.setOnClickListener(this);
 
 		mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
