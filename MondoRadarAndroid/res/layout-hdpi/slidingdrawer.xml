@@ -7,7 +7,7 @@
         android:orientation="vertical"
         android:handle="@+id/handle"
         android:content="@+id/content"
-        android:duration="3000" 
+        android:duration="3000"  
         >
         <LinearLayout
             android:id="@id/handle"

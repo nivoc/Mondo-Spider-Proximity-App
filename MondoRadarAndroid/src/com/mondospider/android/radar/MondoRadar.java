@@ -567,20 +567,25 @@ public class MondoRadar extends MapActivity implements LocationListener,
 				return;
 			mNewsDrawer.open();
 			mSeekBar.setVisibility(View.GONE);
+			onPause();
 			break;
 		case R.id.info_button:
 			if (isSliderOpen())
 				return;
 			mInfoDrawer.open();
+			
 			layoutswitcher.setAnimation(null);
 			layoutswitcher.setInAnimation(null);
 			layoutswitcher.setOutAnimation(null);
 			layoutswitcher.setDisplayedChild(0);
 			mSeekBar.setVisibility(View.GONE);
+
+			onPause();
 			break;
 		case R.id.news_button_01:
 			mNewsDrawer.close();
 			mSeekBar.setVisibility(View.VISIBLE);
+			onResume();
 			break;
 		case R.id.info_button_01:
 			mNewsDrawer.close();
@@ -590,21 +595,28 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			layoutswitcher.setOutAnimation(null);
 			layoutswitcher.setDisplayedChild(0);
 			mSeekBar.setVisibility(View.GONE);
+
+			onPause();
 			break;
 		case R.id.news_button_02:
 			mInfoDrawer.close();
 			mNewsDrawer.open();
 			mSeekBar.setVisibility(View.GONE);
+			onPause();
 			break;
 		case R.id.info_button_02:
 			mInfoDrawer.close();
 			mSeekBar.setVisibility(View.VISIBLE);
+
+			onResume();
 			break;
 		case R.id.radar_info_backwards_arrow_01:
 		case R.id.radar_info_backwards_arrow_02:
 			mInfoDrawer.close();
 			mNewsDrawer.close();
 			mSeekBar.setVisibility(View.VISIBLE);
+
+			onResume();
 			break;
 		default:
 			Log.e(TAG, "No Action found for this click event :(.");
@@ -639,7 +651,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			return true;
 		case R.id.tweetsScreen:
 			if (isSliderOpen())
-				mInfoDrawer.animateClose();
+				mInfoDrawer.animateClose();	
 			mNewsDrawer.animateOpen();
 			mSeekBar.setVisibility(View.GONE);
 			return true; 
