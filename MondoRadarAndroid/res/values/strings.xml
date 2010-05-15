@@ -9,13 +9,13 @@
     <string name="eat_art_description"><a href='http://www.eatart.org'>eatART</a> is an art lab. We make audacious and improbable large-scale kinetic, robotic, and mechanized sculptures that investigate our human relationship to energy use. To learn more visit <a href='http://www.eatart.org'>eatART.org</a> or <a href='http://www.mondospider.com'>MondoSpider.com</a></string>
 
     <string name="person_info_aoi">Aoi Nakanishi, Tokyo, Japan.</string>
-    <string name="person_description_aoi">Who am I?\nI didn't decide what to write...</string>
+    <string name="person_description_aoi">The lead programmer.\nAoi loves android, restoring rusty car and motorcycle, and communicate with people. Fascinated with android UX \naoidroid.com</string>
 
     <string name="person_info_ben">Ben Cooper, Vancouver, British Columbia</string>
     <string name="person_description_ben">Ben has a passion for capturing images (both in photos and in videos), connecting with people and create futuristic projects. www.thecooperbros.ca</string>
 
-    <string name="person_info_leigh">Leigh, Canada</string>
-    <string name="person_description_leigh">Here is description for Leigh.</string>
+    <string name="person_info_leigh">Leigh Christie, Vancouver, British Columbia</string>
+    <string name="person_description_leigh">Leigh, eatART co-founder, is best known for his role in creating the Mondo Spider, the world’s first zero-emission walking vehicle.</string>
 
     <string name="person_info_wibke">Wibke Kreft, Vancouver, British Columbia</string>
     <string name="person_description_wibke">Communication design is her passion and profession. Her vision is to make the word prettier through expedient design. www.designlabel.de</string>
@@ -24,12 +24,12 @@
     <string name="person_description_matthias">Matthias is a html native. Currently is node.js in his focus besides android and a bunch of ajax ingredients. twitter.com/nivoc</string>
 
     <string name="person_info_omri">Omri Baumer, Givatayim, Israel</string>
-    <string name="person_description_omri">Omri is a computer hacker, android programmer, and technology buff who loves a good project. Looking for an invite the the US! http://thebaumers.com</string>
+    <string name="person_description_omri">Omri is a computer hacker, android programmer, and technology buff who loves a good project. Looking for an invite the US! thebaumers.com</string>
     
     <string name="person_info_prithiraj">Prithiraj Sengupta, Tripura, India</string>
     <string name="person_description_prithiraj">Prithiraj has interests in project planning, db designing and team coordination. He is currently focused on learning google technologies. www.whyo2.com</string>
     
-    <string name="person_info_sumit">Sumit, India</string>
-    <string name="person_description_sumit">Here is description for Sumit.</string>
+    <string name="person_info_sumit">Sumit Asok, Kerala, India</string>
+    <string name="person_description_sumit">Sumit has interest in Mobile app development, Linux and love and trust OpenSource. sumitasok.wordpress.com</string>
 
 </resources>
