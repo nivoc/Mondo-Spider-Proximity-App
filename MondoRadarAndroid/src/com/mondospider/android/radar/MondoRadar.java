@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -81,7 +82,8 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	private SlidingDrawer mInfoDrawer;
 	private ImageView mCompassImageView;
 	private TextView mDistanceTextView;
-
+	private TextView mProximityTextView;
+	
 	private static final long UPD_MIN_TIME = 1000; //every secone one update
 	private static final float UPD_MIN_DISTANCE = 3; //update only if traveled more the 3 meter
 	//private static double lat = 0;
@@ -129,6 +131,10 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	private static ListView twitter_listview;
 	private static ArrayList<HashMap<String, String>> tweet_current_list;
 
+
+	private boolean proxyimityAlertActive = false;
+	
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -169,7 +175,8 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		mNewsDrawer = (SlidingDrawer) findViewById(R.id.slidenews);
 		mInfoDrawer = (SlidingDrawer) findViewById(R.id.slideinfo);
 		mRadarSpinView = (ImageView) findViewById(R.id.radar_spin);
-		mDistanceTextView = (TextView) findViewById(R.id.dis_m);
+		mDistanceTextView = (TextView) findViewById(R.id.m_dis);
+		mProximityTextView = (TextView) findViewById(R.id.proximity_textview);
 		mSeekBar = (SeekBar) findViewById(R.id.seekbar_zoom);
 
 		// Setup ZoomBar
@@ -432,7 +439,64 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		
 		float dis = mLastUserloc.distanceTo(mLastSpiderLoc);
 		int meter = (int) Math.round(dis);
-		mDistanceTextView.setText("distance :: :: :: :: :: :: :: :: :: " + String.valueOf(meter) + " m");
+		mDistanceTextView.setText("distance   :: :: :: ::   " + String.valueOf(meter) + " m");
+		//mDistanceTextView.setBackgroundColor(Color.RED);
+		
+		
+		//Flash proximity alert if less than 50m
+		if (meter < 50 && proxyimityAlertActive == false) {
+			new Thread() {
+				int colorState = 0;
+				@Override
+				public void run() {
+					proxyimityAlertActive=true;
+					Runnable flashAni = new Runnable() {
+						
+						@Override
+						public void run() {
+							mProximityTextView.setText("Proximity Alert");
+								
+							if (colorState == 0) {
+								//mProximityTextView.setBackgroundColor(Color.RED);
+								mProximityTextView.setTextColor(Color.BLACK);
+								Log.d(TAG, "RED");
+								colorState = 1;
+							} else {
+								//mProximityTextView.setBackgroundColor(Color.BLACK);
+								mProximityTextView.setTextColor(Color.RED);
+								colorState=0;
+								Log.d(TAG, "BLACK");
+							}
+						}
+					};
+
+					while (proxyimityAlertActive == true) {
+						runOnUiThread(flashAni);
+
+						try {
+							Thread.sleep(250);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					
+					//Cleanup
+					runOnUiThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							mProximityTextView.setText("");
+							mProximityTextView.setBackgroundColor(Color.TRANSPARENT);
+							mProximityTextView.setTextColor(Color.TRANSPARENT);
+						}
+					});
+					
+				}
+			}.start();
+		}
+		
+		
+		
 		
 	}
 	
@@ -527,10 +591,11 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			
 			// Start Animation
 			mMapview.startAnimation(mapRotateAni);
+			mMapview.setSatellite(true);
 			mCompassImageView.startAnimation(arrowRotateAni);
 			//rotate.setInterpolator(new AccelerateDecelerateInterpolator());
 			
-
+  
 		} catch (NullPointerException e) {
 			Log.e("NullPointerException", e.toString());
 			e.printStackTrace();

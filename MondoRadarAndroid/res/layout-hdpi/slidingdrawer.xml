@@ -154,11 +154,13 @@
 					                android:layout_width="fill_parent"
 					                android:layout_height="wrap_content"
 					                android:text="@string/eat_art_description"
+					                android:textColor="@color/text_grey"
+					                android:textColorHighlight="@color/text_grey"
+					                android:textColorHint="@color/red"
 					                android:id="@+id/eat_art_description"
-								    android:textColor="#A6A8AB"
 								    android:textSize="15dip"
 								    android:layout_marginTop="25px"
-						    		android:layout_marginLeft="30px"
+						    		android:layout_marginLeft="20px"
 					                />
 						        <ImageView
 					                android:layout_width="fill_parent"
@@ -182,6 +184,7 @@
 									android:layout_width="fill_parent"
 									android:layout_height="wrap_content"
 									android:orientation="horizontal"
+									android:layout_marginLeft="5dip"
 									>
 	            				    <ImageButton
 								        android:layout_width="wrap_content"
