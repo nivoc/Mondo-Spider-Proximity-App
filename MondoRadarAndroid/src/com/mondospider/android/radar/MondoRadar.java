@@ -26,6 +26,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -81,38 +82,31 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	private ImageView mCompassImageView;
 	private TextView mDistanceTextView;
 
-	private static final long UPD_MIN_TIME = 0;
-	private static final float UPD_MIN_DISTANCE = 0;
-	private static double lat = 0;
-	private static double lon = 0;
-	private static double dis = 0;
-	private static double bea = 0;
-	private static double north = 0;
-	private static float northFloat = 0;
-	private static float lastNorth = 0;
-	private static float lastDegree = 0;
-	private static float beaFloat = 0;
-	private static LocationManager locationmanager;
-	private static Location mSpiderLoc = new Location("mondo_spider");
+	private static final long UPD_MIN_TIME = 1000; //every secone one update
+	private static final float UPD_MIN_DISTANCE = 3; //update only if traveled more the 3 meter
+	//private static double lat = 0;
+	//private static double lon = 0;
+	private static int phoneBearing = 0;
+	private float currArrowDegree = 0;
+	private float currMapDegree = 0;
+	private int userToSpiderBearing = 0;
+	private static LocationManager locationManager;
+	private static Location mLastSpiderLoc = new Location("mondo_spider");
 	private static Location mLastUserloc;
 
-	private static float[] mValues;
 
-	private static RotateAnimation rotate;
-	private static RotateAnimation rotate_map;
 
 	private static SensorManager sensormanager;
 	private static Sensor sensor;
 
 	private static MapController mapctrl;
-	private static MapView mapview;
+	private static MapView mMapview;
 
 	private static SpiderSync spiderSync;
 	private static TwitterSync twitterSync;
 
 	private static SpiderItemizedOverlay spiderOverlay;
 
-	private static GeoPoint geoPoint;
 	private static GeoPoint mSpiderPoint;
 	final static Handler thread_handler = new Handler();
 
@@ -121,6 +115,16 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	private Animation out_from_left;
 	private Animation in_from_right;
 	private Animation out_from_right;
+
+	private long lastRotate;
+
+	private String mLocationProvider;
+
+	private int mLastPhoneAzimuth;
+
+	private int duration;
+
+	private long mAnimationDuration = 2000;
 
 	private static ListView twitter_listview;
 	private static ArrayList<HashMap<String, String>> tweet_current_list;
@@ -208,39 +212,45 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 		mRadarSpinView.startAnimation(set);
 
-		mapview = (MapView) findViewById(R.id.mapview);
+		mMapview = (MapView) findViewById(R.id.mapview);
 		Drawable spider_point = getResources().getDrawable(
 				R.drawable.spider_point_00);
 
 		spiderOverlay = new SpiderItemizedOverlay(spider_point);
 
-		MondoRadar.mapctrl = mapview.getController();
+		MondoRadar.mapctrl = mMapview.getController();
 		MondoRadar.mapctrl.setZoom(16);
 
 		sensormanager = (SensorManager) getSystemService("sensor");
 		sensor = sensormanager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
-		MondoRadar.mapview.setSatellite(false);
+		MondoRadar.mMapview.setSatellite(false);
 		mCompassImageView = (ImageView) findViewById(R.id.compass);
 
 
-		locationmanager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		Location lc = locationmanager
-				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		// Fist best location provider on this machine
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		Criteria criteria = new Criteria(); 
+		criteria.setAccuracy(Criteria.ACCURACY_FINE); 
+		criteria.setAltitudeRequired(false); 
+		criteria.setBearingRequired(true);
+		criteria.setPowerRequirement(Criteria.POWER_HIGH);
+		mLocationProvider = locationManager.getBestProvider(criteria, true);
+		
+//		should be necessare anymore b/c of criteria based slection
+//		if (lc == null) {
+//			lc = locationManager
+//					.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//		}
 
-		if (lc == null) {
-			lc = locationmanager
-					.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		}
+		//Try fast update with last known location until a new location found
+		Location lc = locationManager.getLastKnownLocation(mLocationProvider);
 		if (lc != null) {
 			onLocationChanged(lc);
 		}
 
-		if (lc != null) {
-			lat = lc.getLatitude();
-			lon = lc.getLongitude();
-		}
-
+		
+		
 		String[] tweet_date_dummy = new String[] { "News feed from Mondo Spider" };
 		String[] tweet_text_dummy = new String[] { "Update the Mondospider news from twitter. You can see any moving." };
 		twitter_listview = (ListView) findViewById(R.id.twitter_listview);
@@ -290,7 +300,12 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	@Override
 	protected void onPause() {
-		destroyListeners();
+
+		if (sensormanager != null)
+			sensormanager.unregisterListener(this);
+		if (locationManager != null)
+			locationManager.removeUpdates(this);
+		
 		spiderSync.waitAfterCurrCall();
 		twitterSync.waitAfterCurrCall();
 
@@ -299,8 +314,9 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	@Override
 	protected void onResume() {
-		sensormanager.registerListener(this, sensor, 1);
-		locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+		sensormanager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL );
+		
+		locationManager.requestLocationUpdates(mLocationProvider,
 				UPD_MIN_TIME, UPD_MIN_DISTANCE, this);
 		//MondoRadar.thread();
 
@@ -351,47 +367,81 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		public void run() {
 			if (spiderOverlay != null)
 				spiderOverlay.clearPoint();
-			mapview.getOverlays().add(spiderOverlay);
+			mMapview.getOverlays().add(spiderOverlay);
 			spiderOverlay.addPoint(MondoRadar.mSpiderPoint);
-			MondoRadar.mapctrl.setCenter(MondoRadar.geoPoint);
 
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					thread_handler.post(thread_Finished);
-				}
-			}).start();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			thread_handler.post(thread_Finished);
+			
+			
 		}
 	};
 
-	synchronized public void destroyListeners() {
-		if (sensormanager != null)
-			sensormanager.unregisterListener(this);
-		if (locationmanager != null)
-			locationmanager.removeUpdates(this);
-	}
 
 	@Override
 	public void onLocationChanged(Location location) {
+
+		Log.d(TAG, "New User Location:" + location);
+		
 		mLastUserloc = location;
-		lat = location.getLatitude();
-		lon = location.getLongitude();
-		north = location.getBearing();
-		northFloat = Float.valueOf(String.valueOf(north)).floatValue();
-		if (mSpiderLoc != null) {
-			dis = location.distanceTo(mSpiderLoc);
-			bea = Math.round(location.bearingTo(mSpiderLoc));
-			beaFloat = Float.valueOf(String.valueOf(bea)).floatValue();
-			// if (Config.LOGD) Log.d(TAG, String.valueOf( bea ) );
-			// if (Config.LOGD) Log.d(TAG, String.valueOf( bea_float ) );
-		}
-		changeDirection();
+
+		onUserOrSpiderLocationChanged();		
+		
+
+		phoneBearing = (int) mLastUserloc.getBearing();
+
+		mapctrl.setCenter(
+				new GeoPoint(
+							(int) (location.getLatitude() * 1E6),
+							(int) (location.getLongitude() * 1E6)
+							)
+				);
 
 	}
+
+
+	@Override
+	synchronized public void onSpiderUpdate(double latitude, double longitude) {
+		mLastSpiderLoc = new Location("mondo_spider");
+		mLastSpiderLoc.setLatitude(latitude);
+		mLastSpiderLoc.setLongitude(longitude);
+
+		
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				onUserOrSpiderLocationChanged();
+			}
+		});
+		
+		mSpiderPoint = new GeoPoint((int) (mLastSpiderLoc.getLatitude() * 1E6),
+				(int) (mLastSpiderLoc.getLongitude() * 1E6));
+		
+	
+	}
+
+	
+	synchronized public void onUserOrSpiderLocationChanged() {
+		if (mLastUserloc != null && mLastSpiderLoc != null) {
+			userToSpiderBearing = (int) mLastUserloc.bearingTo(mLastSpiderLoc);
+		}
+		
+		float dis = mLastUserloc.distanceTo(mLastSpiderLoc);
+		int meter = (int) Math.round(dis);
+		mDistanceTextView.setText("distance :: :: :: :: :: :: :: :: :: " + String.valueOf(meter) + " m");
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public void onProviderDisabled(String provider) {
@@ -405,58 +455,82 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 
-	synchronized public void changeDirection() {
-		if (mValues == null)
+	
+	
+	public void changeDirection(int phoneAzimuth) {
+		//Only update if the animation is finished
+		if ((System.currentTimeMillis() - lastRotate)<mAnimationDuration) {
 			return;
+		}
 
+		Log.d(TAG, "rotate " + System.currentTimeMillis());
+		lastRotate =  System.currentTimeMillis();
+		
+		
 		try {
-			MondoRadar.geoPoint = new GeoPoint((int) (MondoRadar.lat * 1E6),
-					(int) (MondoRadar.lon * 1E6));
+//	
+//			if (phoneAzimuth >= 360)
+//				phoneAzimuth -= 360;
+//			else if (phoneAzimuth < 0)
+//				phoneAzimuth += 360;
 
-			int l = Math.round(mValues[0]);
-			int l2 = Math.round(beaFloat);
-			int l3 = Math.round(northFloat);
-			if (l >= 360)
-				l -= 360;
-			else if (l < 0)
-				l += 360;
+			int newArrowDegree = 360 - phoneAzimuth + userToSpiderBearing;
+//			if (newArrowDegree >= 360)
+//				newArrowDegree -= 360;
+//			else if (newArrowDegree < 0)
+//				newArrowDegree += 360;
 
-			int i1 = 360 - l + l2;
-			if (i1 >= 360)
-				i1 -= 360;
-			else if (i1 < 0)
-				i1 += 360;
+			int newMapDegree = 360 - phoneAzimuth + phoneBearing;
+//			if (newMapDegree >= 360)
+//				newMapDegree -= 360;
+//			else if (newMapDegree < 0)
+//				newMapDegree += 360;
+//	
 
-			int i2 = 360 - l + l3;
-			if (i2 >= 360)
-				i2 -= 360;
-			else if (i2 < 0)
-				i2 += 360;
+			newArrowDegree = (int) shortestWayToNewDegree(currArrowDegree, newArrowDegree);
+			newMapDegree = (int) shortestWayToNewDegree(currMapDegree, newMapDegree);
+			
+			int diff = (int) (currArrowDegree - newArrowDegree);
+			diff = Math.abs(diff);
+			if ( diff<1 ){
+				Log.d(TAG, "change to small");
+				//lastRotate = -1;
+				//return;
+				newArrowDegree += 3;
+				newMapDegree += 3;
+			}
+			
 
-			// Map
-			MondoRadar.rotate_map = new RotateAnimation(lastNorth, i2,
-					MondoRadar.mapview.getMeasuredWidth() / 2,
-					MondoRadar.mapview.getMeasuredHeight() / 2);
-			rotate_map.setDuration(3000);
-			rotate_map.setRepeatCount(1);
-			MondoRadar.mapview.startAnimation(rotate_map);
+			Log.d(TAG, "ANIMATE ARROW FROM OLD "+ currArrowDegree + "to new" + newArrowDegree);
+			Log.d(TAG, "ANIMATE MAP FROM OLD "+ currMapDegree + "to new" + newMapDegree);
+			// Setup Map Animation
+			RotateAnimation mapRotateAni = 
+				new RotateAnimation(currMapDegree, newMapDegree,
+									RotateAnimation.RELATIVE_TO_SELF,0.5f,
+									RotateAnimation.RELATIVE_TO_SELF,0.5f);
+			mapRotateAni.setFillAfter(true); //keep view in this position
+			
+			mapRotateAni.setDuration(mAnimationDuration);
+			currMapDegree = newMapDegree;
+			
+			
+			// Setup Arrow Animation
+			RotateAnimation arrowRotateAni = 
+				new RotateAnimation(currArrowDegree, newArrowDegree,
+									RotateAnimation.RELATIVE_TO_SELF,0.5f, 
+									RotateAnimation.RELATIVE_TO_SELF,0.5f);
+			arrowRotateAni.setFillAfter(true); //keep view in this position
+			arrowRotateAni.setDuration(mAnimationDuration);
+			
+			currArrowDegree = newArrowDegree;
+			
+			
+			// Start Animation
+			mMapview.startAnimation(mapRotateAni);
+			mCompassImageView.startAnimation(arrowRotateAni);
+			//rotate.setInterpolator(new AccelerateDecelerateInterpolator());
+			
 
-			// Arrow
-			MondoRadar.rotate = new RotateAnimation(lastDegree, i1,
-					mCompassImageView.getMeasuredWidth() / 2, mCompassImageView
-							.getMeasuredHeight() / 2);
-			rotate.setDuration(5000);
-			rotate.setInterpolator(new AccelerateDecelerateInterpolator());
-			rotate.setRepeatCount(1);
-
-			mCompassImageView.startAnimation(rotate);
-
-			lastDegree = i1;
-			lastNorth = i2;
-
-			int meter = (int) Math.round(dis);
-
-			mDistanceTextView.setText("distance :: :: :: :: :: :: :: :: :: " + String.valueOf(meter) + " m");
 		} catch (NullPointerException e) {
 			Log.e("NullPointerException", e.toString());
 			e.printStackTrace();
@@ -464,6 +538,22 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			Log.e("Exception", e.toString());
 			e.printStackTrace();
 		}
+		Log.d(TAG, "rotate fisnished" + System.currentTimeMillis());
+		
+	}
+
+	private float shortestWayToNewDegree(float currDegree,
+			float newDegree) {
+		
+		float difference = newDegree-currDegree;
+		if (difference>160) {
+			newDegree -= 360;
+		} else if (difference<-160) {
+			newDegree += 360;
+			
+		}
+		
+		return newDegree;
 	}
 
 	@Override
@@ -521,20 +611,6 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	}
 
 	@Override
-	synchronized public void onSpiderUpdate(double latitude, double longitude) {
-		mSpiderLoc = new Location("mondo_spider");
-		mSpiderLoc.setLatitude(latitude);
-		mSpiderLoc.setLongitude(longitude);
-		if (mLastUserloc != null && mSpiderLoc != null) {
-			dis = mLastUserloc.distanceTo(mSpiderLoc);
-			bea = Math.round(mLastUserloc.bearingTo(mSpiderLoc));
-			beaFloat = Float.valueOf(String.valueOf(bea)).floatValue();
-		}
-		mSpiderPoint = new GeoPoint((int) (mSpiderLoc.getLatitude() * 1E6),
-				(int) (mSpiderLoc.getLongitude() * 1E6));
-	}
-
-	@Override
 	public void onTwitterUpdate(ArrayList<HashMap<String, String>> tweetList) {
 		MondoRadar.tweet_current_list = tweetList;
 		
@@ -557,8 +633,9 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		mValues = event.values;
-		changeDirection();
+		 
+		
+		changeDirection(Math.round( event.values[0] ));
 	}
 
 	@Override
@@ -661,6 +738,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 		return false; 
 	}
+	
 	
 	
 }

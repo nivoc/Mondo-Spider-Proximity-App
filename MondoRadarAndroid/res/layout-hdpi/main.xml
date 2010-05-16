@@ -66,8 +66,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:background="@drawable/info_button"
-	    android:id="@+id/info_button"
+	    android:background="@drawable/info_button"  android:id="@+id/info_button"
 	    android:layout_alignParentTop="true"
 	    android:layout_marginTop="590px"
 	    android:layout_marginLeft="330px"
