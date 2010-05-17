@@ -41,7 +41,7 @@
 				    android:id="@+id/news_button_01"
 				    android:layout_alignParentTop="true"
 				    android:layout_marginTop="0px"
-				    android:layout_marginLeft="220px"
+				    android:layout_marginLeft="165dip"
 			    	/>
 			    <ImageButton
 			        android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
 				    android:id="@+id/info_button_01"
 				    android:layout_alignParentTop="true"
 				    android:layout_marginTop="0px"
-				    android:layout_marginLeft="330px"
+				    android:layout_marginLeft="238dip"
 			    	/>
 			    	<!-- Twitter Staff here -->
 			    	<ListView
@@ -113,7 +113,7 @@
 				    android:id="@+id/news_button_02"
 				    android:layout_alignParentTop="true"
 				    android:layout_marginTop="0px"
-				    android:layout_marginLeft="220px"
+				    android:layout_marginLeft="165dip"
 			    	/>
 			    <ImageButton
 			        android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
 				    android:id="@+id/info_button_02"
 				    android:layout_alignParentTop="true"
 				    android:layout_marginTop="0px"
-				    android:layout_marginLeft="330px"
+				    android:layout_marginLeft="238dip"
 			    	/>
 			   	<ViewFlipper
 				    android:layout_margin="6dip"

@@ -64,7 +64,7 @@
 	    android:id="@+id/news_button"
 	    android:layout_alignParentTop="true"
 	    android:layout_marginTop="590px"
-	    android:layout_marginLeft="220px"
+	    android:layout_marginLeft="165dip"
     	/>
     <ImageButton
         android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
 	    android:background="@drawable/info_button"  android:id="@+id/info_button"
 	    android:layout_alignParentTop="true"
 	    android:layout_marginTop="590px"
-	    android:layout_marginLeft="330px"
+	    android:layout_marginLeft="238dip"
     	/>
     	
 	<TextView  
@@ -84,9 +84,8 @@
    		android:textColor="@color/text_grey"
    		android:gravity="center_horizontal"
    		android:textSize="15dip"
-   		android:background="@color/black"
     	android:id="@+id/status_textview"
-	    android:text="status   :: :: :: ::   sleeping"
+	    android:text="status     :: :: :: ::     sleeping"
 	    />
 	 <TextView  
 	    android:layout_height="wrap_content" 
@@ -95,10 +94,9 @@
    		android:layout_width="fill_parent"
    		android:gravity="center_horizontal"
    		android:textSize="15dip"
-   		android:background="@color/black"
    		android:textColor="@color/text_grey"
     	android:id="@+id/m_dis"
-	    android:text="distance   :: :: :: ::   unkown"
+	    android:text="distance     :: :: :: ::     unkown/nactive spider hunter   :: ::  6"
 	    />
 	<TextView  
 	    android:layout_height="wrap_content" 

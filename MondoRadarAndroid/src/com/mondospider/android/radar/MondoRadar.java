@@ -439,7 +439,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		
 		float dis = mLastUserloc.distanceTo(mLastSpiderLoc);
 		int meter = (int) Math.round(dis);
-		mDistanceTextView.setText("distance   :: :: :: ::   " + String.valueOf(meter) + " m");
+		mDistanceTextView.setText("distance     :: :: :: ::     " + String.valueOf(meter) + " m");
 		//mDistanceTextView.setBackgroundColor(Color.RED);
 		
 		
