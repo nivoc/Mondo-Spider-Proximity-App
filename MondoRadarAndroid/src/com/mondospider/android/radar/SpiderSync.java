@@ -61,9 +61,10 @@ public class SpiderSync extends Daemon {
 
 			final double latitude = jsonObj.getDouble("latitude");
 			final double longitude = jsonObj.getDouble("longitude");
+			final String status = jsonObj.getString("status");
 			int nextSyncIn2 = jsonObj.getInt("next_update_in");
 			nextSyncIn = nextSyncIn2;
-			fireUpdate(latitude, longitude);
+			fireUpdate(latitude, longitude, status);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -72,9 +73,9 @@ public class SpiderSync extends Daemon {
 		}
 	}
 
-	void fireUpdate(double latitude, double longitude) {
+	void fireUpdate(double latitude, double longitude, String status) {
 		for (SpiderListener listener : listenerCollection) {
-			listener.onSpiderUpdate(latitude, longitude);
+			listener.onSpiderUpdate(latitude, longitude, status);
 		}
 	}
 
@@ -83,6 +84,6 @@ public class SpiderSync extends Daemon {
 	}
 
 	interface SpiderListener {
-		void onSpiderUpdate(double latitude, double longitude);
+		void onSpiderUpdate(double latitude, double longitude, String status);
 	}
 }

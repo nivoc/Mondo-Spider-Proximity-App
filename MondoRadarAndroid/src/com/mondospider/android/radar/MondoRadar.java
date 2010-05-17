@@ -82,6 +82,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 	private SlidingDrawer mInfoDrawer;
 	private ImageView mCompassImageView;
 	private TextView mDistanceTextView;
+	private TextView mStatusTextView;
 	private TextView mProximityTextView;
 	
 	private static final long UPD_MIN_TIME = 1000; //every secone one update
@@ -176,6 +177,8 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		mInfoDrawer = (SlidingDrawer) findViewById(R.id.slideinfo);
 		mRadarSpinView = (ImageView) findViewById(R.id.radar_spin);
 		mDistanceTextView = (TextView) findViewById(R.id.m_dis);
+		mStatusTextView = (TextView) findViewById(R.id.status_textview);
+
 		mProximityTextView = (TextView) findViewById(R.id.proximity_textview);
 		mSeekBar = (SeekBar) findViewById(R.id.seekbar_zoom);
 
@@ -412,15 +415,16 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 
 	@Override
-	synchronized public void onSpiderUpdate(double latitude, double longitude) {
+	synchronized public void onSpiderUpdate(double latitude, double longitude, final String status) {
 		mLastSpiderLoc = new Location("mondo_spider");
 		mLastSpiderLoc.setLatitude(latitude);
 		mLastSpiderLoc.setLongitude(longitude);
-
+		
 		
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+				mStatusTextView.setText(status);
 				onUserOrSpiderLocationChanged();
 			}
 		});
@@ -591,7 +595,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			
 			// Start Animation
 			mMapview.startAnimation(mapRotateAni);
-			mMapview.setSatellite(true);
+			mMapview.setSatellite(false);
 			mCompassImageView.startAnimation(arrowRotateAni);
 			//rotate.setInterpolator(new AccelerateDecelerateInterpolator());
 			
@@ -803,6 +807,9 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 		return false; 
 	}
+
+	
+
 	
 	
 	

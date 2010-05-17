@@ -103,9 +103,12 @@ public class SetSpiderLocation extends HttpServlet {
 
 				return;
 			}
- 
+
+			String status = req.getParameter("status");
+			
+			
 			// Update Position
-			updatePosition("spider", lat, lng);
+			updatePosition("spider", lat, lng, status);
 
 			responseResp.put("result", "success");
 			responseResp.put("updated_on", new Date());
@@ -130,10 +133,10 @@ public class SetSpiderLocation extends HttpServlet {
 	}
 
 	public void updatePosition(String username, double latitude,
-			double longitude) {
+			double longitude, String status) {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Location l = new Location(username, latitude, longitude);
+		Location l = new Location(username, latitude, longitude, status);
 
 		try {
 			pm.makePersistent(l);

@@ -55,10 +55,11 @@ public class Location implements Serializable{
 	private Location() {
 	}  
     
-    public Location(String username, double latitude,  double longitude) {
+    public Location(String username, double latitude,  double longitude, String status) {
     	this.setUsername(username);
     	this.setLatetude(latitude);
     	this.setLongitude(longitude);
+    	this.setStatus(status);
     	updateDateModified();
 	}
     
@@ -67,16 +68,15 @@ public class Location implements Serializable{
     private String username;
 
 	@Persistent
-    private String moritz = "asd";
-	
-	
-	@Persistent
     private double longitude;
 
     @Persistent
     private double latitude;
     
     @Persistent
+    private String status;
+    
+	@Persistent
     private Date dateModified;
 
     
@@ -118,7 +118,16 @@ public class Location implements Serializable{
 	private void updateDateModified() {
 		dateModified = new Date();
 	}
-    
+
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 
 	
 }
