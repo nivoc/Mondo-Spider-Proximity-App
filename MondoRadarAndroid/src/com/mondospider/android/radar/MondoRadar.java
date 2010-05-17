@@ -394,7 +394,9 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	@Override
 	public void onLocationChanged(Location location) {
-
+		if  ( location == null ) {
+			Log.i(TAG, "Attribute location was null");
+		}
 		Log.d(TAG, "New User Location:" + location);
 		
 		mLastUserloc = location;
@@ -437,10 +439,11 @@ public class MondoRadar extends MapActivity implements LocationListener,
 
 	
 	synchronized public void onUserOrSpiderLocationChanged() {
-		if (mLastUserloc != null && mLastSpiderLoc != null) {
-			userToSpiderBearing = (int) mLastUserloc.bearingTo(mLastSpiderLoc);
+		if (mLastUserloc == null || mLastSpiderLoc == null) {
+			return;
 		}
 		
+		userToSpiderBearing = (int) mLastUserloc.bearingTo(mLastSpiderLoc);
 		float dis = mLastUserloc.distanceTo(mLastSpiderLoc);
 		int meter = (int) Math.round(dis);
 		mDistanceTextView.setText("distance     :: :: :: ::     " + String.valueOf(meter) + " m");
