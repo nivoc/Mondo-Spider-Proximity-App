@@ -24,18 +24,22 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.net.URL;
-import java.net.URLConnection;
-import android.util.Log;
 
+/**
+ * 
+ * @author Omri, uploaded by nivoc
+ *
+ */
 public class spider extends Activity implements LocationListener{
 
+	public static final String TAG = "MondoRadarAdmin";
 	public static final String PREFS_NAME = "GlobalPrefs";
     private static final String ENCODING = "UTF-8";
     private static String mSecretKey;
@@ -44,7 +48,7 @@ public class spider extends Activity implements LocationListener{
 	Button btn1;
 	TextView text1;
 	LocationManager locManager;
-	String best;
+	String mLocationProvider;
 	Location oldLocation;
 	
     /** Called when the activity is first created. */
@@ -65,8 +69,15 @@ public class spider extends Activity implements LocationListener{
         text1 = (TextView)findViewById(R.id.dest);
         
         locManager = (LocationManager)getSystemService(LOCATION_SERVICE);
-        best = locManager.getBestProvider(new Criteria(), true);
-        oldLocation = locManager.getLastKnownLocation(best);
+        
+		Criteria criteria = new Criteria(); 
+		criteria.setAccuracy(Criteria.ACCURACY_FINE); 
+		criteria.setAltitudeRequired(false); 
+		criteria.setBearingRequired(true);
+		criteria.setPowerRequirement(Criteria.POWER_HIGH);
+		mLocationProvider = locManager.getBestProvider(criteria, true);
+		
+        oldLocation = locManager.getLastKnownLocation(mLocationProvider);
         text1.setText("Last Location: lat: " + oldLocation.getLatitude() + "lng: " + oldLocation.getLongitude());
     }
     
@@ -109,8 +120,8 @@ public class spider extends Activity implements LocationListener{
     protected void onResume() {
     	super.onResume();
     	
-    	final int REFRESH_RATE = 3000;
-    	locManager.requestLocationUpdates(best, REFRESH_RATE, 0, this);
+    	final int REFRESH_RATE = 2000; //30sec
+    	locManager.requestLocationUpdates(mLocationProvider, REFRESH_RATE, 2, this);
     }
 
     private void updateLocation(Location location) {
@@ -120,7 +131,7 @@ public class spider extends Activity implements LocationListener{
     	
     	sendLocation(oldLocation);
     	
-    	text1.setText("Last Location: lat: " + oldLocation.getLatitude() + "lng: " + oldLocation.getLongitude());
+    	text1.setText("Last Location: lat: " + oldLocation.getLatitude() + "lng: " + oldLocation.getLongitude() + " systemtime" + System.currentTimeMillis());
     }
     
     private void sendLocation(Location location)
@@ -130,11 +141,19 @@ public class spider extends Activity implements LocationListener{
     	url.append(location.getLatitude());
     	url.append("&lng=" + location.getLongitude());
     	Log.d("MondoRadarAdmin", " Send update: "+url);
-    	try {
-    		URLConnection conn = (new URL(url.toString())).openConnection();
-    	} catch (Exception e) {
-    		Log.e("sendLocation", e.getMessage());
-    	}
+    	
+    	final String reqUrl = url.toString();
+    	new Thread () {
+    		public void run() {
+    			String responseString = LibHTTP.get(reqUrl);
+    			Log.i(TAG, responseString);
+    		}
+    	}.start();
+//    	try {
+//    		URLConnection conn = (new URL(url.toString())).openConnection();
+//    	} catch (Exception e) {
+//    		Log.e("sendLocation", e.getMessage());
+//    	}
     }
     
 	public void onLocationChanged(Location location) {

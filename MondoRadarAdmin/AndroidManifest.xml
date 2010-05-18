@@ -15,7 +15,7 @@
         <activity android:name=".AskForSecretKey" android:label="Spider Admin" android:theme="@android:style/Theme.Dialog">
 		</activity>
     </application>
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="3" />
 
 
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>

@@ -449,6 +449,9 @@ public class MondoRadar extends MapActivity implements LocationListener,
 		mDistanceTextView.setText("distance     :: :: :: ::     " + String.valueOf(meter) + " m");
 		//mDistanceTextView.setBackgroundColor(Color.RED);
 		
+		if (meter > 50) {
+			proxyimityAlertActive=false;
+		}
 		
 		//Flash proximity alert if less than 50m
 		if (meter < 50 && proxyimityAlertActive == false) {
@@ -500,7 +503,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 					
 				}
 			}.start();
-		}
+		} 
 		
 		
 		
@@ -598,7 +601,7 @@ public class MondoRadar extends MapActivity implements LocationListener,
 			
 			// Start Animation
 			mMapview.startAnimation(mapRotateAni);
-			mMapview.setSatellite(false);
+			mMapview.setSatellite(true);
 			mCompassImageView.startAnimation(arrowRotateAni);
 			//rotate.setInterpolator(new AccelerateDecelerateInterpolator());
 			
