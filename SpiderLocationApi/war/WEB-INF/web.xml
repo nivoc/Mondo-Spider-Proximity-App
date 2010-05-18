@@ -36,6 +36,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	
+	<servlet>
+		<servlet-name>SetSpiderStatus</servlet-name>
+		<servlet-class>com.mondospider.spiderlocationapi.SetSpiderStatus</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SetSpiderStatus</servlet-name>
+		<url-pattern>/spiderlocation/setStatus</url-pattern>
+	</servlet-mapping>
+	
+	
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

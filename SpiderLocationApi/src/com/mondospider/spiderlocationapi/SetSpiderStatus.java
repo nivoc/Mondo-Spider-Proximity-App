@@ -21,6 +21,7 @@ import java.util.Date;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
+import javax.naming.ConfigurationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +31,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 @SuppressWarnings("serial")
-public class SetSpiderLocation extends HttpServlet {
+public class SetSpiderStatus extends HttpServlet {
 	private static String secretKey = null;
 
 	final JSONObject responseResp = new JSONObject();
 
-	public SetSpiderLocation() {
+	public SetSpiderStatus() {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
@@ -64,7 +65,7 @@ public class SetSpiderLocation extends HttpServlet {
 //			return;
 //		}
 		
-		if (req.getParameter("lat") == null || req.getParameter("lng") == null || req.getParameter("pwd")==null) {
+		if (req.getParameter("status")==null) {
 			//Display Error&Help
 			try {
 				req.getRequestDispatcher("/index.html").forward(req,resp);
@@ -87,28 +88,12 @@ public class SetSpiderLocation extends HttpServlet {
 
 		try {
 
-			// Get lat/lng Parameters and validate
-			double lat = 0;
-			double lng = 0;
-
-			try {
-				lat = Double.parseDouble(req.getParameter("lat"));
-				lng = Double.parseDouble(req.getParameter("lng"));
-			} catch (NumberFormatException e) {
-				responseResp.put("result", "error");
-				responseResp.put("reason",
-						"Parameter lat or log missing or invalid");
-
-				resp.getWriter().println(responseResp.toString(2));
-
-				return;
-			}
-
+			
 			String status = req.getParameter("status");
 			
 			
 			// Update Position
-			updatePosition("spider", lat, lng, status);
+			updateStatus(status);
 
 			responseResp.put("result", "success");
 			responseResp.put("updated_on", new Date());
@@ -132,20 +117,16 @@ public class SetSpiderLocation extends HttpServlet {
 		return key.equals(secretKey);
 	}
 
-	public void updatePosition(String username, double latitude,
-			double longitude, String status) {
+	public void updateStatus(String status)  {
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
         Location l = pm.getObjectById(Location.class, "spider");
-        
-        if (l == null) {
-        	l = new Location(username, latitude, longitude, status);
+       
+        if (l==null){
+        	 throw new IllegalStateException("spider-object not found");
         }
         
-        
-        l.setLatetude(latitude);
-        l.setLongitude(longitude);
         if (status != null && status.length() > 0) {
         	l.setStatus(status);
         }
