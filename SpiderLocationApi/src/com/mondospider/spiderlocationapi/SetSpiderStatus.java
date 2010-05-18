@@ -59,11 +59,11 @@ public class SetSpiderStatus extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
-//		if(!req.isSecure()) {
-//			resp.getWriter().println(
-//			"{\"result:error\", \"reason\":\"SSL secured connection required for updates.\"}");
-//			return;
-//		}
+		if(!req.isSecure()) {
+			resp.getWriter().println(
+			"{\"result:error\", \"reason\":\"SSL secured connection required for updates.\"}");
+			return;
+		}
 		
 		if (req.getParameter("status")==null) {
 			//Display Error&Help
