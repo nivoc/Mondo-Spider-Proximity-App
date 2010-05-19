@@ -49,11 +49,11 @@
 	    android:layout_height="wrap_content" 
 	    android:padding="20sp" 
 	    android:progressDrawable="@drawable/seek_background"
-	    android:layout_marginBottom="130dip"
+	    android:layout_marginTop="410px"
 	    android:layout_marginLeft="30px"
 	    android:layout_marginRight="30px"
 	    
-	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentTop="true"
 	    android:thumb="@drawable/thumb"
 	    /> 
 	    <!-- android:layout_marginTop="330dip" -->
